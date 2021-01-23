@@ -21,7 +21,6 @@ export class Popup {
     this.popupContentElement = document.querySelector(
       '.popup-content'
     ) as HTMLDivElement
-    this.closeBtnElement.innerText = '&times;'
     this.popupContentHTML = popupContentHTML
     document
       .querySelector(`.${this.popupListenerClass}`)
