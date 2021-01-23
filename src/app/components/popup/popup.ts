@@ -1,45 +1,54 @@
-import './popup.css'
-
 export class Popup {
-  popupDivElement: HTMLDivElement
-  closeBtnElement: HTMLDivElement
-  popupOverlayElement: HTMLDivElement
-  popupContentElement: HTMLDivElement
-
-  // in the constructor provide 2 arguments: content of the popup and class of HTML element that should display it after click
   constructor(
     protected popupContentHTML: string,
-    protected popupListenerClass: string
+    protected closeBtnContent: string
   ) {
-    this.popupDivElement = document.querySelector('.popup') as HTMLDivElement
-    this.closeBtnElement = document.querySelector(
-      '.close-btn'
-    ) as HTMLDivElement
-    this.popupOverlayElement = document.querySelector(
+    this.popupContentHTML = popupContentHTML
+    this.closeBtnContent = closeBtnContent
+  }
+
+  renderPopUpContent(): void {
+    const popup = document.createElement('div') as HTMLDivElement
+    popup.classList.add('popup-container')
+    popup.innerHTML = `
+      <div class="overlay"></div>
+        <div class="popup-content">
+          ${this.popupContentHTML}
+          <button class="close__btn--popup">${this.closeBtnContent}</button>
+        </div>
+      </div>
+    `
+    document.body.appendChild(popup)
+
+    popup.classList.add('popup-active')
+
+    const popupOverlayElement = document.querySelector(
       '.overlay'
     ) as HTMLDivElement
-    this.popupContentElement = document.querySelector(
-      '.popup-content'
-    ) as HTMLDivElement
-    this.popupContentHTML = popupContentHTML
-    document
-      .querySelector(`.${this.popupListenerClass}`)
-      ?.addEventListener('click', () => {
-        this.insertPopupContent()
-        this.popupDivElement.classList.add('active')
-      })
-    this.closeBtnElement.addEventListener('click', () => {
-      this.popupDivElement.classList.remove('active')
+
+    const closeBtn = document.querySelector(
+      '.close__btn--popup'
+    ) as HTMLButtonElement
+
+    closeBtn.addEventListener('click', () => {
+      popup.classList.remove('popup-active')
+      setTimeout(() => {
+        this.removePopup()
+      }, 200)
     })
-    this.popupOverlayElement.addEventListener('click', () => {
-      this.popupDivElement.classList.remove('active')
+
+    popupOverlayElement.addEventListener('click', () => {
+      popup.classList.remove('popup-active')
+      setTimeout(() => {
+        this.removePopup()
+      }, 200)
     })
   }
 
-  insertPopupContent(): void {
-    this.popupContentElement.innerHTML = `
-      <div class="close-btn">&times;</div>
-      ${this.popupContentHTML}
-    `
+  removePopup(): void {
+    const popupDivElement = document.querySelector(
+      '.popup-container'
+    ) as HTMLDivElement
+    document.body.removeChild(popupDivElement)
   }
 }
