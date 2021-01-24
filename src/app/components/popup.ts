@@ -1,16 +1,16 @@
-export function renderPopup(popupContentHTML: string, closeBtnContent: string) {
+export function renderPopup(popupContentHTML: HTMLElement, closeBtnContent: string) {
   const popup = document.createElement('div') as HTMLDivElement
   popup.classList.add('popup')
   popup.innerHTML = `
     <div class="popup__overlay"></div>
     <div class="popup__content">
-      ${popupContentHTML}
       <button class="popup__close-btn">${closeBtnContent}</button>
     </div>
     </div>
   `
 
   document.body.appendChild(popup)
+  document.querySelector('.popup__content')?.appendChild(popupContentHTML)
 
   setTimeout(() => {
     popup.classList.add('popup--active')
