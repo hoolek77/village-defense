@@ -1,0 +1,44 @@
+import { Game } from '../../../game'
+import { ResourceType } from '../../../types'
+import { Building } from '../building'
+
+const GOLD = 1
+const WOOD = 1
+const STONE = 3
+const DEFAULT_TIME_TO_BUILD = 15 // TODO: change after testing
+const MAX_LEVEL = 3
+const DEFENSE = [10, 20, 50]
+
+export class Wall extends Building {
+  readonly defense = DEFENSE[this.level - 1]
+
+  constructor(game: Game) {
+    super(
+      game,
+      [
+        {
+          type: ResourceType.Gold,
+          count: GOLD,
+        },
+        {
+          type: ResourceType.Wood,
+          count: WOOD,
+        },
+        {
+          type: ResourceType.Stone,
+          count: STONE,
+        },
+      ],
+      DEFAULT_TIME_TO_BUILD,
+      MAX_LEVEL
+    )
+  }
+
+  protected handleBuildFinish() {
+    console.log('Wall was built')
+  }
+
+  protected handleUpgradeFinish(newLevel: number) {
+    this.game.handleWallUpgraded(DEFENSE[newLevel - 1] - DEFENSE[newLevel - 2])
+  }
+}
