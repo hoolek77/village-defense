@@ -1,4 +1,4 @@
-.popup-container .overlay {
+.popup__overlay {
   position: fixed;
   top: 0px;
   left: 0px;
@@ -9,7 +9,7 @@
   display: none;
 }
 
-.popup-container .popup-content {
+.popup__content {
   display: flex;
   justify-content: center;
   position: absolute;
@@ -27,7 +27,7 @@
   transition: all 200ms ease-in-out;
 }
 
-.popup-container .close__btn--popup {
+.popup__close-btn {
   cursor: pointer;
   position: absolute;
   bottom: 20px;
@@ -40,11 +40,11 @@
   border-radius: 15px;
 }
 
-.popup-container.popup-active .overlay {
+.popup-container.popup-active .popup__overlay {
   display: block;
 }
 
-.popup-container.popup-active .popup-content {
+.popup-container.popup-active .popup__content {
   transition: all 200ms ease-in-out;
   transform: translate(-50%, -50%) scale(1);
 }

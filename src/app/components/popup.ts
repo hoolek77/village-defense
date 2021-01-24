@@ -2,10 +2,10 @@ export function renderPopup(popupContentHTML: string, closeBtnContent: string) {
   const popup = document.createElement('div') as HTMLDivElement
   popup.classList.add('popup-container')
   popup.innerHTML = `
-    <div class="overlay"></div>
-    <div class="popup-content">
+    <div class="popup__overlay"></div>
+    <div class="popup__content">
       ${popupContentHTML}
-      <button class="close__btn--popup">${closeBtnContent}</button>
+      <button class="popup__close-btn">${closeBtnContent}</button>
     </div>
     </div>
   `
@@ -16,11 +16,11 @@ export function renderPopup(popupContentHTML: string, closeBtnContent: string) {
     popup.classList.add('popup-active')
 
     const popupOverlayElement = document.querySelector(
-      '.overlay'
+      '.popup__overlay'
     ) as HTMLDivElement
 
     const closeBtn = document.querySelector(
-      '.close__btn--popup'
+      '.popup__close-btn'
     ) as HTMLButtonElement
 
     closeBtn.addEventListener('click', () => {
