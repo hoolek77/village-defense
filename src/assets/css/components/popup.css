@@ -40,11 +40,11 @@
   border-radius: 15px;
 }
 
-.popup-container.popup-active .popup__overlay {
+.popup--active .popup__overlay {
   display: block;
 }
 
-.popup-container.popup-active .popup__content {
+.popup--active .popup__content {
   transition: all 200ms ease-in-out;
   transform: translate(-50%, -50%) scale(1);
 }

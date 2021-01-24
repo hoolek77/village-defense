@@ -1,6 +1,6 @@
 export function renderPopup(popupContentHTML: string, closeBtnContent: string) {
   const popup = document.createElement('div') as HTMLDivElement
-  popup.classList.add('popup-container')
+  popup.classList.add('popup')
   popup.innerHTML = `
     <div class="popup__overlay"></div>
     <div class="popup__content">
@@ -13,7 +13,7 @@ export function renderPopup(popupContentHTML: string, closeBtnContent: string) {
   document.body.appendChild(popup)
 
   setTimeout(() => {
-    popup.classList.add('popup-active')
+    popup.classList.add('popup--active')
 
     const popupOverlayElement = document.querySelector(
       '.popup__overlay'
@@ -24,21 +24,19 @@ export function renderPopup(popupContentHTML: string, closeBtnContent: string) {
     ) as HTMLButtonElement
 
     closeBtn.addEventListener('click', () => {
-      popup.classList.remove('popup-active')
+      popup.classList.remove('popup--active')
       removePopup()
     })
 
     popupOverlayElement.addEventListener('click', () => {
-      popup.classList.remove('popup-active')
+      popup.classList.remove('popup--active')
       removePopup()
     })
   }, 10)
 }
 
 export function removePopup() {
-  const popupDivElement = document.querySelector(
-    '.popup-container'
-  ) as HTMLDivElement
+  const popupDivElement = document.querySelector('.popup') as HTMLDivElement
   setTimeout(() => {
     document.body.removeChild(popupDivElement)
   }, 200)
