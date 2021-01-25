@@ -7,10 +7,10 @@ const WOOD = 1
 const STONE = 3
 const DEFAULT_TIME_TO_BUILD = 15 // TODO: change after testing
 const MAX_LEVEL = 3
-const DEFENSE = [10, 20, 50]
+const DEFENSE = 10
 
 export class Wall extends Building {
-  readonly defense = DEFENSE[this.level - 1]
+  readonly defense = DEFENSE
 
   constructor(game: Game) {
     super(
@@ -34,11 +34,7 @@ export class Wall extends Building {
     )
   }
 
-  protected handleBuildFinish() {
-    console.log('Wall was built')
-  }
-
-  protected handleUpgradeFinish(newLevel: number) {
-    this.game.handleWallUpgraded(DEFENSE[newLevel - 1] - DEFENSE[newLevel - 2])
+  toString = (): string => {
+    return `Wall: [level = ${this.level}]`
   }
 }

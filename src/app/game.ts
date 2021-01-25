@@ -63,7 +63,7 @@ export class Game {
     // TODO: remove after testing
     this.addVillageUnit(new Knight())
     const wall = new Wall(this)
-    setTimeout(() => wall.startUpgrading(), 20000)
+    setTimeout(() => wall.startBuilding(), 20000)
     this.addBuilding(wall)
   }
 
@@ -86,41 +86,64 @@ export class Game {
     this.villageUnits.push(unit)
   }
 
+  hasAvailableResources(resources: Resource[]) {
+    let hasEnoughResources = true
+
+    resources.forEach((res) => {
+      const villageResource = this.getResourceForType(res.type)
+
+      if (villageResource) {
+        if (villageResource.count < res.count) {
+          hasEnoughResources = false
+        }
+      } else {
+        hasEnoughResources = false
+      }
+    })
+    console.log('has villable available resources', hasEnoughResources)
+    return hasEnoughResources
+  }
+
+  handleStartingConstructionOfBuilding(building: Building) {
+    console.log('resources before building', this.getAllResourcesCount())
+    this.updateResources(building.getResourcesNeededToBuild())
+    console.log('resources after building started', this.getAllResourcesCount())
+  }
+
   handleBuildingWasBuilt(building: Building) {
-    console.log('New building was built')
+    console.log('New building was built', building)
     if (building instanceof House) {
-      this.handleAddNewHouse(building as House)
+      this.handleHouseWasBuilt(building as House)
     } else if (building instanceof Wall) {
-      this.handleAddNewWall(building as Wall)
+      this.handlewWallWasBuilt(building as Wall)
     } else if (building instanceof Warehouse) {
-      this.handleAddNewWarehouse(building as Warehouse)
+      this.handleWarehouseWasBuilt(building as Warehouse)
     }
   }
 
-  handleBuildingWasUpgraded(building: Building) {}
-
-  handleWallUpgraded(newDefence: number) {
-    console.log('wall upgraded', newDefence)
-    this.villageDefence += newDefence
+  private getResourceForType(resourceType: ResourceType) {
+    return this.resources.find((res) => res.type === resourceType)
   }
 
-  handleWarehouseUpgraded(newCapacity: number) {
-    this.storageCapacity += newCapacity
+  private updateResources(resources: Resource[]) {
+    resources.forEach((res) => {
+      const villageResource = this.getResourceForType(res.type)
+
+      if (villageResource) {
+        villageResource.count -= res.count
+      }
+    })
   }
 
-  handleHouseUpgraded(newPopulation: number) {
-    this.population += newPopulation
-  }
-
-  private handleAddNewHouse(house: House) {
+  private handleHouseWasBuilt(house: House) {
     this.population += house.population
   }
 
-  private handleAddNewWall(wall: Wall) {
+  private handlewWallWasBuilt(wall: Wall) {
     this.villageDefence += wall.defense
   }
 
-  private handleAddNewWarehouse(warehouse: Warehouse) {
+  private handleWarehouseWasBuilt(warehouse: Warehouse) {
     this.storageCapacity += warehouse.capacity
   }
 
@@ -128,6 +151,10 @@ export class Game {
     return this.buildings.find(
       (building) => building instanceof Warehouse
     ) as Warehouse
+  }
+
+  private getWall(): Wall | undefined {
+    return this.buildings.find((building) => building instanceof Wall) as Wall
   }
 
   private getAllResourcesCount() {
@@ -147,6 +174,7 @@ export class Game {
     this.gameTimeInSeconds += 1
     this.nextAttackCountdownInSeconds -= 1
 
+    this.updateBuildings()
     this.renderBuildings()
     this.renderUnits()
 
@@ -158,6 +186,10 @@ export class Game {
 
   private renderBuildings() {
     this.buildings.forEach((building) => building.render())
+  }
+
+  private updateBuildings() {
+    this.buildings.forEach((building) => building.update())
   }
 
   private renderUnits() {
@@ -216,11 +248,16 @@ export class Game {
   }
 
   private getEnemies(): Unit[] {
+    const wall = this.getWall()
     let maxEnemiesCount = this.villageUnits.length
 
     if (maxEnemiesCount === 0) {
       // there is no village units, so add some enemies
       maxEnemiesCount = 3
+    }
+
+    if (wall) {
+      maxEnemiesCount += Math.round((wall.getLevel() * wall.defense) / 10)
     }
 
     switch (this.difficulty) {

@@ -7,10 +7,8 @@ enum Action {
 }
 
 export class Building {
-  private intervalId?: number
-
-  protected level = 1
-  protected isBuilt = false
+  protected level = 0
+  protected isBuilding = false
 
   constructor(
     protected game: Game,
@@ -19,51 +17,47 @@ export class Building {
     protected maxLevel: number
   ) {}
 
+  getLevel() {
+    return this.level
+  }
+
+  getResourcesNeededToBuild() {
+    return this.resourcesNeededToBuild
+  }
+
   startBuilding() {
-    this.startTimer(Action.building)
+    if (!this.canUpgarde() || this.isBuilding) {
+      return
+    }
+
+    if (this.game.hasAvailableResources(this.resourcesNeededToBuild)) {
+      this.isBuilding = true
+
+      this.game.handleStartingConstructionOfBuilding(this)
+    }
   }
 
   canUpgarde() {
     return this.level + 1 <= this.maxLevel
   }
 
-  startUpgrading() {
-    if (!this.canUpgarde()) {
-      return
+  update() {
+    if (this.isBuilding) {
+      console.log(`${this} is building`)
+      this.timeToBuildInSeconds--
+
+      if (this.timeToBuildInSeconds <= 0) {
+        this.isBuilding = false
+        this.level++
+
+        this.game.handleBuildingWasBuilt(this)
+      }
     }
-
-    this.isBuilt = false
-
-    this.startTimer(Action.upgrading)
   }
 
   render() {}
 
-  protected handleBuildFinish() {}
-
-  protected handleUpgradeFinish(newLevel: number) {}
-
-  private startTimer(action: Action) {
-    if (this.intervalId !== undefined) {
-      window.clearInterval(this.intervalId!)
-    }
-
-    this.intervalId = window.setInterval(() => {
-      this.timeToBuildInSeconds--
-
-      if (this.timeToBuildInSeconds <= 0) {
-        this.isBuilt = true
-        window.clearInterval(this.intervalId!)
-
-        if (action === Action.building) {
-          this.game.handleBuildingWasBuilt(this)
-          this.handleBuildFinish()
-        } else if (action === Action.upgrading) {
-          this.level++
-          this.game.handleBuildingWasUpgraded(this)
-          this.handleUpgradeFinish(this.level)
-        }
-      }
-    }, ONE_SECOND)
+  toString = (): string => {
+    return `Building: [level = ${this.level}]`
   }
 }
