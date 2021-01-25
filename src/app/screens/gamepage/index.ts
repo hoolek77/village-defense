@@ -19,6 +19,6 @@ export class GamePage {
     this.setClosePageEvent()
 
     this.game = new Game()
-    this.game.start()
+    //this.game.start()
   }
 }

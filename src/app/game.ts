@@ -62,10 +62,10 @@ export class Game {
     private difficulty: Difficulty = Difficulty.Medium
   ) {
     // TODO: remove after testing
-    this.addVillageUnit(new Knight())
-    const wall = new Wall(this)
-    setTimeout(() => wall.startBuilding(), 20000)
-    this.addBuilding(wall)
+    // this.addVillageUnit(new Knight())
+    // const wall = new Wall(this)
+    // setTimeout(() => wall.startBuilding(), 20000)
+    // this.addBuilding(wall)
   }
 
   start() {
