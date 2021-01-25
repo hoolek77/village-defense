@@ -6,6 +6,7 @@ import {
   Warehouse,
   Goblin,
   Knight,
+  Goldmine,
 } from './components'
 import {
   Difficulty,
@@ -16,10 +17,10 @@ import {
 } from './types'
 import { randomBetween } from './utils'
 
-const DEFAULT_GOLD = 20
-const DEFAULT_WOOD = 20
-const DEFAULT_STONE = 20
-const DEFAULT_STORAGE_CAPACITY = 100
+const DEFAULT_GOLD = 100
+const DEFAULT_WOOD = 100
+const DEFAULT_STONE = 100
+const DEFAULT_STORAGE_CAPACITY = 600
 
 const START_POPULATION = 100
 
@@ -118,6 +119,8 @@ export class Game {
       this.handlewWallWasBuilt(building as Wall)
     } else if (building instanceof Warehouse) {
       this.handleWarehouseWasBuilt(building as Warehouse)
+    } else if (building instanceof Goldmine) {
+      this.handleGoldmineWasBuilt(building as Goldmine)
     }
   }
 
@@ -147,6 +150,14 @@ export class Game {
     this.storageCapacity += warehouse.capacity
   }
 
+  private handleGoldmineWasBuilt(goldmine: Goldmine) {
+    const gold = this.getResourceForType(ResourceType.Gold)
+
+    if (gold) {
+      gold.count += goldmine.goldProduction
+    }
+  }
+
   private getWarehouse(): Warehouse | undefined {
     return this.buildings.find(
       (building) => building instanceof Warehouse
@@ -171,8 +182,8 @@ export class Game {
     console.log('Updating game')
     console.log('game time', this.gameTimeInSeconds)
     console.log('next attak', this.nextAttackCountdownInSeconds)
-    this.gameTimeInSeconds += 1
-    this.nextAttackCountdownInSeconds -= 1
+    this.gameTimeInSeconds++
+    this.nextAttackCountdownInSeconds--
 
     this.updateBuildings()
     this.renderBuildings()
@@ -239,7 +250,7 @@ export class Game {
     while (numberOfResourcesToSteal > 0) {
       availableResources.forEach((resource) => {
         if (resource.count > 0 && numberOfResourcesToSteal > 0) {
-          resource.count -= 1
+          resource.count--
           numberOfResourcesToSteal--
         }
       })
