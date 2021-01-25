@@ -17,21 +17,89 @@ export default class infoContentProvider {
         `
         )
 
+        const footer = this.createElementt('footer', '', 'footer')
+        // const footerHeader = this.createElementt('h2', '', 'footer__header', 'Authors')
+        const authorList = this.createElementt('ul', '', 'authors__list',
+        `
+            <li class="author">
+            <div class="author__container">
+            <div class="author__front">
+                <div class="author__content">Piotr Dybowski</div>
+            </div>
+            <div class="author__back">
+                <div class="author__content">
+                <i class="fas fa-user-tie author__icon"></i>
+                <span class="author__position">Mentor<br />Client</span>
+                </div>
+            </div>
+            </div>
+        </li>
+        <li class="author">
+            <div class="author__container">
+            <div class="author__front">
+                <div class="author__content">Szymon Kin</div>
+            </div>
+            <div class="author__back">
+                <div class="author__content">
+                <i class="fas fa-user-secret author__icon"></i>
+                <span class="author__position">Tech Lead<br />Developer</span>
+                </div>
+            </div>
+            </div>
+        </li>
+        <li class="author">
+            <div class="author__container">
+            <div class="author__front">
+                <div class="author__content">Bartosz Białecki</div>
+            </div>
+            <div class="author__back">
+                <div class="author__content">
+                <i class="fas fa-hiking author__icon"></i>
+                <span class="author__position"
+                    >Product Owner<br />Developer</span
+                >
+                </div>
+            </div>
+            </div>
+        </li>
+        <li class="author">
+            <div class="author__container">
+            <div class="author__front">
+                <div class="author__content">Ireneusz Bednorz</div>
+            </div>
+            <div class="author__back">
+                <div class="author__content">
+                <i class="fas fa-user-ninja author__icon"></i>
+                <span class="author__position">Dev Manager<br />Developer</span>
+                </div>
+            </div>
+            </div>
+        </li>
+        </div>
+        `)
+
+
+        footer.appendChild(authorList)
+
+
 
         wrapper.appendChild(header)
             .appendChild(infoContent)
             .appendChild(gameDesc)
+            .appendChild(footer)
         renderPopup(wrapper, 'x');
     }
 
     createElementt(typeElement:string, idElement?:string, classesElement?:string, textElement?:string){
         const infoItem = document.createElement(typeElement)
-        infoItem.id = idElement?idElement:''
+        if(idElement){
+            infoItem.id = idElement
+        }
         if(classesElement){
             infoItem.className = classesElement
         }
         if(textElement){
-            infoItem.textContent = textElement
+            infoItem.innerHTML = textElement
         }
 
         return infoItem
