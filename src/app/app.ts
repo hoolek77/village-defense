@@ -1,11 +1,14 @@
-import { Game } from './game'
+import { playAudio } from './utils'
+import { GamePage, HomePage } from './screens'
 
 export class App {
-  private game!: Game
-
   start() {
     console.log('Starting application...')
-    this.game = new Game()
-    this.game.start()
+
+    playAudio(0.7)
+    const homepage = new HomePage()
+    const gamepage = new GamePage()
+    homepage.runPage()
+    gamepage.runPage()
   }
 }
