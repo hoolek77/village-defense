@@ -1,10 +1,5 @@
 import { Game } from '../../game'
-import { ONE_SECOND, Resource } from '../../types'
-
-enum Action {
-  building,
-  upgrading,
-}
+import { Resource } from '../../types'
 
 export class Building {
   protected level = 0
