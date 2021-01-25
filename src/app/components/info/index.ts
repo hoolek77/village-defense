@@ -1,6 +1,6 @@
 import {renderPopup} from '../popup'
 
-const btn = document.querySelector('#info')
+const btn = document.querySelector('#info-button')
 
 export default class infoContentProvider {
     constructor(){
