@@ -1,4 +1,3 @@
-import { ONE_SECOND } from './constants'
 import {
   DEFAULT_GOLD,
   DEFAULT_STONE,
@@ -7,6 +6,7 @@ import {
   EASY_ATTACK_COUNTDOWN_IN_SECONDS,
   HARD_ATTACK_COUNTDOWN_IN_SECONDS,
   MEDIUM_ATTACK_COUNTDOWN_IN_SECONDS,
+  ONE_SECOND,
   START_POPULATION,
 } from './constants'
 import {
