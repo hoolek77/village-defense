@@ -1,5 +1,5 @@
 import { Game } from '../../game'
-import { Resource } from '../../types'
+import { Resource } from '../types'
 
 export class Building {
   protected level = 0

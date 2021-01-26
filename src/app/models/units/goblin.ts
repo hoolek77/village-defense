@@ -1,4 +1,4 @@
-import { Unit } from '../unit'
+import { Unit } from './unit'
 
 export class Goblin extends Unit {
   strength = 8

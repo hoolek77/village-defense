@@ -1,6 +1,6 @@
-import { Game } from '../../../game'
-import { ResourceType } from '../../../types'
-import { Building } from '../building'
+import { Game } from '../../game'
+import { ResourceType } from '../types'
+import { Building } from './building'
 
 const CAPACITY = 100
 const GOLD = 2

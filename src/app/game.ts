@@ -1,3 +1,14 @@
+import { ONE_SECOND } from './constants'
+import {
+  DEFAULT_GOLD,
+  DEFAULT_STONE,
+  DEFAULT_STORAGE_CAPACITY,
+  DEFAULT_WOOD,
+  EASY_ATTACK_COUNTDOWN_IN_SECONDS,
+  HARD_ATTACK_COUNTDOWN_IN_SECONDS,
+  MEDIUM_ATTACK_COUNTDOWN_IN_SECONDS,
+  START_POPULATION,
+} from './constants/game'
 import {
   Building,
   Unit,
@@ -7,26 +18,13 @@ import {
   Goblin,
   Knight,
   Goldmine,
-} from './components'
-import {
   Difficulty,
   ResourceType,
   Resource,
-  ONE_SECOND,
   Fractions,
-} from './types'
+} from './models'
+
 import { randomBetween } from './utils'
-
-const DEFAULT_GOLD = 100
-const DEFAULT_WOOD = 100
-const DEFAULT_STONE = 100
-const DEFAULT_STORAGE_CAPACITY = 600
-
-const START_POPULATION = 100
-
-const EASY_ATTACK_COUNTDOWN_IN_SECONDS = 10 * 60
-const MEDIUM_ATTACK_COUNTDOWN_IN_SECONDS = 0.5 * 60 // TODO: change to 8 after testing
-const HARD_ATTACK_COUNTDOWN_IN_SECONDS = 5 * 60
 
 export class Game {
   private resources: Resource[] = [
