@@ -8,7 +8,7 @@ import {
   HARD_ATTACK_COUNTDOWN_IN_SECONDS,
   MEDIUM_ATTACK_COUNTDOWN_IN_SECONDS,
   START_POPULATION,
-} from './constants/game'
+} from './constants'
 import {
   Building,
   Unit,
