@@ -8,6 +8,7 @@ export default class infoContentProvider {
     }
 
     render() {
+
         const wrapper = this.createElementt('div')
         const header = this.createElementt('h1', '', 'header', 'Info');
         const infoContent = this.createElementt('div')
@@ -18,7 +19,7 @@ export default class infoContentProvider {
         )
 
         const footer = this.createElementt('footer', '', 'footer')
-        // const footerHeader = this.createElementt('h2', '', 'footer__header', 'Authors')
+        const footerHeader = this.createElementt('h2', '', 'footer__header', 'Authors')
         const authorList = this.createElementt('ul', '', 'authors__list',
         `
             <li class="author">
@@ -28,7 +29,6 @@ export default class infoContentProvider {
             </div>
             <div class="author__back">
                 <div class="author__content">
-                <i class="fas fa-user-tie author__icon"></i>
                 <span class="author__position">Mentor<br />Client</span>
                 </div>
             </div>
@@ -42,7 +42,7 @@ export default class infoContentProvider {
             <div class="author__back">
                 <div class="author__content">
                 <i class="fas fa-user-secret author__icon"></i>
-                <span class="author__position">Tech Lead<br />Developer</span>
+                <span class="author__position">Dev<br />Manager</span>
                 </div>
             </div>
             </div>
@@ -54,9 +54,8 @@ export default class infoContentProvider {
             </div>
             <div class="author__back">
                 <div class="author__content">
-                <i class="fas fa-hiking author__icon"></i>
                 <span class="author__position"
-                    >Product Owner<br />Developer</span
+                    >Tech<br />Lead</span
                 >
                 </div>
             </div>
@@ -69,8 +68,31 @@ export default class infoContentProvider {
             </div>
             <div class="author__back">
                 <div class="author__content">
-                <i class="fas fa-user-ninja author__icon"></i>
-                <span class="author__position">Dev Manager<br />Developer</span>
+                <span class="author__position">Product<br />Owner</span>
+                </div>
+            </div>
+            </div>
+        </li>
+        <li class="author">
+            <div class="author__container">
+            <div class="author__front">
+                <div class="author__content">Aleksandra Jankowska</div>
+            </div>
+            <div class="author__back">
+                <div class="author__content">
+                <span class="author__position">Developer</span>
+                </div>
+            </div>
+            </div>
+        </li>
+        <li class="author">
+            <div class="author__container">
+            <div class="author__front">
+                <div class="author__content">Jakub Góra</div>
+            </div>
+            <div class="author__back">
+                <div class="author__content">
+                <span class="author__position">Developer</span>
                 </div>
             </div>
             </div>
@@ -83,11 +105,9 @@ export default class infoContentProvider {
 
 
 
-        wrapper.appendChild(header)
-            .appendChild(infoContent)
-            .appendChild(gameDesc)
-            .appendChild(footer)
-        renderPopup(wrapper, 'x');
+        wrapper.append(header, infoContent,footerHeader,footer)
+        infoContent.appendChild(gameDesc)
+        renderPopup(wrapper, 'X');
     }
 
     createElementt(typeElement:string, idElement?:string, classesElement?:string, textElement?:string){

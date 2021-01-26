@@ -4,12 +4,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 2rem 6rem;
+  padding: 0 2rem 1rem;
   font-size: 1.4rem;
 }
 
 .footer__header {
-  font-size: 3.6rem;
+  font-size: 3rem;
+  margin: 0;
 }
 
 .authors__list {
@@ -21,7 +22,7 @@
 .author {
   color: #fff;
   height: 250px;
-  margin: 4rem 1rem;
+  margin: 2rem 1rem;
   perspective: 1000px;
   position: relative;
   text-align: center;
@@ -75,6 +76,16 @@
   transform: translateY(50%);
   transition: bottom 0.3s linear, opacity 0.3s linear, transform 0.3s 1s linear;
   z-index: -1;
+}
+
+.popup__close-btn {
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+}
+
+.popup__close-btn:hover {
+  opacity: 1;
 }
 
 .author:hover .author__container {
