@@ -9,18 +9,17 @@ export default class infoContentProvider {
 
     render() {
 
-        const wrapper = this.createElementt('div')
-        const header = this.createElementt('h1', '', 'header', 'Info');
-        const infoContent = this.createElementt('div')
-        const gameDesc = this.createElementt('p', '', 'info__desc', 
+        const wrapper = this.createElement('div')
+        const header = this.createElement('h1', '', 'header', 'Info');
+        const infoContent = this.createElement('div')
+        const gameDesc = this.createElement('p', '', 'info__desc', 
         `
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu faucibus urna. Mauris eu lorem ac felis rhoncus tempor ut eget felis. In ullamcorper fringilla lorem. Nam blandit, sapien sed venenatis lobortis, lacus ligula pellentesque libero, a feugiat velit neque sit amet turpis. Integer tempor elementum lectus quis tincidunt. Cras egestas orci sed nisi tempus ultrices. Maecenas enim arcu, volutpat non nunc nec, consequat faucibus lorem.
         `
         )
-
-        const footer = this.createElementt('footer', '', 'footer')
-        const footerHeader = this.createElementt('h2', '', 'footer__header', 'Authors')
-        const authorList = this.createElementt('ul', '', 'authors__list',
+        const footer = this.createElement('footer', '', 'footer')
+        const footerHeader = this.createElement('h2', '', 'footer__header', 'Authors')
+        const authorList = this.createElement('ul', '', 'authors__list',
         `
             <li class="author">
             <div class="author__container">
@@ -100,17 +99,13 @@ export default class infoContentProvider {
         </div>
         `)
 
-
         footer.appendChild(authorList)
-
-
-
         wrapper.append(header, infoContent,footerHeader,footer)
         infoContent.appendChild(gameDesc)
+
         renderPopup(wrapper, 'X');
     }
-
-    createElementt(typeElement:string, idElement?:string, classesElement?:string, textElement?:string){
+    createElement(typeElement:string, idElement?:string, classesElement?:string, contentElement?:string){
         const infoItem = document.createElement(typeElement)
         if(idElement){
             infoItem.id = idElement
@@ -118,11 +113,10 @@ export default class infoContentProvider {
         if(classesElement){
             infoItem.className = classesElement
         }
-        if(textElement){
-            infoItem.innerHTML = textElement
+        if(contentElement){
+            infoItem.innerHTML = contentElement
         }
 
         return infoItem
     }
 }
-
