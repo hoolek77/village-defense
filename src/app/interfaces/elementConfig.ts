@@ -1,4 +1,4 @@
-export interface ElementConfig {
+export interface customHtmlElement {
   type: string
   content?: string
   id?: string

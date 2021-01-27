@@ -1,4 +1,4 @@
-import { ElementConfig } from '../interfaces/elementConfig'
+import { customHtmlElement } from '../interfaces'
 
 export function createElement({
   type,
@@ -9,7 +9,7 @@ export function createElement({
   properties,
   innerHTML,
   styles,
-}: ElementConfig) {
+}: customHtmlElement) {
   const element = document.createElement(type)
   if (content) {
     element.textContent = content
