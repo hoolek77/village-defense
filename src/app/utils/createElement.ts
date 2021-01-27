@@ -8,6 +8,7 @@ export function createElement({
   handleEvent,
   properties,
   innerHTML,
+  styles,
 }: elementConfig) {
   const element = document.createElement(type)
   if (content) {

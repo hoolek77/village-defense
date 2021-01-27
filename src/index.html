@@ -4,27 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title></title>
+    <link rel="stylesheet" href="assets/css/global.css" />
   </head>
   <body>
+    <audio autoplay loop>
+      <source src="assets/audio/music.mp3" type="audio/mpeg" />
+    </audio>
+
     <section class="start__screen">
       <div class="start__screen__logoContainer">
         <div class="start__screen__logo"></div>
       </div>
       <div class="start__screen__actions">
-        <button class="start__screen__button" id="start-game-button">Start</button>
+        <button class="start__screen__button" id="start-game-button">
+          Start
+        </button>
         <select class="start__screen__button" id="character-dropdown">
           <option class="start__screen__option" value="elfs">Elfs</option>
           <option class="start__screen__option" value="people">People</option>
           <option class="start__screen__option" value="dwarfs">Dwarfs</option>
         </select>
-        <button class="start__screen__button" id="settings-button">Settings</button>
+        <button class="start__screen__button" id="settings-button">
+          Settings
+        </button>
         <button class="start__screen__button" id="info-button">Info</button>
       </div>
     </section>
 
     <section class="game__screen">
-      <p>Game</p>
-      <button class="quit__game__button" id="quit-game-button">Go to main screen</button>
+      <div class="middle-box"></div>
+      <div class="left-box"></div>
+      <div class="right-box"></div>
+      <div class="top-box"></div>
+      <div class="bottom-box"></div>
+      <button class="quit__game__button" id="quit-game-button">
+        Go to main screen
+      </button>
     </section>
   </body>
 </html>
