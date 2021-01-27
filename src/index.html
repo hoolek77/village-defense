@@ -4,26 +4,49 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title></title>
-    <link rel="stylesheet" href="assets/css/global.css" />
   </head>
   <body>
     <audio autoplay loop>
       <source src="assets/audio/music.mp3" type="audio/mpeg" />
     </audio>
-
     <section class="start__screen">
+      <div class="start__screen--background"></div>
       <div class="start__screen__logoContainer">
-        <div class="start__screen__logo"></div>
+        <div class="start__screen__logo--background">
+          <div class="start__screen__logo"></div>
+        </div>
       </div>
       <div class="start__screen__actions">
         <button class="start__screen__button" id="start-game-button">
           Start
         </button>
-        <select class="start__screen__button" id="character-dropdown">
-          <option class="start__screen__option" value="elfs">Elfs</option>
-          <option class="start__screen__option" value="people">People</option>
-          <option class="start__screen__option" value="dwarfs">Dwarfs</option>
-        </select>
+
+        <div
+          class="start__screen__button start__screen__button--list"
+          id="character-dropdown"
+        >
+          <span>Elfs</span>
+          <div class="start__screen__option__wrapper">
+            <button
+              class="start__screen__button start__screen__button--option start__screen__button--option--selected"
+              value="elfs"
+            >
+              Elfs
+            </button>
+            <button
+              class="start__screen__button start__screen__button--option"
+              value="people"
+            >
+              People
+            </button>
+            <button
+              class="start__screen__button start__screen__button--option"
+              value="dwarfs"
+            >
+              Dwarfs
+            </button>
+          </div>
+        </div>
         <button class="start__screen__button" id="settings-button">
           Settings
         </button>

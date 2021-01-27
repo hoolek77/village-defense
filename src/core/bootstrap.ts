@@ -4,4 +4,4 @@ import '../assets/css/screens/startScreen.css'
 import '../assets/css/screens/gameScreen.css'
 import '../assets/css/animations.css'
 import '../assets/css/components/popup.css'
-
+import '../assets/fonts/google-fonts.css'
