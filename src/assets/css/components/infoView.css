@@ -95,3 +95,48 @@
 .author:hover .author__position {
   bottom: -40px;
 }
+
+@media (max-width: 1800px) {
+  .author__container {
+    height: 150px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s;
+    width: 100%;
+  }
+  .author {
+    color: #fff;
+    height: 250px;
+    margin: 2rem 1rem;
+    perspective: 1000px;
+    position: relative;
+    text-align: center;
+    width: 150px;
+  }
+}
+
+@media (max-width: 1635px) {
+  .author__container {
+    height: 120px;
+  }
+  .author {
+    width: 120px;
+  }
+
+  .author__content {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 1385px) {
+  .author__container {
+    height: 120px;
+  }
+  .author {
+    width: 120px;
+  }
+
+  .author__content {
+    font-size: 1.5rem;
+  }
+}
