@@ -1,5 +1,5 @@
 import { GamePage } from '../gamepage'
-import {infoContentProvider} from '../../components'
+import {InfoContentProvider} from '../../components'
 
 export class HomePage {
   settingButton: HTMLElement
@@ -75,6 +75,6 @@ export class HomePage {
     this.triggerInfoButton()
     this.triggerStartButton()
     this.triggerSettingsButton()
-    new infoContentProvider()
+    new InfoContentProvider()
   }
 }
