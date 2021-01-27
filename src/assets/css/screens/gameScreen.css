@@ -4,6 +4,35 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  background: lightcoral;
   z-index: -1;
+  display: grid;
+  grid-template-columns: 3fr 15fr 3fr;
+  grid-template-rows: 3fr 14fr 3fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    '. top-box .'
+    'left-box middle-box right-box'
+    '. bottom-box .';
+}
+
+.middle-box {
+  grid-area: middle-box;
+  background-image: url('../../images/villageImages/elf-bg.jpg');
+  background-size: cover;
+  max-width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.left-box {
+  grid-area: left-box;
+}
+.right-box {
+  grid-area: right-box;
+}
+.top-box {
+  grid-area: top-box;
+}
+.bottom-box {
+  grid-area: bottom-box;
 }
