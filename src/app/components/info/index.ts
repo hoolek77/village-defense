@@ -1,13 +1,13 @@
 import { renderPopup } from '../popup'
 import { createElement } from '../../utils/createElement'
 
-export default class infoContentProvider {
+export class infoContentProvider {
   constructor() {
     const btn = document.querySelector('#info-button')
     btn?.addEventListener('click', this.render.bind(this))
   }
 
-  render() {
+  private render() {
     const wrapper = createElement({ type: 'div' })
     const header = createElement({
       type: 'h1',
