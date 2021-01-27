@@ -1,5 +1,5 @@
-import { renderPopup } from '../popup'
-import { createElement } from '../../utils/createElement'
+import { renderPopup } from './popup'
+import { createElement } from '../utils'
 
 const btn = document.querySelector('#info-button')
 
