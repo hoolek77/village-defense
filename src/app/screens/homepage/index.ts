@@ -52,16 +52,17 @@ export class HomePage {
     const buttonText: HTMLElement = <HTMLElement>(
       this.characterButton.children[0]
     )
-    buttonText.innerText = this.theme.charAt(0).toLocaleUpperCase() + this.theme.slice(1)
+    buttonText.innerText =
+      this.theme.charAt(0).toLocaleUpperCase() + this.theme.slice(1)
   }
 
   private changeTheme(theme: string) {
     this.theme = theme
-    this.removeClasses()
-    this.changeLogo()
     this.startScreen.style.background = getComputedStyle(
       this.startScreenBackground
     ).background
+    this.removeClasses()
+    this.changeLogo()
     this.changeBackground()
   }
 
@@ -69,7 +70,7 @@ export class HomePage {
     this.startScreenLogo.classList.add(`start__screen__logo--${this.theme}`)
     this.startScreenLogoBackground.classList.add(`${this.theme}__background`)
   }
-  
+
   private changeBackground() {
     this.startScreenBackground.style.display = 'none'
     setTimeout(() => (this.startScreenBackground.style.display = 'block'), 100)
