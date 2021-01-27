@@ -1,4 +1,4 @@
-import { elementConfig } from '../interfaces/elementConfig'
+import { ElementConfig } from '../interfaces/elementConfig'
 
 export function createElement({
   type,
@@ -8,8 +8,7 @@ export function createElement({
   handleEvent,
   properties,
   innerHTML,
-  styles,
-}: elementConfig) {
+}: ElementConfig) {
   const element = document.createElement(type)
   if (content) {
     element.textContent = content
@@ -19,7 +18,7 @@ export function createElement({
   }
   if (classes) {
     classes.forEach((className) => {
-      element.className += `${className} `
+      element.classList.add(className)
     })
   }
   if (handleEvent?.type) {

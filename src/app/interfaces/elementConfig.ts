@@ -1,4 +1,4 @@
-export interface elementConfig {
+export interface ElementConfig {
   type: string
   content?: string
   id?: string
@@ -6,5 +6,4 @@ export interface elementConfig {
   handleEvent?: { type: string; callback: () => void }
   innerHTML?: string
   properties?: object
-  styles?: { property: string; value: string }
 }
