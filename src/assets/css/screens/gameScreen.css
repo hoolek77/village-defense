@@ -32,7 +32,29 @@
 }
 .top-box {
   grid-area: top-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .bottom-box {
   grid-area: bottom-box;
+}
+
+.resource__itemContainer {
+  width: 33.33%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+}
+.resource__itemContainer__img {
+  width: 100px;
+}
+.resource__itemContainer p {
+  margin: 0;
+}
+.resource__itemContainer > p > span {
+  font-weight: 700;
 }
