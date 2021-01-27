@@ -8,6 +8,7 @@ export function createElement({
   handleEvent,
   properties,
   innerHTML,
+  styles,
 }: ElementConfig) {
   const element = document.createElement(type)
   if (content) {
@@ -21,11 +22,18 @@ export function createElement({
       element.classList.add(className)
     })
   }
-  if (handleEvent?.type) {
-    element.addEventListener(handleEvent.type, () => handleEvent.callback())
+  if (handleEvent) {
+    for (const [key, value] of Object.entries(handleEvent)) {
+      element.addEventListener(key, value)
+    }
   }
   if (innerHTML) {
     element.innerHTML = innerHTML
+  }
+  if (styles) {
+    for (const [key, value] of Object.entries(styles)) {
+      element.style[<any>key] = value
+    }
   }
   return element
 }

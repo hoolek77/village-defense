@@ -3,7 +3,8 @@ export interface ElementConfig {
   content?: string
   id?: string
   classes?: string[]
-  handleEvent?: { type: string; callback: () => void }
+  handleEvent?: object
   innerHTML?: string
   properties?: object
+  styles?: object
 }
