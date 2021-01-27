@@ -1,4 +1,7 @@
+import { Game } from '../../game'
 export class GamePage {
+  private game!: Game
+
   quitButton: HTMLButtonElement
   startScreen: HTMLElement
   gameScreen: HTMLElement
@@ -38,6 +41,10 @@ export class GamePage {
 
   runPage() {
     this.setClosePageEvent()
+
     this.setBackgrondImage()
+
+    this.game = new Game()
+    //this.game.start()
   }
 }
