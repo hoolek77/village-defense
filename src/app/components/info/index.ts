@@ -1,5 +1,5 @@
 import { renderPopup } from '../popup'
-import { createElement } from '../../utils/customHtmlElement'
+import { createElement } from '../../utils/createElement'
 
 const btn = document.querySelector('#info-button')
 

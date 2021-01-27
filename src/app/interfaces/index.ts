@@ -1,1 +1,1 @@
-export * from './elementConfig'
+export * from './customHtmlElementModel'

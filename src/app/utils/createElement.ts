@@ -1,4 +1,4 @@
-import { customHtmlElement } from '../interfaces'
+import { customHtmlElementModel } from '../interfaces'
 
 export function createElement({
   type,
@@ -9,7 +9,7 @@ export function createElement({
   properties,
   innerHTML,
   styles,
-}: customHtmlElement) {
+}: customHtmlElementModel) {
   const element = document.createElement(type)
   if (content) {
     element.textContent = content
