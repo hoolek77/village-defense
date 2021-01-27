@@ -1,4 +1,4 @@
-import { renderPopup } from '../popup'
+import { renderPopup } from './popup'
 import { createElement } from '../../utils/createElement'
 
 export class InfoContentProvider {
