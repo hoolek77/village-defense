@@ -1,10 +1,9 @@
 import { renderPopup } from '../popup'
 import { createElement } from '../../utils/createElement'
 
-const btn = document.querySelector('#info-button')
-
 export default class infoContentProvider {
   constructor() {
+    const btn = document.querySelector('#info-button')
     btn?.addEventListener('click', this.render.bind(this))
   }
 
