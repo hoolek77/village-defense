@@ -7,6 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   background: radial-gradient(
     circle,
     rgba(255, 255, 255, 1) 0%,
@@ -57,13 +58,28 @@
   );
   animation: fadeIn 1s;
 }
+
+.start__screen--exclamation {
+  z-index: 5;
+  width: 100%;
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3.3em;
+  color: white;
+  text-shadow: 0px 5px 15px black;
+  letter-spacing: 0.1em;
+  font-weight: 900;
+}
 .start__screen__logoContainer {
   width: 50vw;
-  height: 100vh;
+  height: 90vh;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding-right: 5vw;
+  padding-bottom: 10vh;
 }
 
 .start__screen__logo {
@@ -103,13 +119,14 @@
 
 .start__screen__actions {
   width: 50vw;
-  height: 100vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: flex-start;
   padding: 6vh 5vw 6vh;
   z-index: 2;
+  padding-bottom: 15vh;
 }
 
 .start__screen__button,
