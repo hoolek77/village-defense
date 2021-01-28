@@ -20,10 +20,10 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
-        test: /\.(png|jpe?g|gif|ico|mp3|woff2)$/i,
+        test: /\.(png|jpe?g|gif|ico|mp3)$/i,
         use: [
           {
             loader: 'file-loader',
@@ -31,12 +31,8 @@ module.exports = {
         ],
       },
       {
-        test: /\.svg$/,
-        use: [
-          {
-            loader: 'svg-url-loader',
-          },
-        ],
+        test: /\.(svg|eot|ttf|woff|woff2)$/,
+        loader: "url-loader",
       },
     ],
   },

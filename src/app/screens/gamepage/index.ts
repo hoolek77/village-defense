@@ -6,6 +6,7 @@ export class GamePage {
   startScreen: HTMLElement
   gameScreen: HTMLElement
   middleBox: HTMLDivElement
+  unitsImg: HTMLDivElement
   theme: string
 
   constructor(theme: string) {
@@ -15,7 +16,21 @@ export class GamePage {
     this.startScreen = document.querySelector('.start__screen') as HTMLElement
     this.gameScreen = document.querySelector('.game__screen') as HTMLElement
     this.middleBox = document.querySelector('.middle-box') as HTMLDivElement
+    this.unitsImg = document.querySelector('.units__image') as HTMLDivElement
     this.theme = theme
+  }
+
+  private setFracImg() {
+    switch (this.theme) {
+      case 'people':
+        this.unitsImg.style.backgroundImage = `url('../../../assets/images/homepage/people.png')`
+        break
+      case 'dwarfs':
+        this.unitsImg.style.backgroundImage = `url('../../../assets/images/homepage/dwarfs.png')`
+        break
+      case 'elfs':
+        this.unitsImg.style.backgroundImage = `url('../../../assets/images/homepage/elfs.png')`
+    }
   }
 
   private setBackgrondImage() {
@@ -40,6 +55,7 @@ export class GamePage {
   }
 
   runPage() {
+    this.setFracImg()
     this.setClosePageEvent()
 
     this.setBackgrondImage()

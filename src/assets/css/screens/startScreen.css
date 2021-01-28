@@ -131,6 +131,7 @@
 
 .start__screen__button,
 .start__screen__button--list > span {
+  font-family: 'Shadows Into Light Two', cursive;
   width: 50%;
   height: 70px;
   font-size: 2.4em;
