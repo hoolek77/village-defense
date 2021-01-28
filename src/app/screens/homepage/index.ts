@@ -1,20 +1,65 @@
-import { GamePage } from '../gamepage'
-import {InfoContentProvider} from '../../components'
+import { App } from '../../app'
+import { Fractions } from '../../models'
+import {
+  capitalizeFirstLetter,
+  enumKeys,
+  getCSSProperty,
+  getFractionForName,
+  setCSSProperty,
+} from '../../utils'
+import { InfoContentProvider } from '../../components'
 
 export class HomePage {
-  settingButton: HTMLElement
-  infoButton: HTMLElement
-  startButton: HTMLElement
-  characterButton: HTMLInputElement
-  startScreen: HTMLElement
-  startScreenBackground: HTMLElement
-  gameScreen: HTMLElement
-  startScreenLogo: HTMLElement
-  characterButtonOptions: NodeListOf<HTMLInputElement>
-  startScreenLogoBackground: HTMLElement
-  theme: string
+  private app: App
 
-  constructor() {
+  private settingButton!: HTMLElement
+  private infoButton!: HTMLElement
+  private startButton!: HTMLElement
+  private characterButton!: HTMLInputElement
+  private startScreen!: HTMLElement
+  private startScreenBackground!: HTMLElement
+  private startScreenLogo!: HTMLElement
+  private characterButtonOptions!: NodeListOf<HTMLInputElement>
+  private startScreenLogoBackground!: HTMLElement
+
+  constructor(app: App) {
+    this.app = app
+  }
+
+  show(appContainer: HTMLElement, startHidden: boolean) {
+    const template = <HTMLTemplateElement>(
+      document.querySelector('#start-screen-template')
+    )
+    const pageScreen = template?.content.firstElementChild?.cloneNode(true)
+
+    if (pageScreen) {
+      appContainer.appendChild(pageScreen)
+
+      this.bindUIElements()
+      this.bindEvents()
+
+      if (startHidden) {
+        this.updateTheme()
+
+        this.startScreen.classList.add('start__screen--hidden')
+        this.startScreen.classList.add('start__screen--opened')
+
+        setTimeout(() => {
+          this.startScreen.classList.remove('start__screen--hidden')
+          this.startScreen.classList.remove('start__screen--opened')
+        }, 500)
+      }
+    }
+  }
+
+  close(appContainer: HTMLElement) {
+    this.startScreen.classList.add('start__screen--closed')
+    setTimeout(() => {
+      appContainer.removeChild(this.startScreen)
+    }, 500)
+  }
+
+  private bindUIElements() {
     this.settingButton = <HTMLElement>document.querySelector('#settings-button')
     this.infoButton = <HTMLElement>document.querySelector('#info-button')
     this.startButton = <HTMLElement>document.querySelector('#start-game-button')
@@ -25,7 +70,6 @@ export class HomePage {
     this.startScreenBackground = <HTMLElement>(
       document.querySelector('.start__screen--background')
     )
-    this.gameScreen = <HTMLElement>document.querySelector('.game__screen')
     this.startScreenLogo = <HTMLElement>(
       document.querySelector('.start__screen__logo')
     )
@@ -35,14 +79,14 @@ export class HomePage {
     this.startScreenLogoBackground = <HTMLElement>(
       document.querySelector('.start__screen__logo--background')
     )
-    this.theme = 'elfs'
   }
+
   private removeClasses() {
-    const categories = ['elfs', 'dwarfs', 'people']
-    for (let category of categories) {
-      this.startScreenLogo.classList.remove(`start__screen__logo--${category}`)
-      this.startScreenLogoBackground.classList.remove(`${category}__background`)
-      this.startScreenBackground.classList.remove(`start_screen--${category}`)
+    for (const fractionKey of enumKeys(Fractions)) {
+      const fraction = Fractions[fractionKey]
+      this.startScreenLogo.classList.remove(`start__screen__logo--${fraction}`)
+      this.startScreenLogoBackground.classList.remove(`${fraction}__background`)
+      this.startScreenBackground.classList.remove(`start_screen--${fraction}`)
     }
     this.characterButtonOptions.forEach((e) => {
       e.classList.remove('start__screen__button--option--selected')
@@ -53,12 +97,14 @@ export class HomePage {
     const buttonText: HTMLElement = <HTMLElement>(
       this.characterButton.children[0]
     )
-    buttonText.innerText =
-      this.theme.charAt(0).toLocaleUpperCase() + this.theme.slice(1)
+
+    buttonText.innerText = capitalizeFirstLetter(this.app.gameSettings.fraction)
   }
 
-  private changeTheme(theme: string) {
-    this.theme = theme
+  private onFractionDidChange(fractionName: string) {
+    this.app.gameSettings.fraction = getFractionForName(fractionName)
+    this.updateTheme()
+
     this.startScreen.style.background = getComputedStyle(
       this.startScreenBackground
     ).background
@@ -67,22 +113,34 @@ export class HomePage {
     this.changeBackground()
   }
 
+  private updateTheme() {
+    const fraction = this.app.gameSettings.fraction
+    setCSSProperty('--primary-color', getCSSProperty(`--${fraction}-color`))
+
+    setCSSProperty(
+      '--primary-dark-color',
+      getCSSProperty(`--${fraction}-dark-color`)
+    )
+  }
+
   private changeLogo() {
-    this.startScreenLogo.classList.add(`start__screen__logo--${this.theme}`)
-    this.startScreenLogoBackground.classList.add(`${this.theme}__background`)
+    const fraction = this.app.gameSettings.fraction
+    this.startScreenLogo.classList.add(`start__screen__logo--${fraction}`)
+    this.startScreenLogoBackground.classList.add(`${fraction}__background`)
   }
 
   private changeBackground() {
+    const fraction = this.app.gameSettings.fraction
     this.startScreenBackground.style.display = 'none'
     setTimeout(() => (this.startScreenBackground.style.display = 'block'), 100)
-    this.startScreenBackground.classList.add(`start_screen--${this.theme}`)
+    this.startScreenBackground.classList.add(`start_screen--${fraction}`)
   }
 
   private handleFracChange(): void {
     this.characterButtonOptions.forEach((element) => {
       element.addEventListener('click', () => {
         const value = element.value
-        this.changeTheme(value)
+        this.onFractionDidChange(value)
         this.changeButtonTextContent()
         this.triggerOptionButton(element)
       })
@@ -91,15 +149,7 @@ export class HomePage {
 
   private triggerStartButton(): void {
     this.startButton.addEventListener('click', () => {
-      this.startScreen.classList.add('start__screen--opened')
-      this.startScreen.classList.remove('start__screen--closed')
-
-      const gamepage = new GamePage(this.theme)
-      gamepage.runPage()
-
-      setTimeout(() => {
-        this.gameScreen.style.zIndex = '0'
-      }, 500)
+      this.app.showSplashPage()
     })
   }
 
@@ -115,7 +165,7 @@ export class HomePage {
     this.infoButton.addEventListener('click', () => {})
   }
 
-  runPage() {
+  private bindEvents() {
     this.handleFracChange()
     this.triggerInfoButton()
     this.triggerStartButton()

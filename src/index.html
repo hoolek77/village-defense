@@ -9,178 +9,202 @@
     <audio autoplay loop>
       <source src="assets/audio/music.mp3" type="audio/mpeg" />
     </audio>
-    <section class="start__screen">
-      <div class="start__screen--background"></div>
-      <h1 class="start__screen--exclamation">Defend Your Village!</h1>
-      <div class="start__screen__logoContainer">
-        <div class="start__screen__logo--background">
-          <div class="start__screen__logo"></div>
-        </div>
-      </div>
-      <div class="start__screen__actions">
-        <button class="start__screen__button" id="start-game-button">
-          Start
-        </button>
 
-        <div
-          class="start__screen__button start__screen__button--list"
-          id="character-dropdown"
-        >
-          <span>Elfs</span>
-          <div class="start__screen__option__wrapper">
-            <button
-              class="start__screen__button start__screen__button--option start__screen__button--option--selected"
-              value="elfs"
-            >
-              Elfs
-            </button>
-            <button
-              class="start__screen__button start__screen__button--option"
-              value="people"
-            >
-              People
-            </button>
-            <button
-              class="start__screen__button start__screen__button--option"
-              value="dwarfs"
-            >
-              Dwarfs
-            </button>
-          </div>
-        </div>
-        <button class="start__screen__button" id="settings-button">
-          Settings
-        </button>
-        <button class="start__screen__button" id="info-button">Info</button>
-      </div>
-    </section>
+    <main id="app"></main>
 
-    <section class="game__screen">
-      <div class="middle-box"></div>
-      <div class="left-box">
-        <div class="buildings__container">
-          <h1 class="builidings__hedaing-main">Buildings:</h1>
-          <div class="building townhall">
-            <h2 class="building__heading">
-              Town Hall |
-              <span class="building__level">Lvl: 1</span>
-              <span class="building__icon"><i class="fas fa-plus-circle"></i></span>
-            </h2>
-            <div class="building__hover">
-              <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+    <!-- Start screen -->
+    <template id="start-screen-template">
+      <section class="start__screen">
+        <div class="start__screen--background"></div>
+        <h1 class="start__screen--exclamation">Defend Your Village!</h1>
+        <div class="start__screen__logoContainer">
+          <div class="start__screen__logo--background">
+            <div class="start__screen__logo"></div>
+          </div>
+        </div>
+        <div class="start__screen__actions">
+          <button class="start__screen__button" id="start-game-button">
+            Start
+          </button>
+
+          <div
+            class="start__screen__button start__screen__button--list"
+            id="character-dropdown"
+          >
+            <span>Elves</span>
+            <div class="start__screen__option__wrapper">
+              <button
+                class="start__screen__button start__screen__button--option start__screen__button--option--selected"
+                value="elves"
+              >
+                Elves
+              </button>
+              <button
+                class="start__screen__button start__screen__button--option"
+                value="humans"
+              >
+                Humans
+              </button>
+              <button
+                class="start__screen__button start__screen__button--option"
+                value="dwarves"
+              >
+                Dwarves
+              </button>
             </div>
           </div>
-          <div class="building barracks">
-            <h2 class="building__heading">
-              Barracks |
-              <span class="building__level">Lvl: 1</span>
-              <span class="building__icon"><i class="fas fa-plus-circle"></i></span>
-            </h2>
-            <div class="building__hover">
-              <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+          <button class="start__screen__button" id="settings-button">
+            Settings
+          </button>
+          <button class="start__screen__button" id="info-button">Info</button>
+        </div>
+      </section>
+    </template>
+
+    <!-- Game Screen -->
+    <template id="game-screen-template">
+      <section class="game__screen">
+        <div class="middle-box"></div>
+        <div class="left-box">
+          <div class="buildings__container">
+            <h1 class="builidings__hedaing-main">Buildings:</h1>
+            <div class="building townhall">
+              <h2 class="building__heading">
+                Town Hall |
+                <span class="building__level">Lvl: 1</span>
+                <span class="building__icon"><i class="fas fa-plus-circle"></i></span>
+              </h2>
+              <div class="building__hover">
+                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              </div>
             </div>
-          </div>
-          <div class="building warehouse">
-            <h2 class="building__heading">
-              Warehouse |
-              <span class="building__level">Lvl: 1</span>
-              <span class="building__icon"><i class="fas fa-plus-circle"></i>
-            </h2>
-            <div class="building__hover">
-              <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+            <div class="building barracks">
+              <h2 class="building__heading">
+                Barracks |
+                <span class="building__level">Lvl: 1</span>
+                <span class="building__icon"><i class="fas fa-plus-circle"></i></span>
+              </h2>
+              <div class="building__hover">
+                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              </div>
             </div>
-          </div>
-          <div class="building home">
-            <h2 class="building__heading">
-              Home |
-              <span class="building__level">Lvl: 1</span>
-              <span class="building__icon"><i class="fas fa-plus-circle"></i>
-            </h2>
-            <div class="building__hover">
-              <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+            <div class="building warehouse">
+              <h2 class="building__heading">
+                Warehouse |
+                <span class="building__level">Lvl: 1</span>
+                <span class="building__icon"><i class="fas fa-plus-circle"></i>
+              </h2>
+              <div class="building__hover">
+                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              </div>
             </div>
-          </div>
-          <div class="building wall">
-            <h2 class="building__heading">
-              Wall |
-              <span class="building__level">Lvl: 1</span>
-              <span class="building__icon"><i class="fas fa-plus-circle"></i>
-            </h2>
-            <div class="building__hover">
-              <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+            <div class="building home">
+              <h2 class="building__heading">
+                Home |
+                <span class="building__level">Lvl: 1</span>
+                <span class="building__icon"><i class="fas fa-plus-circle"></i>
+              </h2>
+              <div class="building__hover">
+                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              </div>
             </div>
-          </div>
-          <div class="building goldmine">
-            <h2 class="building__heading">
-              Gold Mine |
-              <span class="building__level">Lvl: 1</span>
-              <span class="building__icon"><i class="fas fa-plus-circle"></i>
-            </h2>
-            <div class="building__hover">
-              <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+            <div class="building wall">
+              <h2 class="building__heading">
+                Wall |
+                <span class="building__level">Lvl: 1</span>
+                <span class="building__icon"><i class="fas fa-plus-circle"></i>
+              </h2>
+              <div class="building__hover">
+                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              </div>
             </div>
-          </div>
-          <div class="building quarry">
-            <h2 class="building__heading">
-              Quarry |
-              <span class="building__level">Lvl: 1</span>
-              <span class="building__icon"><i class="fas fa-plus-circle"></i>
-            </h2>
-            <div class="building__hover">
-              <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+            <div class="building goldmine">
+              <h2 class="building__heading">
+                Gold Mine |
+                <span class="building__level">Lvl: 1</span>
+                <span class="building__icon"><i class="fas fa-plus-circle"></i>
+              </h2>
+              <div class="building__hover">
+                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              </div>
             </div>
-          </div>
-          <div class="building sawmill">
-            <h2 class="building__heading">
-              Sawmill |
-              <span class="building__level">Lvl: 1</span>
-              <span class="building__icon"><i class="fas fa-plus-circle"></i>
-            </h2>
-            <div class="building__hover">
-              <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+            <div class="building quarry">
+              <h2 class="building__heading">
+                Quarry |
+                <span class="building__level">Lvl: 1</span>
+                <span class="building__icon"><i class="fas fa-plus-circle"></i>
+              </h2>
+              <div class="building__hover">
+                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              </div>
+            </div>
+            <div class="building sawmill">
+              <h2 class="building__heading">
+                Sawmill |
+                <span class="building__level">Lvl: 1</span>
+                <span class="building__icon"><i class="fas fa-plus-circle"></i>
+              </h2>
+              <div class="building__hover">
+                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="right-box">
-        <div class="units__container">
-          <div class="units__image"></div>
-          <div class="units__quantity">100 <i class="fas fa-chess-knight"></i></div>
+        <div class="right-box">
+          <div class="units__container">
+            <div class="units__image"></div>
+            <div class="units__quantity">100 <i class="fas fa-chess-knight"></i></div>
+          </div>
         </div>
-      </div>
-      <div class="top-box"></div>
-      <div class="left-box"></div>
-      <div class="right-box"></div>
-      <div class="top-box">
-        <div class="resource__itemContainer resource__itemContainer--wood">
-          <img
-            class="resource__itemContainer__img"
-            src="./assets/images/resources/wood.png"
-            alt="Wood"
-          />
-          <p>Wood: <span id="woodAmmount">100</span></p>
+        <div class="top-box"></div>
+        <div class="left-box"></div>
+        <div class="right-box"></div>
+        <div class="top-box">
+          <div class="resource__itemContainer resource__itemContainer--wood">
+            <img
+              class="resource__itemContainer__img"
+              src="./assets/images/resources/wood.png"
+              alt="Wood"
+            />
+            <p>Wood: <span id="woodAmmount">100</span></p>
+          </div>
+          <div class="resource__itemContainer resource__itemContainer--stone">
+            <img
+              class="resource__itemContainer__img"
+              src="./assets/images/resources/stone.png"
+              alt="Wood"
+            />
+            <p>Stone: <span id="stoneAmmount">325</span></p>
+          </div>
+          <div class="resource__itemContainer resource__itemContainer--gold">
+            <img
+              class="resource__itemContainer__img"
+              src="./assets/images/resources/gold.png"
+              alt="Wood"
+            />
+            <p>Gold: <span id="goldAmmount">10</span></p>
+          </div>
         </div>
-        <div class="resource__itemContainer resource__itemContainer--stone">
-          <img
-            class="resource__itemContainer__img"
-            src="./assets/images/resources/stone.png"
-            alt="Wood"
-          />
-          <p>Stone: <span id="stoneAmmount">325</span></p>
+        <div class="bottom-box"></div>
+        <button class="quit__game__button" id="quit-game-button">
+          Go to main screen
+        </button>
+      </section>
+    </template>
+
+    <!-- Splash Screen  -->
+    <template id="splash-screen-template">
+      <section class="splash__screen">
+        <h2>Loading game...</h2>
+        <div class="splash__loading">
+          <div class="splash__loading-frame"></div>
+          <div class="splash__loading-bar">
+            <div class="splash__loading-percent-container">
+              <span class="splash__loading-percent">0 %</span>
+            </div>
+          </div>
         </div>
-        <div class="resource__itemContainer resource__itemContainer--gold">
-          <img
-            class="resource__itemContainer__img"
-            src="./assets/images/resources/gold.png"
-            alt="Wood"
-          />
-          <p>Gold: <span id="goldAmmount">10</span></p>
-        </div>
-      </div>
-      <div class="bottom-box"></div>
-      <button class="quit__game__button" id="quit-game-button">
-        Go to main screen
-      </button>
-    </section>
+      </section>
+    </template>
   </body>
 </html>

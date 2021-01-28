@@ -1,66 +1,82 @@
+import { App } from '../../app'
 import { Game } from '../../game'
+import { Fractions } from '../../models'
 export class GamePage {
-  private game!: Game
+  private app: App
+  private game: Game
 
-  quitButton: HTMLButtonElement
-  startScreen: HTMLElement
-  gameScreen: HTMLElement
-  middleBox: HTMLDivElement
-  unitsImg: HTMLDivElement
-  theme: string
+  private quitButton!: HTMLButtonElement
+  private gameScreen!: HTMLElement
+  private middleBox!: HTMLDivElement
+  private unitsImg!: HTMLDivElement
 
-  constructor(theme: string) {
+  constructor(app: App, game: Game) {
+    this.app = app
+    this.game = game
+  }
+
+  show(appContainer: HTMLElement) {
+    const template = <HTMLTemplateElement>(
+      document.querySelector('#game-screen-template')
+    )
+    const pageScreen = template?.content.firstElementChild?.cloneNode(true)
+
+    if (pageScreen) {
+      appContainer.appendChild(pageScreen)
+
+      this.bindUIElements()
+      this.bindEvents()
+      this.setupUI()
+
+      setTimeout(() => {
+        this.gameScreen.classList.add('game__screen--opened')
+        this.startGame()
+      }, 500)
+    }
+  }
+
+  close(appContainer: HTMLElement) {
+    setTimeout(() => {
+      appContainer.removeChild(this.gameScreen)
+    }, 500)
+  }
+
+  private bindUIElements() {
     this.quitButton = document.querySelector(
       '.quit__game__button'
     ) as HTMLButtonElement
-    this.startScreen = document.querySelector('.start__screen') as HTMLElement
     this.gameScreen = document.querySelector('.game__screen') as HTMLElement
     this.middleBox = document.querySelector('.middle-box') as HTMLDivElement
     this.unitsImg = document.querySelector('.units__image') as HTMLDivElement
-    this.theme = theme
   }
 
-  private setFracImg() {
-    switch (this.theme) {
-      case 'people':
-        this.unitsImg.style.backgroundImage = `url('../../../assets/images/homepage/people.png')`
-        break
-      case 'dwarfs':
-        this.unitsImg.style.backgroundImage = `url('../../../assets/images/homepage/dwarfs.png')`
-        break
-      case 'elfs':
-        this.unitsImg.style.backgroundImage = `url('../../../assets/images/homepage/elfs.png')`
-    }
+  private bindEvents() {
+    this.setClosePageEvent()
+  }
+
+  private setupUI() {
+    this.setBackgrondImage()
+    this.setUnitsFractionImage()
+  }
+
+  private setUnitsFractionImage() {
+    const fraction = this.app.gameSettings.fraction
+    this.unitsImg.style.backgroundImage = `url('../../../assets/images/homepage/${fraction}.png')`
   }
 
   private setBackgrondImage() {
-    switch (this.theme) {
-      case 'people':
-        this.middleBox.style.backgroundImage = `url('../../../assets/images/villageImages/people-bg.jpg')`
-        break
-      case 'dwarfs':
-        this.middleBox.style.backgroundImage = `url('../../../assets/images/villageImages/dwarf-bg.jpg')`
-        break
-      case 'elfs':
-        this.middleBox.style.backgroundImage = `url('../../../assets/images/villageImages/elf-bg.jpg')`
-    }
+    this.gameScreen.style.backgroundImage = `url('../../../assets/images/villageImages/${this.app.gameSettings.fraction}-bg.jpg')`
   }
 
   private setClosePageEvent() {
     this.quitButton.addEventListener('click', () => {
-      this.startScreen.classList.remove('start__screen--opened')
-      this.startScreen.classList.add('start__screen--closed')
-      this.gameScreen.style.zIndex = '-1'
+      this.app.resetGame()
+      this.app.showHomePage(true)
+      this.game.stop()
     })
   }
 
-  runPage() {
-    this.setFracImg()
-    this.setClosePageEvent()
-
-    this.setBackgrondImage()
-
-    this.game = new Game()
-    //this.game.start()
+  private startGame() {
+    this.game.start()
   }
 }

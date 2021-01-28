@@ -11,9 +11,10 @@
   background: radial-gradient(
     circle,
     rgba(255, 255, 255, 1) 0%,
-    rgba(16, 184, 60, 1) 52%,
+    var(--primary-color) 52%,
     rgba(0, 0, 0, 1) 100%
   );
+  z-index: 1;
 }
 .start__screen--background {
   position: absolute;
@@ -21,39 +22,33 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(16, 184, 60, 1) 52%,
-    rgba(0, 0, 0, 1) 100%
-  );
   z-index: 0;
   animation: fadeIn 1s;
 }
 
-.start_screen--elfs {
+.start_screen--elves {
   background: radial-gradient(
     circle,
     rgba(255, 255, 255, 1) 0%,
-    rgba(16, 184, 60, 1) 52%,
+    var(--elves-color) 52%,
     rgba(0, 0, 0, 1) 100%
   );
   animation: fadeIn 1s;
 }
-.start_screen--dwarfs {
+.start_screen--dwarves {
   background: radial-gradient(
     circle,
     rgba(255, 255, 255, 1) 0%,
-    rgb(16, 108, 184) 52%,
+    var(--dwarves-color) 52%,
     rgba(0, 0, 0, 1) 100%
   );
   animation: fadeIn 1s;
 }
-.start_screen--people {
+.start_screen--humans {
   background: radial-gradient(
     circle,
     rgba(255, 255, 255, 1) 0%,
-    rgb(184, 125, 16) 52%,
+    var(--humans-color) 52%,
     rgba(0, 0, 0, 1) 100%
   );
   animation: fadeIn 1s;
@@ -83,7 +78,7 @@
 }
 
 .start__screen__logo {
-  background-image: url('/src/assets/images/homepage/elfs.png');
+  background-image: url('/src/assets/images/homepage/elves.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 50%;
@@ -97,23 +92,23 @@
   width: 50%;
   height: 70vh;
   position: relative;
-  background: url('/src/assets/images/homepage/elfs_background.jpg');
+  background: url('/src/assets/images/homepage/elves_background.jpg');
   background-position: 30%;
   z-index: 0;
   border-radius: 5px;
   box-shadow: 0 5px 25px 3px rgb(0, 0, 0);
 }
-.elfs__background {
-  background: url('/src/assets/images/homepage/elfs_background.jpg');
+.elves__background {
+  background: url('/src/assets/images/homepage/elves_background.jpg');
   background-position: 30%;
 }
-.dwarfs__background {
-  background: url('/src/assets/images/homepage/dwarf_background.jpg');
+.dwarves__background {
+  background: url('/src/assets/images/homepage/dwarves_background.jpg');
   background-size: cover;
   background-position: 70% 100%;
 }
-.people__background {
-  background: url('/src/assets/images/homepage/people_background.jpg');
+.humans__background {
+  background: url('/src/assets/images/homepage/humans_background.jpg');
   background-position: 50% 100%;
 }
 
@@ -184,7 +179,7 @@
 }
 
 .start__screen__button:hover {
-  border-bottom: 10px solid rgb(26, 136, 35);
+  border-bottom: 10px solid var(--primary-dark-color);
 }
 
 .start__screen__button--option {
@@ -199,7 +194,7 @@
 
 .start__screen__button--list:hover,
 .start__screen__button--list:hover span {
-  background-color: rgb(26, 136, 35);
+  background-color: var(--primary-dark-color);
   border-bottom: 0px solid white;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -215,20 +210,24 @@ select:focus > option:hover {
   background: #000 !important;
 }
 
-.start__screen--opened {
+.start__screen--closed {
   animation: slideUp 0.5s ease-in forwards;
 }
 
-.start__screen--closed {
+.start__screen--hidden {
+  transform: translateY(-100%);
+}
+
+.start__screen--opened {
   animation: slideDown 0.5s ease-in forwards;
 }
 
-.start__screen__logo--elfs {
-  background-image: url('/src/assets/images/homepage/elfs.png');
+.start__screen__logo--elves {
+  background-image: url('/src/assets/images/homepage/elves.png');
 }
-.start__screen__logo--dwarfs {
-  background-image: url('/src/assets/images/homepage/dwarfs.png');
+.start__screen__logo--dwarves {
+  background-image: url('/src/assets/images/homepage/dwarves.png');
 }
-.start__screen__logo--people {
-  background-image: url('/src/assets/images/homepage/people.png');
+.start__screen__logo--humans {
+  background-image: url('/src/assets/images/homepage/humans.png');
 }
