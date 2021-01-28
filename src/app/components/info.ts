@@ -1,5 +1,5 @@
 import { renderPopup } from './popup'
-import { createElement } from '../../utils'
+import { createElement } from '../utils'
 
 export class InfoContentProvider {
   constructor() {
