@@ -2,12 +2,14 @@ import { App } from '../../app'
 import { Fractions } from '../../models'
 import {
   capitalizeFirstLetter,
+  createElement,
   enumKeys,
   getCSSProperty,
   getFractionForName,
   setCSSProperty,
 } from '../../utils'
 import { InfoContentProvider } from '../../components'
+import { GameSettingsView } from '../../components/gameSettingsView'
 
 export class HomePage {
   private app: App
@@ -171,5 +173,6 @@ export class HomePage {
     this.triggerStartButton()
     this.triggerSettingsButton()
     new InfoContentProvider()
+    new GameSettingsView(this.app)
   }
 }
