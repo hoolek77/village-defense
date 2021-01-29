@@ -64,131 +64,190 @@
     <!-- Game Screen -->
     <template id="game-screen-template">
       <section class="game__screen">
-        <div class="middle-box"></div>
-        <div class="left-box">
-          <div class="buildings__container">
-            <h1 class="builidings__hedaing-main">Buildings:</h1>
+        <div class="exit-area">
+          <button class="quit-button">Quit</button>
+        </div>
+        <div class="main-area"></div>
+        <div class="buildings-box">
+          <div class="buildings">
+            <h2 class="builidings__hedaing">Buildings</h2>
+
             <div class="building townhall">
-              <h2 class="building__heading">
-                Town Hall |
-                <span class="building__level">Lvl: 1</span>
-                <span class="building__icon"><i class="fas fa-plus-circle"></i></span>
-              </h2>
-              <div class="building__hover">
-                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              <h3 class="building__heading">Town Hall</h3>
+              <p class="building__level">Level: 1</p>
+              <button class="building__upgrade-button">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+              <div class="building__details">
+                <h3>Town Hall</h3>
+                <p>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Distinctio at fugit adipisci in asperiores natus et, vero fuga
+                  aliquid quaerat assumenda laudantium hic nemo nisi placeat cum
+                  nam! Quidem, ipsa.
+                </p>
+                <p class="building__price">100<i class="fas fa-coins"></i></p>
               </div>
             </div>
             <div class="building barracks">
-              <h2 class="building__heading">
-                Barracks |
-                <span class="building__level">Lvl: 1</span>
-                <span class="building__icon"><i class="fas fa-plus-circle"></i></span>
-              </h2>
-              <div class="building__hover">
+              <h3 class="building__heading">Barracks</h3>
+              <p class="building__level">Level: 1</p>
+              <button class="building__upgrade-button">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+              <!-- <div class="building__hover">
                 <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              </div> -->
+              <div class="building__details">
+                <h3>Barracks</h3>
+                <p>Barracks help to create units faster.</p>
+                <p class="building__price">100<i class="fas fa-coins"></i></p>
               </div>
             </div>
             <div class="building warehouse">
-              <h2 class="building__heading">
-                Warehouse |
-                <span class="building__level">Lvl: 1</span>
-                <span class="building__icon"><i class="fas fa-plus-circle"></i>
-              </h2>
-              <div class="building__hover">
-                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              <h3 class="building__heading">Warehouse</h3>
+              <p class="building__level">Level: 1</p>
+              <button class="building__upgrade-button">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+              <div class="building__details">
+                <h3>Warehouse</h3>
+                <p>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Distinctio at fugit adipisci in asperiores natus et, vero fuga
+                  aliquid quaerat assumenda laudantium hic nemo nisi placeat cum
+                  nam! Quidem, ipsa.
+                </p>
+                <p class="building__price">100<i class="fas fa-coins"></i></p>
               </div>
             </div>
             <div class="building home">
-              <h2 class="building__heading">
-                Home |
-                <span class="building__level">Lvl: 1</span>
-                <span class="building__icon"><i class="fas fa-plus-circle"></i>
-              </h2>
-              <div class="building__hover">
-                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              <h3 class="building__heading">Home</h3>
+              <p class="building__level">Level: 1</p>
+              <button class="building__upgrade-button">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+              <div class="building__details">
+                <h3>Home</h3>
+                <p>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Distinctio at fugit adipisci in asperiores natus et, vero fuga
+                  aliquid quaerat assumenda laudantium hic nemo nisi placeat cum
+                  nam! Quidem, ipsa.
+                </p>
+                <p class="building__price">100<i class="fas fa-coins"></i></p>
               </div>
             </div>
             <div class="building wall">
-              <h2 class="building__heading">
-                Wall |
-                <span class="building__level">Lvl: 1</span>
-                <span class="building__icon"><i class="fas fa-plus-circle"></i>
-              </h2>
-              <div class="building__hover">
-                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              <h3 class="building__heading">Wall</h3>
+              <p class="building__level">Level: 1</p>
+              <button class="building__upgrade-button">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+              <div class="building__details">
+                <h3>Wall</h3>
+                <p>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Distinctio at fugit adipisci in asperiores natus et, vero fuga
+                  aliquid quaerat assumenda laudantium hic nemo nisi placeat cum
+                  nam! Quidem, ipsa.
+                </p>
+                <p class="building__price">100<i class="fas fa-coins"></i></p>
               </div>
             </div>
             <div class="building goldmine">
-              <h2 class="building__heading">
-                Gold Mine |
-                <span class="building__level">Lvl: 1</span>
-                <span class="building__icon"><i class="fas fa-plus-circle"></i>
-              </h2>
-              <div class="building__hover">
-                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              <h3 class="building__heading">Gold Mine</h3>
+              <p class="building__level">Level: 1</p>
+              <button class="building__upgrade-button">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+              <div class="building__details">
+                <h3>Gold Mine</h3>
+                <p>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Distinctio at fugit adipisci in asperiores natus et, vero fuga
+                  aliquid quaerat assumenda laudantium hic nemo nisi placeat cum
+                  nam! Quidem, ipsa.
+                </p>
+                <p class="building__price">100<i class="fas fa-coins"></i></p>
               </div>
             </div>
             <div class="building quarry">
-              <h2 class="building__heading">
-                Quarry |
-                <span class="building__level">Lvl: 1</span>
-                <span class="building__icon"><i class="fas fa-plus-circle"></i>
-              </h2>
-              <div class="building__hover">
-                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              <h3 class="building__heading">Quarry</h3>
+              <p class="building__level">Level: 1</p>
+              <button class="building__upgrade-button">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+              <div class="building__details">
+                <h3>Quarry</h3>
+                <p>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Distinctio at fugit adipisci in asperiores natus et, vero fuga
+                  aliquid quaerat assumenda laudantium hic nemo nisi placeat cum
+                  nam! Quidem, ipsa.
+                </p>
+                <p class="building__price">100<i class="fas fa-coins"></i></p>
               </div>
             </div>
             <div class="building sawmill">
-              <h2 class="building__heading">
-                Sawmill |
-                <span class="building__level">Lvl: 1</span>
-                <span class="building__icon"><i class="fas fa-plus-circle"></i>
-              </h2>
-              <div class="building__hover">
-                <h2 class="building__price">100<i class="fas fa-coins"></i></h2>
+              <h3 class="building__heading">Sawmill</h3>
+              <p class="building__level">Level: 1</p>
+              <button class="building__upgrade-button">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+              <div class="building__details">
+                <h3>Sawmill</h3>
+                <p>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Distinctio at fugit adipisci in asperiores natus et, vero fuga
+                  aliquid quaerat assumenda laudantium hic nemo nisi placeat cum
+                  nam! Quidem, ipsa.
+                </p>
+                <p class="building__price">100<i class="fas fa-coins"></i></p>
               </div>
             </div>
           </div>
         </div>
-        <div class="right-box">
-          <div class="units__container">
+
+        <div class="units-box">
+          <div class="units">
+            <div class="population">
+              <h2 class="population__heading">Population</h2>
+              <p class="population__info">
+                <span class="population__count">100</span>
+                <i class="fas fa-male"></i>
+              </p>
+            </div>
             <div class="units__image"></div>
-            <div class="units__quantity">100 <i class="fas fa-chess-knight"></i></div>
           </div>
         </div>
-        <div class="top-box"></div>
-        <div class="left-box"></div>
-        <div class="right-box"></div>
-        <div class="top-box">
-          <div class="resource__itemContainer resource__itemContainer--wood">
+        <div class="resources-box">
+          <div class="resource__item">
             <img
-              class="resource__itemContainer__img"
+              class="resource__image"
               src="./assets/images/resources/wood.png"
               alt="Wood"
             />
             <p>Wood: <span id="woodAmmount">100</span></p>
           </div>
-          <div class="resource__itemContainer resource__itemContainer--stone">
+          <div class="resource__item">
             <img
-              class="resource__itemContainer__img"
+              class="resource__image"
               src="./assets/images/resources/stone.png"
               alt="Wood"
             />
             <p>Stone: <span id="stoneAmmount">325</span></p>
           </div>
-          <div class="resource__itemContainer resource__itemContainer--gold">
+          <div class="resource__item">
             <img
-              class="resource__itemContainer__img"
+              class="resource__image"
               src="./assets/images/resources/gold.png"
               alt="Wood"
             />
             <p>Gold: <span id="goldAmmount">10</span></p>
           </div>
         </div>
-        <div class="bottom-box"></div>
-        <button class="quit__game__button" id="quit-game-button">
-          Go to main screen
-        </button>
+        <div class="info-box"></div>
       </section>
     </template>
 

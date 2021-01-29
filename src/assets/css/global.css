@@ -7,8 +7,20 @@
   --humans-dark-color: rgb(138, 96, 16);
   --dwarves-dark-color: rgb(14, 88, 148);
 
+  --elves-quit-button-background-color: rgb(26, 84, 31);
+  --humans-quit-button-background-color: rgb(138, 96, 16);
+  --dwarves-quit-button-background-color: rgb(14, 88, 148);
+
+  --elves-quit-button-hover-background-color: rgb(13, 63, 17);
+  --humans-quit-button-hover-background-color: rgb(113, 77, 10);
+  --dwarves-quit-button-hover-background-color: rgb(11, 71, 120);
+
   --primary-color: var(--elves-color);
   --primary-dark-color: var(--elves-dark-color);
+  --quit-button-background-color: var(--elves-quit-button-background-color);
+  --quit-button-hover-background-color: var(
+    --elves-quit-button-hover-background-color
+  );
 }
 
 html {

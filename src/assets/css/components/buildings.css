@@ -1,41 +1,46 @@
-.buildings__container {
+.buildings {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin: 0 auto;
-  height: 100%;
   justify-content: center;
-  align-items: center;
 }
 
-.builidings__hedaing-main {
-  font-size: 2rem;
-  text-align: center;
+.builidings__hedaing {
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 15px 5px rgb(0, 0, 0);
+  color: #fff;
+  font-size: 3rem;
+  margin-top: 0;
+  padding: 5px 10px;
 }
 
 .building {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.8);
   width: 90%;
   display: flex;
   flex-direction: column;
-  border: 1px solid #000;
   border-radius: 15px;
   align-items: center;
-  margin-top: 0.5rem;
-  padding-bottom: 1rem;
+  margin: 0.5rem;
   box-shadow: 1px 2px 1px 2px #ccc;
-  overflow: hidden;
+  /* overflow: hidden; */
+  position: relative;
 }
 
 .building__heading {
   cursor: pointer;
   font-size: 1.7rem;
+  margin: 10px 0 0;
 }
 
 .building__heading i {
   margin-left: 0.5rem;
   font-size: 1.4rem;
   cursor: pointer;
+}
+
+.building__level {
+  margin: 0;
 }
 
 .building__icon i {
@@ -62,4 +67,42 @@
 .building:hover > .building__hover {
   opacity: 1;
   height: 4rem;
+}
+
+.building__details {
+  background: var(--primary-color);
+  border-radius: 15px;
+  opacity: 0;
+  position: absolute;
+  padding: 20px;
+  right: -300px;
+  top: 0;
+  transform: scale(0);
+  transition: opacity 0.3s ease-in-out;
+  width: 300px;
+}
+
+.building__upgrade-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 3rem;
+  height: 0;
+  opacity: 0;
+  outline: none;
+  transition: opacity 0.4s ease-out, height 0.3s ease-out;
+}
+
+.building__upgrade-button:hover {
+  color: var(--primary-dark-color);
+}
+
+.building:hover > .building__upgrade-button {
+  height: 4rem;
+  opacity: 1;
+}
+
+.building:hover .building__details {
+  opacity: 1;
+  transform: scale(1) translateY(-50%);
 }
