@@ -11,8 +11,12 @@
   font-size: 4rem;
 }
 
+.volume__heading {
+  margin-top: 5rem;
+}
+
 .volume__input {
-  margin-top: 1rem;
+  margin-top: 4rem;
   -webkit-appearance: none;
   outline: none;
   border: none;
@@ -31,7 +35,7 @@
 }
 
 .difficulty__heading {
-  margin-top: 6rem;
+  margin-top: 10rem;
 }
 
 .difficulty__input {
