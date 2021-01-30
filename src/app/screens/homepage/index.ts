@@ -9,8 +9,7 @@ import {
   getFractionForName,
   setCSSProperty,
 } from '../../utils'
-import { InfoContentProvider } from '../../components'
-import { GameSettingsView } from '../../components/'
+import { InfoContentProvider, GameSettingsView } from '../../components'
 
 export class HomePage {
   private app: App
