@@ -2,15 +2,15 @@ import { Game } from '../../game'
 import { ResourceType } from '../types'
 import { Building } from './building'
 
+const WOOD_PRODUCTION = 10
 const GOLD = 1
 const WOOD = 1
 const STONE = 3
-const DEFAULT_TIME_TO_BUILD = 15 // TODO: change after testing
+const DEFAULT_TIME_TO_BUILD = 100
 const MAX_LEVEL = 3
-const DEFENSE = 10
 
-export class Wall extends Building {
-  readonly defense = DEFENSE
+export class Sawmill extends Building {
+  readonly woodProduction = WOOD_PRODUCTION
 
   constructor(game: Game) {
     super(
@@ -35,7 +35,7 @@ export class Wall extends Building {
   }
 
   getTitle() {
-    return 'Wall'
+    return 'Sawmill'
   }
 
   getDescription() {
@@ -43,6 +43,6 @@ export class Wall extends Building {
   }
 
   toString = (): string => {
-    return `Wall: [level = ${this.level}]`
+    return `Sawmill: [level = ${this.level}]`
   }
 }

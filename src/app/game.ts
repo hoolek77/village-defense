@@ -22,6 +22,10 @@ import {
   ResourceType,
   Resource,
   Fractions,
+  TownHall,
+  Barracks,
+  Quarry,
+  Sawmill,
 } from './models'
 
 import { randomBetween } from './utils'
@@ -55,6 +59,8 @@ export class Game {
 
   private intervalId?: number
 
+  private onGameUpdate?: () => void
+
   constructor(
     private fraction: Fractions = Fractions.Humans,
     private difficulty: Difficulty = Difficulty.Medium
@@ -64,9 +70,12 @@ export class Game {
     // const wall = new Wall(this)
     // setTimeout(() => wall.startBuilding(), 20000)
     // this.addBuilding(wall)
+    this.addBuildings()
   }
 
-  start() {
+  start(onGameUpdate: () => void) {
+    this.onGameUpdate = onGameUpdate
+
     this.intervalId = window.setInterval(() => this.update(), ONE_SECOND)
   }
 
@@ -74,11 +83,9 @@ export class Game {
     if (this.intervalId !== undefined) {
       window.clearInterval(this.intervalId!)
     }
-  }
 
-  addBuilding(building: Building) {
-    this.buildings.push(building)
-    building.startBuilding()
+    this.resetGame()
+    this.addBuildings()
   }
 
   addVillageUnit(unit: Unit) {
@@ -122,6 +129,71 @@ export class Game {
     }
   }
 
+  getBuildings() {
+    return this.buildings
+  }
+
+  getGoldAmount() {
+    return this.getResourceForType(ResourceType.Gold)?.count || 0
+  }
+
+  getWoodAmount() {
+    return this.getResourceForType(ResourceType.Wood)?.count || 0
+  }
+
+  getStoneAmount() {
+    return this.getResourceForType(ResourceType.Stone)?.count || 0
+  }
+
+  getPopulation() {
+    return this.population
+  }
+
+  getVillageDefence() {
+    return this.getUnitsDefence(this.villageUnits) + this.villageDefence
+  }
+
+  getNextAttack() {
+    return this.nextAttackCountdownInSeconds
+  }
+
+  getBuilding(title: string) {
+    return this.buildings.find((building) => building.getTitle() === title)
+  }
+
+  private resetGame() {
+    this.storageCapacity = DEFAULT_STORAGE_CAPACITY
+    this.villageDefence = 0
+
+    this.buildings = []
+    this.villageUnits = []
+
+    this.population = START_POPULATION
+
+    this.gameTimeInSeconds = 0
+    this.nextAttackCountdownInSeconds = this.calculateNextAttack()
+
+    this.changeGoldAmount(DEFAULT_GOLD)
+    this.changeWoodAmount(DEFAULT_WOOD)
+    this.changeStoneAmount(DEFAULT_STONE)
+  }
+
+  private addBuildings() {
+    this.addBuilding(new TownHall(this))
+    this.addBuilding(new Barracks(this))
+    this.addBuilding(new Warehouse(this))
+    this.addBuilding(new House(this))
+    this.addBuilding(new Wall(this))
+    this.addBuilding(new Goldmine(this))
+    this.addBuilding(new Quarry(this))
+    this.addBuilding(new Sawmill(this))
+  }
+
+  private addBuilding(building: Building) {
+    this.buildings.push(building)
+    // building.startBuilding()
+  }
+
   private getResourceForType(resourceType: ResourceType) {
     return this.resources.find((res) => res.type === resourceType)
   }
@@ -134,6 +206,29 @@ export class Game {
         villageResource.count -= res.count
       }
     })
+  }
+
+  private changeGoldAmount(goldAmount: number) {
+    const gold = this.getResourceForType(ResourceType.Gold)
+
+    if (gold) {
+      gold.count = goldAmount
+    }
+  }
+
+  private changeWoodAmount(woodAmount: number) {
+    const wood = this.getResourceForType(ResourceType.Wood)
+
+    if (wood) {
+      wood.count = woodAmount
+    }
+  }
+  private changeStoneAmount(stoneAmount: number) {
+    const stone = this.getResourceForType(ResourceType.Stone)
+
+    if (stone) {
+      stone.count = stoneAmount
+    }
   }
 
   private handleHouseWasBuilt(house: House) {
@@ -149,11 +244,7 @@ export class Game {
   }
 
   private handleGoldmineWasBuilt(goldmine: Goldmine) {
-    const gold = this.getResourceForType(ResourceType.Gold)
-
-    if (gold) {
-      gold.count += goldmine.goldProduction
-    }
+    this.changeGoldAmount(this.getGoldAmount() + goldmine.goldProduction)
   }
 
   private getWarehouse(): Warehouse | undefined {
@@ -180,12 +271,17 @@ export class Game {
     console.log('Updating game')
     console.log('game time', this.gameTimeInSeconds)
     console.log('next attak', this.nextAttackCountdownInSeconds)
-    this.gameTimeInSeconds++
-    this.nextAttackCountdownInSeconds--
 
     this.updateBuildings()
     this.renderBuildings()
     this.renderUnits()
+
+    if (this.onGameUpdate) {
+      this.onGameUpdate()
+    }
+
+    this.gameTimeInSeconds++
+    this.nextAttackCountdownInSeconds--
 
     if (this.nextAttackCountdownInSeconds <= 0) {
       this.nextAttackCountdownInSeconds = this.calculateNextAttack()
@@ -298,10 +394,6 @@ export class Game {
     return (villageDefence - enemiesAttack) / 10 > 0
   }
 
-  private getVillageDefence() {
-    return this.getUnitsDefence(this.villageUnits) + this.villageDefence
-  }
-
   private getUnitsDefence(units: Unit[]) {
     return units.reduce((defence, unit) => {
       return defence + unit.defence
@@ -319,9 +411,7 @@ export class Game {
       return capacity + unit.capacity
     }, 0)
   }
-  public getNextAttack() {
-    return this.nextAttackCountdownInSeconds
-  }
+
   private calculateNextAttack() {
     let interval = 0
 

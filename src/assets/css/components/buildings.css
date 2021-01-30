@@ -10,8 +10,19 @@
   box-shadow: 0px 2px 15px 5px rgb(0, 0, 0);
   color: #fff;
   font-size: 3rem;
-  margin-top: 0;
+  margin: 0 0 10px;
   padding: 5px 10px;
+}
+
+.buildings__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.buildings__list-item {
+  margin-bottom: 10px;
 }
 
 .building {
@@ -21,57 +32,25 @@
   flex-direction: column;
   border-radius: 15px;
   align-items: center;
-  margin: 0.5rem;
+  margin: 0.5rem auto;
   box-shadow: 1px 2px 1px 2px #ccc;
-  /* overflow: hidden; */
   position: relative;
 }
 
 .building__heading {
   cursor: pointer;
-  font-size: 1.7rem;
+  font-size: 2rem;
   margin: 10px 0 0;
-}
-
-.building__heading i {
-  margin-left: 0.5rem;
-  font-size: 1.4rem;
-  cursor: pointer;
 }
 
 .building__level {
   margin: 0;
 }
 
-.building__icon i {
-  color: grey;
-  transition: all 0.1s ease;
-}
-
-.building__icon i:active {
-  transform: scale(0.9);
-}
-
-.building__price i {
-  margin-left: 0.5rem;
-}
-
-.building__hover {
-  font-size: 1.4rem;
-  color: #daa520;
-  opacity: 0;
-  height: 0;
-  transition: opacity 0.4s ease-out, height 0.3s ease-out;
-}
-
-.building:hover > .building__hover {
-  opacity: 1;
-  height: 4rem;
-}
-
 .building__details {
   background: var(--primary-color);
   border-radius: 15px;
+  color: #fff;
   opacity: 0;
   position: absolute;
   padding: 20px;
@@ -82,6 +61,22 @@
   width: 300px;
 }
 
+.building__details-title {
+  margin-bottom: 2rem;
+}
+
+.building__details-description {
+  margin-bottom: 2rem;
+}
+
+.building__details-resources {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .building__upgrade-button {
   background: none;
   border: none;
@@ -90,7 +85,16 @@
   height: 0;
   opacity: 0;
   outline: none;
-  transition: opacity 0.4s ease-out, height 0.3s ease-out;
+  transition: opacity 0.4s ease-out, height 0.3s ease-out,
+    transform 0.3s ease-out;
+}
+
+.building__upgrade-button:active {
+  transform: scale(0.9);
+}
+
+.building__upgrade-button:focus {
+  outline: none;
 }
 
 .building__upgrade-button:hover {

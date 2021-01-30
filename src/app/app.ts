@@ -1,6 +1,6 @@
-import { playAudio } from './utils'
-import { GamePage, HomePage, SplashPage } from './screens'
+import { Audio } from './audio'
 import { Game } from './game'
+import { GamePage, HomePage, SplashPage } from './screens'
 import { GameSettings } from './gameSettings'
 import { Fractions } from './models'
 
@@ -12,14 +12,16 @@ export class App {
   private appMainContainer!: HTMLElement
 
   game!: Game
+  audio!: Audio
   gameSettings!: GameSettings
 
   start() {
-    playAudio(0.7)
-
     this.appMainContainer = <HTMLElement>document.querySelector('#app')
 
-    this.gameSettings = new GameSettings()
+    this.audio = new Audio()
+
+    this.gameSettings = new GameSettings(this.audio)
+
     this.game = new Game(
       this.gameSettings.fraction,
       this.gameSettings.difficulty
@@ -27,9 +29,7 @@ export class App {
 
     this.homePage = new HomePage(this)
 
-    // TODO: uncomment showHomePage and remove showGamePage when ready
-    // this.showHomePage(false)
-    this.showGamePage()
+    this.showHomePage(false)
   }
 
   showHomePage(startHidden: boolean) {

@@ -33,4 +33,16 @@ export class Goldmine extends Building {
       MAX_LEVEL
     )
   }
+
+  getTitle() {
+    return 'Gold Mine'
+  }
+
+  getDescription() {
+    return 'Esse officia eu Lorem excepteur aliqua non. Dolor quis nisi irure eiusmod et magna eiusmod mollit non qui ad laborum nulla.'
+  }
+
+  toString = (): string => {
+    return `Gold Mine: [level = ${this.level}]`
+  }
 }

@@ -5,13 +5,10 @@ import { Building } from './building'
 const GOLD = 1
 const WOOD = 1
 const STONE = 3
-const DEFAULT_TIME_TO_BUILD = 15 // TODO: change after testing
+const DEFAULT_TIME_TO_BUILD = 200
 const MAX_LEVEL = 3
-const DEFENSE = 10
 
-export class Wall extends Building {
-  readonly defense = DEFENSE
-
+export class Barracks extends Building {
   constructor(game: Game) {
     super(
       game,
@@ -35,14 +32,14 @@ export class Wall extends Building {
   }
 
   getTitle() {
-    return 'Wall'
+    return 'Barracks'
   }
 
   getDescription() {
-    return 'Esse officia eu Lorem excepteur aliqua non. Dolor quis nisi irure eiusmod et magna eiusmod mollit non qui ad laborum nulla.'
+    return 'It helps to create units faster.'
   }
 
   toString = (): string => {
-    return `Wall: [level = ${this.level}]`
+    return `Barracks: [level = ${this.level}]`
   }
 }
