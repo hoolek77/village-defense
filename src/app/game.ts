@@ -128,6 +128,8 @@ export class Game {
       this.handleWarehouseWasBuilt(building as Warehouse)
     } else if (building instanceof Goldmine) {
       this.handleGoldmineWasBuilt(building as Goldmine)
+    } else if (building instanceof TownHall) {
+      this.reduceTimeBuilding()
     }
   }
 
@@ -277,7 +279,7 @@ export class Game {
     console.log('Updating game')
     console.log('game time', this.gameTimeInSeconds)
     console.log('next attak', this.nextAttackCountdownInSeconds)
-    this.reduceTimeBuilding()
+    // this.reduceTimeBuilding()
     console.log(this.getBuildings()[0])
     console.log(this.getBuildings()[1])
     console.log(this.getBuildings())
