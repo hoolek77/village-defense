@@ -13,6 +13,7 @@ import { InfoContentProvider, GameSettingsView } from '../../components'
 
 export class HomePage {
   private app: App
+  private audio: Audio
 
   private settingButton!: HTMLElement
   private infoButton!: HTMLElement
@@ -26,6 +27,7 @@ export class HomePage {
 
   constructor(app: App) {
     this.app = app
+    this.audio = new Audio()
   }
 
   show(appContainer: HTMLElement, startHidden: boolean) {
@@ -184,6 +186,6 @@ export class HomePage {
     this.triggerStartButton()
     this.triggerSettingsButton()
     new InfoContentProvider()
-    new GameSettingsView(this.app, new Audio())
+    new GameSettingsView(this.app, this.audio)
   }
 }

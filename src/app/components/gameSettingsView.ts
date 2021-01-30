@@ -3,7 +3,6 @@ import { Audio } from '../audio'
 import { Difficulty } from '../models'
 import { renderPopup, removePopup } from './popup'
 import { createElement } from '../utils'
-import { playAudio } from '../utils'
 
 export class GameSettingsView {
   private app: App
@@ -111,7 +110,7 @@ export class GameSettingsView {
       '.popup__overlay'
     ) as HTMLDivElement
     popupOverlay.addEventListener('click', () => {
-      playAudio(this.currentVolume)
+      this.audio.audioSettings(this.currentVolume)
       this.app.gameSettings.difficulty = this.currentDifficulty
     })
   }
