@@ -9,7 +9,7 @@ import {
   setCSSProperty,
 } from '../../utils'
 import { InfoContentProvider } from '../../components'
-import { GameSettingsView } from '../../components/gameSettingsView'
+import { GameSettingsView } from '../../components/'
 
 export class HomePage {
   private app: App

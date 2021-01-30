@@ -1,27 +1,41 @@
 import { App } from '../app'
 import { Difficulty } from '../models'
-import { renderPopup } from './popup'
+import { renderPopup, removePopup } from './popup'
 import { createElement } from '../utils'
 import { playAudio } from '../utils'
 
 export class GameSettingsView {
   private app: App
   private settingsBtn: HTMLButtonElement
+  private currentVolume: number
+  private currentDifficulty: Difficulty
+  private audioElement: HTMLAudioElement
 
   constructor(app: App) {
     this.settingsBtn = document.querySelector(
       '#settings-button'
     ) as HTMLButtonElement
 
+    this.audioElement = document.querySelector('audio') as HTMLAudioElement
+    this.currentVolume = this.audioElement?.volume
+
     this.app = app
+
+    this.currentDifficulty = this.app.gameSettings.difficulty
 
     this.render()
   }
 
+  private removeDefaultBtn() {
+    const popupCloseBtn: HTMLDivElement = document.querySelector(
+      '.popup__close-btn'
+    ) as HTMLDivElement
+    popupCloseBtn.style.display = 'none'
+  }
+
   private getCurrentVolumeValue() {
-    const audio = document.querySelector('audio') as HTMLAudioElement
-    const volume = audio?.volume
-    const value = volume * 100
+    const value = this.audioElement?.volume * 100
+    this.currentVolume = this.audioElement.volume
     const volumeInput = document.querySelector('.volume__input')
     volumeInput?.setAttribute('value', `${value}`)
   }
@@ -47,6 +61,8 @@ export class GameSettingsView {
         difficultyHardInput.checked = true
         break
     }
+
+    this.currentDifficulty = this.app.gameSettings.difficulty
   }
 
   private addListeners(): void {
@@ -63,7 +79,6 @@ export class GameSettingsView {
     ) as HTMLInputElement
     difficultyEasyInput?.addEventListener('change', () => {
       this.app.gameSettings.difficulty = Difficulty.Easy
-      console.log(this.app.gameSettings.difficulty)
     })
 
     const difficultyMediumInput = document.querySelector(
@@ -71,7 +86,6 @@ export class GameSettingsView {
     ) as HTMLInputElement
     difficultyMediumInput?.addEventListener('change', () => {
       this.app.gameSettings.difficulty = Difficulty.Medium
-      console.log(this.app.gameSettings.difficulty)
     })
 
     const difficultyHardInput = document.querySelector(
@@ -79,7 +93,23 @@ export class GameSettingsView {
     ) as HTMLInputElement
     difficultyHardInput?.addEventListener('change', () => {
       this.app.gameSettings.difficulty = Difficulty.Hard
-      console.log(this.app.gameSettings.difficulty)
+    })
+
+    const popupCloseBtn = document.querySelector(
+      '.save__close-btn'
+    ) as HTMLDivElement
+    popupCloseBtn.addEventListener('click', () => {
+      const popup = document.querySelector('.popup') as HTMLDivElement
+      popup.classList.remove('popup--active')
+      removePopup()
+    })
+
+    const popupOverlay = document.querySelector(
+      '.popup__overlay'
+    ) as HTMLDivElement
+    popupOverlay.addEventListener('click', () => {
+      playAudio(this.currentVolume)
+      this.app.gameSettings.difficulty = this.currentDifficulty
     })
   }
 
@@ -210,6 +240,7 @@ export class GameSettingsView {
       this.addListeners()
       this.getCurrentVolumeValue()
       this.getCurrentGameDifficulty()
+      this.removeDefaultBtn()
     })
   }
 }
