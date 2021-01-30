@@ -1,14 +1,13 @@
 import { App } from '../../app'
 import { Game } from '../../game'
-import { Fractions } from '../../models'
 export class GamePage {
   private app: App
   private game: Game
 
   private quitButton!: HTMLButtonElement
   private gameScreen!: HTMLElement
-  private middleBox!: HTMLDivElement
   private unitsImg!: HTMLDivElement
+  private progressBar!: HTMLElement
 
   constructor(app: App, game: Game) {
     this.app = app
@@ -43,11 +42,11 @@ export class GamePage {
 
   private bindUIElements() {
     this.quitButton = document.querySelector(
-      '.quit__game__button'
+      '.quit-button'
     ) as HTMLButtonElement
     this.gameScreen = document.querySelector('.game__screen') as HTMLElement
-    this.middleBox = document.querySelector('.middle-box') as HTMLDivElement
     this.unitsImg = document.querySelector('.units__image') as HTMLDivElement
+    this.progressBar = document.querySelector(".progress-bar") as HTMLElement
   }
 
   private bindEvents() {
@@ -76,7 +75,17 @@ export class GamePage {
     })
   }
 
+  private handleProgressBarChange() {
+    setInterval(() => {
+      const timeToNextWave = this.game.getNextAttack();
+      const width = timeToNextWave * 100 / 30;
+      this.progressBar.style.width = `${width}%`;
+      
+    }, 1000)
+  }
+
   private startGame() {
     this.game.start()
+    this.handleProgressBarChange()
   }
 }

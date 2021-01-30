@@ -117,11 +117,22 @@ export class HomePage {
 
   private updateTheme() {
     const fraction = this.app.gameSettings.fraction
+
     setCSSProperty('--primary-color', getCSSProperty(`--${fraction}-color`))
 
     setCSSProperty(
       '--primary-dark-color',
       getCSSProperty(`--${fraction}-dark-color`)
+    )
+
+    setCSSProperty(
+      '--quit-button-background-color',
+      getCSSProperty(`--${fraction}-quit-button-background-color`)
+    )
+
+    setCSSProperty(
+      '--quit-button-hover-background-color',
+      getCSSProperty(`--${fraction}-quit-button-hover-background-color`)
     )
   }
 

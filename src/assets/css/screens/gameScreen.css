@@ -6,60 +6,89 @@
   height: 100vh;
   display: grid;
   grid-template-columns: 3fr 15fr 3fr;
-  grid-template-rows: 3fr 14fr 3fr;
-  gap: 0px 0px;
+  grid-template-rows: 100px auto 100px;
+  gap: 30px;
   grid-template-areas:
-    '. top-box .'
-    'left-box middle-box right-box'
-    '. bottom-box .';
-  padding: 20px;
+    'exit-area resources-box .'
+    'buildings-box main-area units-box'
+    '. info-box .';
+  padding: 30px;
   transition: transform 0.5s ease-in-out;
   transform: scale(0);
 }
 
-.middle-box {
-  grid-area: middle-box;
-  background-size: cover;
-  max-width: 100%;
-  height: 100%;
-  display: block;
+.exit-area {
+  display: flex;
+  grid-area: exit-area;
+  justify-content: center;
 }
 
-.left-box {
-  grid-area: left-box;
+.quit-button {
+  background-color: var(--quit-button-background-color);
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  font-size: 1.2em;
+  height: 40px;
+  width: 80%;
 }
-.right-box {
-  grid-area: right-box;
+
+.quit-button:hover {
+  background-color: var(--quit-button-hover-background-color);
 }
-.top-box {
-  grid-area: top-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.main-area {
+  grid-area: main-area;
 }
-.bottom-box {
-  grid-area: bottom-box;
+
+.buildings-box {
+  grid-area: buildings-box;
+}
+
+.units-box {
+  grid-area: units-box;
+}
+
+.info-box {
+  grid-area: info-box;
+  margin-top: 3em;
+}
+
+.progress {
+  box-shadow: 3px 6px 5px 6px #ccc;
 }
 
 .game__screen--opened {
   transform: scale(1);
 }
 
-.resource__itemContainer {
-  width: 33.33%;
-  height: 100%;
+.resources-box {
+  grid-area: resources-box;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.resource__item {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  font-size: 1.3em;
   justify-content: center;
-  font-size: 2em;
+  width: 150px;
 }
-.resource__itemContainer__img {
-  width: 100px;
+
+.resource__image {
+  width: 50px;
 }
-.resource__itemContainer p {
+
+.resource__item p {
   margin: 0;
 }
-.resource__itemContainer > p > span {
+
+.resource__item > p > span {
   font-weight: 700;
 }

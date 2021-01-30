@@ -1,23 +1,27 @@
-.units__container {
+.units {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 20px;
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.population__heading {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.population__info {
+  font-size: 2.8rem;
+  margin-top: 0;
+  text-align: center;
+}
+
 .units__image {
   width: 100%;
-  height: 60vh;
+  height: 400px;
   background-image: url('/src/assets/images/homepage/elves.png');
   background-size: contain;
   background-repeat: no-repeat;
-}
-
-.units__quantity {
-  bottom: 8rem;
-  font-size: 3rem;
 }
