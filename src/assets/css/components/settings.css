@@ -92,33 +92,3 @@
   border: 1px solid black;
   transition: 0.5s;
 }
-
-.save__close-btn:active {
-  transform: scale(0.9);
-}
-
-.save__close-btn:hover {
-  background-color: transparent;
-  color: #000;
-}
-.save__close-btn:hover:before {
-  transition-delay: 0.2s;
-}
-.save__close-btn:before {
-  width: 0%;
-  height: 100%;
-  z-index: 3;
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  box-sizing: border-box;
-  transition: 0.2s;
-}
-.save__close-btn:hover:before {
-  width: 100%;
-  transition: 0.7s;
-}
-.save__close-btn:before {
-  border-bottom: 3px solid #000;
-}

@@ -216,7 +216,7 @@ export class GameSettingsView {
 
     const saveAndCloseBtn = createElement({
       type: 'div',
-      classes: ['save__close-btn'],
+      classes: ['start__screen__button', 'save__close-btn'],
       content: 'Save and Close',
     })
 
