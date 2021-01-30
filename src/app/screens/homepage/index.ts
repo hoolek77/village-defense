@@ -1,4 +1,5 @@
 import { App } from '../../app'
+import { Audio } from '../../audio'
 import { Fractions } from '../../models'
 import {
   capitalizeFirstLetter,
@@ -184,6 +185,6 @@ export class HomePage {
     this.triggerStartButton()
     this.triggerSettingsButton()
     new InfoContentProvider()
-    new GameSettingsView(this.app)
+    new GameSettingsView(this.app, new Audio())
   }
 }

@@ -1,4 +1,5 @@
 import { App } from '../app'
+import { Audio } from '../audio'
 import { Difficulty } from '../models'
 import { renderPopup, removePopup } from './popup'
 import { createElement } from '../utils'
@@ -6,12 +7,13 @@ import { playAudio } from '../utils'
 
 export class GameSettingsView {
   private app: App
+  private audio: Audio
   private settingsBtn: HTMLButtonElement
   private currentVolume: number
   private currentDifficulty: Difficulty
   private audioElement: HTMLAudioElement
 
-  constructor(app: App) {
+  constructor(app: App, audio: Audio) {
     this.settingsBtn = document.querySelector(
       '#settings-button'
     ) as HTMLButtonElement
@@ -20,6 +22,7 @@ export class GameSettingsView {
     this.currentVolume = this.audioElement?.volume
 
     this.app = app
+    this.audio = audio
 
     this.currentDifficulty = this.app.gameSettings.difficulty
 
@@ -71,7 +74,7 @@ export class GameSettingsView {
     ) as HTMLInputElement
     volumeInput?.addEventListener('input', () => {
       const value = +volumeInput.value / 100
-      playAudio(value)
+      this.audio.audioSettings(value)
     })
 
     const difficultyEasyInput = document.querySelector(

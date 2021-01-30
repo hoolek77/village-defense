@@ -20,7 +20,7 @@ export class App {
 
     this.audio = new Audio()
 
-    this.gameSettings = new GameSettings(this.audio)
+    this.gameSettings = new GameSettings()
 
     this.game = new Game(
       this.gameSettings.fraction,
