@@ -20,7 +20,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.(png|jpe?g|gif|ico|mp3)$/i,
@@ -32,7 +32,7 @@ module.exports = {
       },
       {
         test: /\.(svg|eot|ttf|woff|woff2)$/,
-        loader: "url-loader",
+        loader: 'url-loader',
       },
     ],
   },

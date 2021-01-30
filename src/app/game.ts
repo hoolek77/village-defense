@@ -319,7 +319,9 @@ export class Game {
       return capacity + unit.capacity
     }, 0)
   }
-
+  public getNextAttack() {
+    return this.nextAttackCountdownInSeconds
+  }
   private calculateNextAttack() {
     let interval = 0
 

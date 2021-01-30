@@ -53,6 +53,11 @@
 
 .info-box {
   grid-area: info-box;
+  margin-top: 3em;
+}
+
+.progress {
+  box-shadow: 3px 6px 5px 6px #ccc;
 }
 
 .game__screen--opened {

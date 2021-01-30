@@ -7,6 +7,7 @@ export class GamePage {
   private quitButton!: HTMLButtonElement
   private gameScreen!: HTMLElement
   private unitsImg!: HTMLDivElement
+  private progressBar!: HTMLElement
 
   constructor(app: App, game: Game) {
     this.app = app
@@ -45,6 +46,7 @@ export class GamePage {
     ) as HTMLButtonElement
     this.gameScreen = document.querySelector('.game__screen') as HTMLElement
     this.unitsImg = document.querySelector('.units__image') as HTMLDivElement
+    this.progressBar = document.querySelector(".progress-bar") as HTMLElement
   }
 
   private bindEvents() {
@@ -73,7 +75,17 @@ export class GamePage {
     })
   }
 
+  private handleProgressBarChange() {
+    setInterval(() => {
+      const timeToNextWave = this.game.getNextAttack();
+      const width = timeToNextWave * 100 / 30;
+      this.progressBar.style.width = `${width}%`;
+      
+    }, 1000)
+  }
+
   private startGame() {
     this.game.start()
+    this.handleProgressBarChange()
   }
 }
