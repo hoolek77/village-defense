@@ -44,3 +44,33 @@ body {
   padding: 0;
   overflow: hidden;
 }
+
+a:hover {
+  cursor: pointer;
+}
+
+.hide { 
+  display: none;
+}
+
+.show { 
+  display: block;
+}
+
+.fa-volume-off, .fa-volume-up {
+  -webkit-text-stroke: .5px black;
+  text-shadow: -.2px 0 black, 0 .2px black, .2px 0 black, 0 -.2px black;
+}
+
+.main__audio { 
+  position: absolute; 
+  top: 2rem; 
+  right: 2rem; 
+  z-index: 2; 
+  font-size: 2rem; 
+  color: white;
+}
+
+a.main__audio--menu:hover {
+  color: rgb(226, 226, 226)
+}
