@@ -59,6 +59,8 @@ export class Game {
 
   private intervalId?: number
 
+  private TownHallLevel = 0
+
   private onGameUpdate?: () => void
 
   constructor(
@@ -257,6 +259,10 @@ export class Game {
     return this.buildings.find((building) => building instanceof Wall) as Wall
   }
 
+  private getTownHall(): TownHall | undefined {
+    return this.buildings.find((building) => building instanceof TownHall) as TownHall
+  }
+
   private getAllResourcesCount() {
     return this.resources.reduce((prev, resource) => {
       return prev + resource.count
@@ -271,6 +277,10 @@ export class Game {
     console.log('Updating game')
     console.log('game time', this.gameTimeInSeconds)
     console.log('next attak', this.nextAttackCountdownInSeconds)
+    this.reduceTimeBuilding()
+    console.log(this.getBuildings()[0])
+    console.log(this.getBuildings()[1])
+    console.log(this.getBuildings())
 
     this.updateBuildings()
     this.renderBuildings()
@@ -319,6 +329,25 @@ export class Game {
 
     if (this.population < 0) {
       this.population = 0
+    }
+  }
+
+  private reduceTimeBuilding(){
+    const townHall = this.getTownHall()
+    const townHallLevel = townHall!.getLevel()
+    console.log(this.TownHallLevel , townHallLevel)
+    if(this.TownHallLevel==townHallLevel){
+      return
+    } else {
+      this.TownHallLevel = townHallLevel
+      const percent = townHall?.reducingAmountResources()
+      const buildings = this.getBuildings()
+      buildings.forEach(building => {
+        if(percent){
+          const timetoreduce = percent*building.timeToBuildInSeconds
+          return (building.timeToBuildInSeconds = building.timeToBuildInSeconds-timetoreduce)
+        }
+      });
     }
   }
 

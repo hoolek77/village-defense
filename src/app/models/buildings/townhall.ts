@@ -5,8 +5,9 @@ import { Building } from './building'
 const GOLD = 10
 const WOOD = 15
 const STONE = 20
-const DEFAULT_TIME_TO_BUILD = 300
+const DEFAULT_TIME_TO_BUILD = 20
 const MAX_LEVEL = 3
+const REDUCING_AMOUNT_RESOURCES = [0, 0.2, 0.3, 0.5]
 
 export class TownHall extends Building {
   constructor(game: Game) {
@@ -37,6 +38,10 @@ export class TownHall extends Building {
 
   getDescription() {
     return 'Esse officia eu Lorem excepteur aliqua non. Dolor quis nisi irure eiusmod et magna eiusmod mollit non qui ad laborum nulla.'
+  }
+
+  reducingAmountResources() {
+    return REDUCING_AMOUNT_RESOURCES[this.level]
   }
 
   toString = (): string => {
