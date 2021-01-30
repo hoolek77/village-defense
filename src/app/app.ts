@@ -27,9 +27,7 @@ export class App {
 
     this.homePage = new HomePage(this)
 
-    // TODO: uncomment showHomePage and remove showGamePage when ready
-    // this.showHomePage(false)
-    this.showGamePage()
+    this.showHomePage(false)
   }
 
   showHomePage(startHidden: boolean) {

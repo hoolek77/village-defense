@@ -1,5 +1,7 @@
 import { App } from '../../app'
 import { Game } from '../../game'
+import { Building } from '../../models'
+import { createElement } from '../../utils'
 export class GamePage {
   private app: App
   private game: Game
@@ -7,6 +9,13 @@ export class GamePage {
   private quitButton!: HTMLButtonElement
   private gameScreen!: HTMLElement
   private unitsImg!: HTMLDivElement
+
+  private goldAmountElement!: HTMLElement
+  private woodAmountElement!: HTMLElement
+  private stoneAmountElement!: HTMLElement
+  private populationElement!: HTMLElement
+  private defenceElement!: HTMLElement
+
   private progressBar!: HTMLElement
 
   constructor(app: App, game: Game) {
@@ -46,7 +55,25 @@ export class GamePage {
     ) as HTMLButtonElement
     this.gameScreen = document.querySelector('.game__screen') as HTMLElement
     this.unitsImg = document.querySelector('.units__image') as HTMLDivElement
-    this.progressBar = document.querySelector(".progress-bar") as HTMLElement
+
+    this.goldAmountElement = document.querySelector(
+      '#goldAmount'
+    ) as HTMLElement
+    this.woodAmountElement = document.querySelector(
+      '#woodAmount'
+    ) as HTMLElement
+    this.stoneAmountElement = document.querySelector(
+      '#stoneAmount'
+    ) as HTMLElement
+
+    this.populationElement = document.querySelector(
+      '.population__count'
+    ) as HTMLElement
+    this.defenceElement = document.querySelector(
+      '.defence__count'
+    ) as HTMLElement
+
+    this.progressBar = document.querySelector('.progress-bar') as HTMLElement
   }
 
   private bindEvents() {
@@ -56,6 +83,7 @@ export class GamePage {
   private setupUI() {
     this.setBackgrondImage()
     this.setUnitsFractionImage()
+    this.renderBuildings()
   }
 
   private setUnitsFractionImage() {
@@ -75,17 +103,99 @@ export class GamePage {
     })
   }
 
-  private handleProgressBarChange() {
-    setInterval(() => {
-      const timeToNextWave = this.game.getNextAttack();
-      const width = timeToNextWave * 100 / 30;
-      this.progressBar.style.width = `${width}%`;
-      
-    }, 1000)
+  private startGame() {
+    this.game.start(this.updateUI.bind(this))
   }
 
-  private startGame() {
-    this.game.start()
-    this.handleProgressBarChange()
+  private updateUI() {
+    this.updateGoldAmount()
+    this.updateWoodAmount()
+    this.updateStoneAmount()
+    this.updatePopulation()
+    this.updateDefence()
+    this.updateNextAttackProgressBar()
+  }
+
+  private updateGoldAmount() {
+    this.goldAmountElement.textContent = this.game.getGoldAmount().toString()
+  }
+
+  private updateWoodAmount() {
+    this.woodAmountElement.textContent = this.game.getWoodAmount().toString()
+  }
+
+  private updateStoneAmount() {
+    this.stoneAmountElement.textContent = this.game.getStoneAmount().toString()
+  }
+
+  private updatePopulation() {
+    this.populationElement.textContent = this.game.getPopulation().toString()
+  }
+
+  private updateDefence() {
+    this.defenceElement.textContent = this.game.getVillageDefence().toString()
+  }
+
+  private updateNextAttackProgressBar() {
+    const width = (this.game.getNextAttack() * 100) / 30
+    this.progressBar.style.width = `${width}%`
+  }
+
+  private renderBuildings() {
+    const list = document.querySelector('.buildings__list') as HTMLElement
+
+    this.game.getBuildings().forEach((building) => {
+      const buildingItemElement = createElement({
+        type: 'li',
+        classes: ['buildings__list-item'],
+        innerHTML: this.getBuildingContent(building),
+      })
+
+      list?.appendChild(buildingItemElement)
+    })
+
+    const upgradeButtonElements = list?.querySelectorAll(
+      '.building__upgrade-button'
+    )
+
+    upgradeButtonElements.forEach((upgradeButtonElement) => {
+      upgradeButtonElement.addEventListener('click', (e) => {
+        const button = e.currentTarget as HTMLElement
+
+        if (button) {
+          const buildingTitle = button.dataset.building || ''
+          const building = this.game.getBuilding(buildingTitle)
+
+          if (building) {
+            building.startBuilding()
+          }
+        }
+      })
+    })
+  }
+
+  private getBuildingContent(building: Building) {
+    const resources = building.getResourcesNeededToBuild()
+
+    return `
+      <div class="building">
+      <h3 class="building__heading">${building.getTitle()}</h3>
+      <p class="building__level">Level: ${building.getLevel()}</p>
+      <button class="building__upgrade-button" data-building="${building.getTitle()}">
+        <i class="fas fa-plus-circle"></i>
+      </button>
+      <div class="building__details">
+        <h3 class="building__details-title">${building.getTitle()}</h3>
+        <p class="building__details-description">${building.getDescription()}</p>
+        <ul class="building__details-resources">
+          ${resources
+            .map((resource) => {
+              return `<li class="building__price building__price--${resource.type}">${resource.count} ${resource.type}</li>`
+            })
+            .join('')}
+        </ul>
+      </div>
+    </div>
+    `
   }
 }

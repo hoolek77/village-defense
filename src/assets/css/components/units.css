@@ -7,12 +7,14 @@
   align-items: center;
 }
 
-.population__heading {
+.population__heading,
+.defence__heading {
   font-size: 3rem;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
-.population__info {
+.population__info,
+.defence__info {
   font-size: 2.8rem;
   margin-top: 0;
   text-align: center;

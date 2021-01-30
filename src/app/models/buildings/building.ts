@@ -20,6 +20,14 @@ export class Building {
     return this.resourcesNeededToBuild
   }
 
+  getTitle() {
+    return ''
+  }
+
+  getDescription() {
+    return ''
+  }
+
   startBuilding() {
     if (!this.canUpgarde() || this.isBuilding) {
       return

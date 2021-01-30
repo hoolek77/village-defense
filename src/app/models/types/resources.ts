@@ -1,7 +1,7 @@
 export enum ResourceType {
-  Gold,
-  Wood,
-  Stone,
+  Gold = 'Gold',
+  Wood = 'Wood',
+  Stone = 'Stone',
 }
 
 export interface Resource {

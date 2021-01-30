@@ -33,4 +33,16 @@ export class House extends Building {
       MAX_LEVEL
     )
   }
+
+  getTitle() {
+    return 'House'
+  }
+
+  getDescription() {
+    return 'Esse officia eu Lorem excepteur aliqua non. Dolor quis nisi irure eiusmod et magna eiusmod mollit non qui ad laborum nulla.'
+  }
+
+  toString = (): string => {
+    return `House: [level = ${this.level}]`
+  }
 }
