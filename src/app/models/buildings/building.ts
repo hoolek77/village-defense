@@ -13,6 +13,8 @@ export class Building {
     protected maxLevel: number
   ) {}
 
+  protected remainingTimeToBuild = this.timeToBuildInMiliseconds
+
   getLevel() {
     return this.level
   }
@@ -45,15 +47,23 @@ export class Building {
     return this.level + 1 <= this.maxLevel
   }
 
+  getLevelContainer() {
+    const levelContainer = document.querySelector(
+      `.building__level--${this.getTitle()}`
+    ) as HTMLElement
+    return levelContainer
+  }
+
   update() {
     if (this.isBuilding) {
       console.log(`${this} is building`)
-      this.timeToBuildInMiliseconds -= GAME_LOOP_DELAY_IN_MILISECONDS
-
-      if (this.timeToBuildInMiliseconds <= 0) {
+      this.remainingTimeToBuild -= GAME_LOOP_DELAY_IN_MILISECONDS
+      console.log(this.remainingTimeToBuild)
+      if (this.remainingTimeToBuild <= 0) {
         this.isBuilding = false
         this.level++
-
+        this.getLevelContainer().textContent = `Level: ${this.level}`
+        this.remainingTimeToBuild = this.timeToBuildInMiliseconds
         this.game.handleBuildingWasBuilt(this)
       }
     }

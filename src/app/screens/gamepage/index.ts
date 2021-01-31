@@ -148,7 +148,6 @@ export class GamePage {
 
   private renderBuildings() {
     const list = document.querySelector('.buildings__list') as HTMLElement
-
     this.game.getBuildings().forEach((building) => {
       const buildingItemElement = createElement({
         type: 'li',
@@ -166,11 +165,9 @@ export class GamePage {
     upgradeButtonElements.forEach((upgradeButtonElement) => {
       upgradeButtonElement.addEventListener('click', (e) => {
         const button = e.currentTarget as HTMLElement
-
         if (button) {
           const buildingTitle = button.dataset.building || ''
           const building = this.game.getBuilding(buildingTitle)
-
           if (building) {
             building.startBuilding()
           }
@@ -185,7 +182,7 @@ export class GamePage {
     return `
       <div class="building">
       <h3 class="building__heading">${building.getTitle()}</h3>
-      <p class="building__level">Level: ${building.getLevel()}</p>
+      <p class="building__level building__level--${building.getTitle()}">Level: ${building.getLevel()}</p>
       <button class="building__upgrade-button" data-building="${building.getTitle()}">
         <i class="fas fa-plus-circle"></i>
       </button>

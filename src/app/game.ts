@@ -197,9 +197,9 @@ export class Game {
       this.peaceTimeDuration = Date.now() - this.peaceTime
     }
 
-    console.log('elapsed game time', this.elapsedTimeInMilliseconds)
-    console.log('pease time duration', this.peaceTimeDuration)
-    console.log('next attack total in ms', this.nextAttackTotalInMiliseconds)
+    // console.log('elapsed game time', this.elapsedTimeInMilliseconds)
+    // console.log('pease time duration', this.peaceTimeDuration)
+    // console.log('next attack total in ms', this.nextAttackTotalInMiliseconds)
     if (
       this.attackInProgress ||
       this.peaceTimeDuration >= this.nextAttackTotalInMiliseconds
