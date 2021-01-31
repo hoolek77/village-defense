@@ -59,8 +59,6 @@ export class Game {
 
   private intervalId?: number
 
-  private TownHallLevel = 0
-
   private onGameUpdate?: () => void
 
   constructor(
@@ -279,10 +277,8 @@ export class Game {
     console.log('Updating game')
     console.log('game time', this.gameTimeInSeconds)
     console.log('next attak', this.nextAttackCountdownInSeconds)
-    // this.reduceTimeBuilding()
     console.log(this.getBuildings()[0])
     console.log(this.getBuildings()[1])
-    console.log(this.getBuildings())
 
     this.updateBuildings()
     this.renderBuildings()
@@ -336,21 +332,14 @@ export class Game {
 
   private reduceTimeBuilding(){
     const townHall = this.getTownHall()
-    const townHallLevel = townHall!.getLevel()
-    console.log(this.TownHallLevel , townHallLevel)
-    if(this.TownHallLevel==townHallLevel){
-      return
-    } else {
-      this.TownHallLevel = townHallLevel
-      const percent = townHall?.reducingAmountResources()
-      const buildings = this.getBuildings()
-      buildings.forEach(building => {
-        if(percent){
-          const timetoreduce = percent*building.timeToBuildInSeconds
-          return (building.timeToBuildInSeconds = building.timeToBuildInSeconds-timetoreduce)
-        }
-      });
-    }
+    const percent = townHall?.reducingAmountResources()
+    const buildings = this.getBuildings()
+    buildings.forEach(building => {
+      if(percent){
+        const timetoreduce = percent*building.timeToBuildInSeconds
+        return (building.timeToBuildInSeconds = building.timeToBuildInSeconds-timetoreduce)
+      }
+    });
   }
 
   private stealResources(enemies: Unit[]) {
