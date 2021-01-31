@@ -192,7 +192,11 @@ export class GamePage {
         <ul class="building__details-resources">
           ${resources
             .map((resource) => {
-              return `<li class="building__price building__price--${resource.type}">${resource.count} ${resource.type}</li>`
+              return `<li class="building__price building__price--${
+                resource.type
+              } building__price--${building.getTitle()}">${resource.count} ${
+                resource.type
+              }</li>`
             })
             .join('')}
         </ul>

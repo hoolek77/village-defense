@@ -8,7 +8,7 @@ export class Building {
 
   constructor(
     protected game: Game,
-    protected resourcesNeededToBuild: Resource[],
+    public resourcesNeededToBuild: Resource[],
     protected timeToBuildInMiliseconds: number,
     protected maxLevel: number
   ) {}
@@ -54,6 +54,22 @@ export class Building {
     return levelContainer
   }
 
+  getBuildingPriceContainer() {
+    const container = document.querySelectorAll(
+      `.building__price--${this.getTitle()}`
+    )
+    return container
+  }
+
+  updateBuildingContainer() {
+    let i = 0
+    this.getLevelContainer().textContent = `Level: ${this.level}`
+    this.getBuildingPriceContainer().forEach((element) => {
+      element.textContent = `${this.resourcesNeededToBuild[i].count} ${this.resourcesNeededToBuild[i].type}`
+      i++
+    })
+  }
+
   update() {
     if (this.isBuilding) {
       console.log(`${this} is building`)
@@ -62,9 +78,9 @@ export class Building {
       if (this.remainingTimeToBuild <= 0) {
         this.isBuilding = false
         this.level++
-        this.getLevelContainer().textContent = `Level: ${this.level}`
-        this.remainingTimeToBuild = this.timeToBuildInMiliseconds
         this.game.handleBuildingWasBuilt(this)
+        this.updateBuildingContainer()
+        this.remainingTimeToBuild = this.timeToBuildInMiliseconds
       }
     }
   }
