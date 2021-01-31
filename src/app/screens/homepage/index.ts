@@ -1,16 +1,19 @@
 import { App } from '../../app'
+import { Audio } from '../../audio'
 import { Fractions } from '../../models'
 import {
   capitalizeFirstLetter,
+  createElement,
   enumKeys,
   getCSSProperty,
   getFractionForName,
   setCSSProperty,
 } from '../../utils'
-import { InfoContentProvider } from '../../components'
+import { InfoContentProvider, GameSettingsView } from '../../components'
 
 export class HomePage {
   private app: App
+  private audio: Audio
 
   private settingButton!: HTMLElement
   private infoButton!: HTMLElement
@@ -24,6 +27,7 @@ export class HomePage {
 
   constructor(app: App) {
     this.app = app
+    this.audio = this.app.audio
   }
 
   show(appContainer: HTMLElement, startHidden: boolean) {
@@ -182,5 +186,6 @@ export class HomePage {
     this.triggerStartButton()
     this.triggerSettingsButton()
     new InfoContentProvider()
+    new GameSettingsView(this.app, this.audio)
   }
 }
