@@ -2,7 +2,7 @@ import { Game } from '../../game'
 import { ResourceType } from '../types'
 import { Building } from './building'
 
-const STONE_PRODUCTION = 10
+const STONE_PRODUCTION: number[] = [4, 8, 12]
 const GOLD = 1
 const WOOD = 1
 const STONE = 3
@@ -11,6 +11,7 @@ const MAX_LEVEL = 3
 
 export class Quarry extends Building {
   readonly stoneProduction = STONE_PRODUCTION
+  private passiveIncomeInterval: any
 
   constructor(game: Game) {
     super(
@@ -32,6 +33,17 @@ export class Quarry extends Building {
       DEFAULT_TIME_TO_BUILD,
       MAX_LEVEL
     )
+  }
+
+  handlePassiveIncome(level: number) {
+    if (this.passiveIncomeInterval) {
+      clearInterval(this.passiveIncomeInterval)
+    }
+    this.passiveIncomeInterval = setInterval(() => {
+      this.game.changeStoneAmount(
+        this.game.getStoneAmount() + this.stoneProduction[level - 1]
+      )
+    }, 30000)
   }
 
   getTitle() {

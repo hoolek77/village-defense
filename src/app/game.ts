@@ -141,6 +141,10 @@ export class Game {
       this.handleWarehouseWasBuilt(building as Warehouse)
     } else if (building instanceof Goldmine) {
       this.handleGoldmineWasBuilt(building as Goldmine)
+    } else if (building instanceof Quarry) {
+      this.handleQuarryWasBuild(building as Quarry)
+    } else if (building instanceof Sawmill) {
+      this.handleSawmillWasBuild(building as Sawmill)
     }
   }
 
@@ -293,7 +297,7 @@ export class Game {
     })
   }
 
-  private changeGoldAmount(goldAmount: number) {
+  changeGoldAmount(goldAmount: number) {
     const gold = this.getResourceForType(ResourceType.Gold)
 
     if (gold) {
@@ -301,14 +305,14 @@ export class Game {
     }
   }
 
-  private changeWoodAmount(woodAmount: number) {
+  changeWoodAmount(woodAmount: number) {
     const wood = this.getResourceForType(ResourceType.Wood)
 
     if (wood) {
       wood.count = woodAmount
     }
   }
-  private changeStoneAmount(stoneAmount: number) {
+  changeStoneAmount(stoneAmount: number) {
     const stone = this.getResourceForType(ResourceType.Stone)
 
     if (stone) {
@@ -329,7 +333,15 @@ export class Game {
   }
 
   private handleGoldmineWasBuilt(goldmine: Goldmine) {
-    this.changeGoldAmount(this.getGoldAmount() + goldmine.goldProduction)
+    goldmine.handlePassiveIncome(goldmine.getLevel())
+  }
+
+  private handleQuarryWasBuild(quarry: Quarry) {
+    quarry.handlePassiveIncome(quarry.getLevel())
+  }
+
+  private handleSawmillWasBuild(sawmill: Sawmill) {
+    sawmill.handlePassiveIncome(sawmill.getLevel())
   }
 
   private getWarehouse(): Warehouse | undefined {
