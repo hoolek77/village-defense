@@ -41,7 +41,7 @@ export class Goldmine extends Building {
     }
     this.passiveIncomeInterval = setInterval(() => {
       this.game.handleGoldmineWasBuilt(this)
-    }, 5000)
+    }, 30000)
   }
 
   getProduction() {

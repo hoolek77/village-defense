@@ -41,7 +41,7 @@ export class Sawmill extends Building {
     }
     this.passiveIncomeInterval = setInterval(() => {
       this.game.handleSawmillWasBuilt(this)
-    }, 5000)
+    }, 30000)
   }
 
   getProduction() {
