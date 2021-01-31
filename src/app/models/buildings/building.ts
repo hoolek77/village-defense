@@ -77,12 +77,16 @@ export class Building {
       console.log(this.remainingTimeToBuild)
       if (this.remainingTimeToBuild <= 0) {
         this.isBuilding = false
-        this.level++
         this.game.handleBuildingWasBuilt(this)
-        this.updateBuildingContainer()
-        this.remainingTimeToBuild = this.timeToBuildInMiliseconds
+        this.handleBuildingWasBuilt()
       }
     }
+  }
+
+  protected handleBuildingWasBuilt() {
+    this.updateBuildingContainer()
+    this.remainingTimeToBuild = this.timeToBuildInMiliseconds
+    this.level++
   }
 
   render() {}
