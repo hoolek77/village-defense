@@ -27,7 +27,7 @@ export class HomePage {
 
   constructor(app: App) {
     this.app = app
-    this.audio = new Audio()
+    this.audio = this.app.audio
   }
 
   show(appContainer: HTMLElement, startHidden: boolean) {
