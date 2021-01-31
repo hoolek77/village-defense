@@ -139,12 +139,6 @@ export class Game {
       this.handlewWallWasBuilt(building as Wall)
     } else if (building instanceof Warehouse) {
       this.handleWarehouseWasBuilt(building as Warehouse)
-    } else if (building instanceof Goldmine) {
-      this.handleGoldmineWasBuilt(building as Goldmine)
-    } else if (building instanceof Sawmill) {
-      this.handleSawmillWasBuilt(building as Sawmill)
-    } else if (building instanceof Quarry) {
-      this.handleQuarryWasBuilt(building as Quarry)
     }
   }
 
