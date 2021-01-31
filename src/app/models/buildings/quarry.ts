@@ -40,7 +40,7 @@ export class Quarry extends Building {
       clearTimeout(this.passiveIncomeInterval)
     }
     this.passiveIncomeInterval = setInterval(() => {
-      this.game.handleQuarryeWasBuild(this)
+      this.game.handleQuarryWasBuild(this)
     }, 30000)
   }
 

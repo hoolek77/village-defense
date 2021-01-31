@@ -330,12 +330,12 @@ export class Game {
     this.changeGoldAmount(this.getGoldAmount() + goldmine.getProduction())
   }
 
-  handleQuarryeWasBuild(quarry: Quarry) {
-    this.changeGoldAmount(this.getGoldAmount() + quarry.getProduction())
+  handleQuarryWasBuild(quarry: Quarry) {
+    this.changeGoldAmount(this.getStoneAmount() + quarry.getProduction())
   }
 
   handleSawmillWasBuild(sawmill: Sawmill) {
-    this.changeGoldAmount(this.getGoldAmount() + sawmill.getProduction())
+    this.changeGoldAmount(this.getWoodAmount() + sawmill.getProduction())
   }
 
   private getWarehouse(): Warehouse | undefined {
