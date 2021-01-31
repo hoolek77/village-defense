@@ -36,7 +36,7 @@ export class Quarry extends Building {
   }
 
   handleBuildingWasBuilt() {
-    if (this.passiveIncomeInterval != undefined) {
+    if (this.passiveIncomeInterval) {
       return
     }
     this.passiveIncomeInterval = setInterval(() => {
