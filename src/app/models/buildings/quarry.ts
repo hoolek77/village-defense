@@ -35,9 +35,9 @@ export class Quarry extends Building {
     )
   }
 
-  handlePassiveIncome(level: number) {
-    if (this.passiveIncomeInterval) {
-      clearInterval(this.passiveIncomeInterval)
+  handleBuildingWasBuilt(level: number) {
+    if (this.passiveIncomeInterval != undefined) {
+      clearTimeout(this.passiveIncomeInterval)
     }
     this.passiveIncomeInterval = setInterval(() => {
       this.game.changeStoneAmount(

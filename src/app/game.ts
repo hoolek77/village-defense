@@ -139,12 +139,6 @@ export class Game {
       this.handlewWallWasBuilt(building as Wall)
     } else if (building instanceof Warehouse) {
       this.handleWarehouseWasBuilt(building as Warehouse)
-    } else if (building instanceof Goldmine) {
-      this.handleGoldmineWasBuilt(building as Goldmine)
-    } else if (building instanceof Quarry) {
-      this.handleQuarryWasBuild(building as Quarry)
-    } else if (building instanceof Sawmill) {
-      this.handleSawmillWasBuild(building as Sawmill)
     }
   }
 
@@ -330,18 +324,6 @@ export class Game {
 
   private handleWarehouseWasBuilt(warehouse: Warehouse) {
     this.storageCapacity += warehouse.capacity
-  }
-
-  private handleGoldmineWasBuilt(goldmine: Goldmine) {
-    goldmine.handlePassiveIncome(goldmine.getLevel())
-  }
-
-  private handleQuarryWasBuild(quarry: Quarry) {
-    quarry.handlePassiveIncome(quarry.getLevel())
-  }
-
-  private handleSawmillWasBuild(sawmill: Sawmill) {
-    sawmill.handlePassiveIncome(sawmill.getLevel())
   }
 
   private getWarehouse(): Warehouse | undefined {

@@ -55,9 +55,12 @@ export class Building {
         this.level++
 
         this.game.handleBuildingWasBuilt(this)
+        this.handleBuildingWasBuilt(this.level)
       }
     }
   }
+
+  protected handleBuildingWasBuilt(level: number) {}
 
   render() {}
 
