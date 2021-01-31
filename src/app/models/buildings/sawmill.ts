@@ -6,7 +6,7 @@ const WOOD_PRODUCTION = 10
 const GOLD = 1
 const WOOD = 1
 const STONE = 3
-const DEFAULT_TIME_TO_BUILD = 100
+const DEFAULT_TIME_TO_BUILD = 100 * 1000
 const MAX_LEVEL = 3
 
 export class Sawmill extends Building {

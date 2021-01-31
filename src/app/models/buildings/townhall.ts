@@ -5,7 +5,7 @@ import { Building } from './building'
 const GOLD = 10
 const WOOD = 15
 const STONE = 20
-const DEFAULT_TIME_TO_BUILD = 300
+const DEFAULT_TIME_TO_BUILD = 300 * 1000
 const MAX_LEVEL = 3
 
 export class TownHall extends Building {

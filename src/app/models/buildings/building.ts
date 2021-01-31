@@ -1,3 +1,4 @@
+import { GAME_LOOP_DELAY_IN_MILISECONDS } from '../../constants'
 import { Game } from '../../game'
 import { Resource } from '../types'
 
@@ -8,7 +9,7 @@ export class Building {
   constructor(
     protected game: Game,
     protected resourcesNeededToBuild: Resource[],
-    protected timeToBuildInSeconds: number,
+    protected timeToBuildInMiliseconds: number,
     protected maxLevel: number
   ) {}
 
@@ -47,9 +48,9 @@ export class Building {
   update() {
     if (this.isBuilding) {
       console.log(`${this} is building`)
-      this.timeToBuildInSeconds--
+      this.timeToBuildInMiliseconds -= GAME_LOOP_DELAY_IN_MILISECONDS
 
-      if (this.timeToBuildInSeconds <= 0) {
+      if (this.timeToBuildInMiliseconds <= 0) {
         this.isBuilding = false
         this.level++
 
