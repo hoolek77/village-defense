@@ -40,10 +40,12 @@ export class Sawmill extends Building {
       clearTimeout(this.passiveIncomeInterval)
     }
     this.passiveIncomeInterval = setInterval(() => {
-      this.game.changeWoodAmount(
-        this.game.getWoodAmount() + this.woodProduction[this.level]
-      )
+      this.game.handleSawmillWasBuild(this)
     }, 30000)
+  }
+
+  getProduction() {
+    return this.woodProduction[this.level]
   }
 
   getTitle() {

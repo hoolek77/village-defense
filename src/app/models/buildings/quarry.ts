@@ -40,10 +40,12 @@ export class Quarry extends Building {
       clearTimeout(this.passiveIncomeInterval)
     }
     this.passiveIncomeInterval = setInterval(() => {
-      this.game.changeStoneAmount(
-        this.game.getStoneAmount() + this.stoneProduction[this.level]
-      )
+      this.game.handleQuarryeWasBuild(this)
     }, 30000)
+  }
+
+  getProduction() {
+    return this.stoneProduction[this.level]
   }
 
   getTitle() {

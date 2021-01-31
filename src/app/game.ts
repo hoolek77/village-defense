@@ -291,7 +291,7 @@ export class Game {
     })
   }
 
-  changeGoldAmount(goldAmount: number) {
+  private changeGoldAmount(goldAmount: number) {
     const gold = this.getResourceForType(ResourceType.Gold)
 
     if (gold) {
@@ -299,14 +299,14 @@ export class Game {
     }
   }
 
-  changeWoodAmount(woodAmount: number) {
+  private changeWoodAmount(woodAmount: number) {
     const wood = this.getResourceForType(ResourceType.Wood)
 
     if (wood) {
       wood.count = woodAmount
     }
   }
-  changeStoneAmount(stoneAmount: number) {
+  private changeStoneAmount(stoneAmount: number) {
     const stone = this.getResourceForType(ResourceType.Stone)
 
     if (stone) {
@@ -324,6 +324,18 @@ export class Game {
 
   private handleWarehouseWasBuilt(warehouse: Warehouse) {
     this.storageCapacity += warehouse.capacity
+  }
+
+  handleGoldmineWasBuild(goldmine: Goldmine) {
+    this.changeGoldAmount(this.getGoldAmount() + goldmine.getProduction())
+  }
+
+  handleQuarryeWasBuild(quarry: Quarry) {
+    this.changeGoldAmount(this.getGoldAmount() + quarry.getProduction())
+  }
+
+  handleSawmillWasBuild(sawmill: Sawmill) {
+    this.changeGoldAmount(this.getGoldAmount() + sawmill.getProduction())
   }
 
   private getWarehouse(): Warehouse | undefined {
