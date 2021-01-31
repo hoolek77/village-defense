@@ -2,7 +2,7 @@ import { Game } from '../../game'
 import { ResourceType } from '../types'
 import { Building } from './building'
 
-const GOLD_PRODUCTION: number[] = [3, 5, 7, 10, 12]
+const GOLD_PRODUCTION: number[] = [0, 3, 5, 7, 10, 12]
 const GOLD = 5
 const WOOD = 1
 const STONE = 4
@@ -35,13 +35,13 @@ export class Goldmine extends Building {
     )
   }
 
-  handleBuildingWasBuilt(level: number) {
+  handleBuildingWasBuilt() {
     if (this.passiveIncomeInterval != undefined) {
-      clearTimeout(this.passiveIncomeInterval)
+      return
     }
     this.passiveIncomeInterval = setInterval(() => {
       this.game.changeGoldAmount(
-        this.game.getGoldAmount() + this.goldProduction[level - 1]
+        this.game.getGoldAmount() + this.goldProduction[this.level]
       )
     }, 30000)
   }

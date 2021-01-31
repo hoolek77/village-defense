@@ -2,7 +2,7 @@ import { Game } from '../../game'
 import { ResourceType } from '../types'
 import { Building } from './building'
 
-const STONE_PRODUCTION: number[] = [4, 8, 12]
+const STONE_PRODUCTION: number[] = [0, 4, 8, 12]
 const GOLD = 1
 const WOOD = 1
 const STONE = 3
@@ -35,13 +35,13 @@ export class Quarry extends Building {
     )
   }
 
-  handleBuildingWasBuilt(level: number) {
+  handleBuildingWasBuilt() {
     if (this.passiveIncomeInterval != undefined) {
       clearTimeout(this.passiveIncomeInterval)
     }
     this.passiveIncomeInterval = setInterval(() => {
       this.game.changeStoneAmount(
-        this.game.getStoneAmount() + this.stoneProduction[level - 1]
+        this.game.getStoneAmount() + this.stoneProduction[this.level]
       )
     }, 30000)
   }
