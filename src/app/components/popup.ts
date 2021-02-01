@@ -1,18 +1,13 @@
-import { createElement } from '../utils'
+import { createElement } from "../utils"
 
 interface popup {
-  headerText: string
-  popupContentHTML: HTMLElement
-  closeBtnText: string
+  headerText: string, 
+  popupContentHTML: HTMLElement, 
+  closeBtnText: string,
   isOverlayClickable?: boolean
 }
 
-export function renderPopup({
-  headerText,
-  popupContentHTML,
-  closeBtnText,
-  isOverlayClickable = true,
-}: popup) {
+export function renderPopup({ headerText, popupContentHTML, closeBtnText, isOverlayClickable = true }: popup) {
   const popup = createElement({
     type: 'div',
     classes: ['popup'],
@@ -31,7 +26,7 @@ export function renderPopup({
           </div>
         </div>
       </div>
-    `,
+    `
   })
 
   document.body.appendChild(popup)
@@ -40,7 +35,7 @@ export function renderPopup({
   setTimeout(() => {
     popup.classList.add('popup--active')
 
-    if (isOverlayClickable) {
+    if(isOverlayClickable) {
       const popupOverlayElement = document.querySelector(
         '.popup__overlay'
       ) as HTMLDivElement

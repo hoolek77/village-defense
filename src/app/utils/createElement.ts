@@ -1,4 +1,4 @@
-import { customHtmlElementModel } from '../interfaces'
+import { customHtmlElementModel } from '../models'
 
 export function createElement({
   type,

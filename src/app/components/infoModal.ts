@@ -5,12 +5,10 @@ export class InfoModal {
   private openInfoBtn: HTMLButtonElement
 
   constructor() {
-    this.openInfoBtn = document.querySelector(
-      '#info-button'
-    ) as HTMLButtonElement
+    this.openInfoBtn = document.querySelector('#info-button') as HTMLButtonElement
 
     this._init()
-  }
+  } 
 
   private _init() {
     this.openInfoBtn?.addEventListener('click', this.render.bind(this))
@@ -44,6 +42,7 @@ export class InfoModal {
               </div>
               <div class="author__back">
                   <div class="author__content">
+                    <i class="fas fa-user-tie author__icon"></i>
                     <span class="author__position">Mentor<br />Client</span>
                   </div>
               </div>
@@ -52,11 +51,24 @@ export class InfoModal {
           <li class="author">
               <div class="author__container">
                 <div class="author__front">
+                    <div class="author__content">Ireneusz Bednorz</div>
+                </div>
+                <div class="author__back">
+                    <div class="author__content">
+                      <i class="fas fa-hiking author__icon"></i>
+                      <span class="author__position">Product<br />Owner</span>
+                    </div>
+                </div>
+              </div>
+          </li>
+          <li class="author">
+              <div class="author__container">
+                <div class="author__front">
                     <div class="author__content">Szymon Kin</div>
                 </div>
                 <div class="author__back">
                     <div class="author__content">
-                      <i class="fas fa-user-secret author__icon"></i>
+                      <i class="fas fa-user-ninja author__icon"></i>
                       <span class="author__position">Dev<br />Manager</span>
                     </div>
                 </div>
@@ -69,19 +81,8 @@ export class InfoModal {
                 </div>
                 <div class="author__back">
                     <div class="author__content">
+                      <i class="fas fa-user-secret author__icon"></i>
                       <span class="author__position">Tech<br />Lead</span>
-                    </div>
-                </div>
-              </div>
-          </li>
-          <li class="author">
-              <div class="author__container">
-                <div class="author__front">
-                    <div class="author__content">Ireneusz Bednorz</div>
-                </div>
-                <div class="author__back">
-                    <div class="author__content">
-                      <span class="author__position">Product<br />Owner</span>
                     </div>
                 </div>
               </div>
@@ -93,6 +94,7 @@ export class InfoModal {
                 </div>
                 <div class="author__back">
                     <div class="author__content">
+                      <i class="fas fa-user-cog author__icon"></i>
                       <span class="author__position">Developer</span>
                     </div>
                 </div>
@@ -105,6 +107,7 @@ export class InfoModal {
               </div>
               <div class="author__back">
                   <div class="author__content">
+                    <i class="fas fa-user-cog author__icon"></i>
                     <span class="author__position">Developer</span>
                   </div>
               </div>

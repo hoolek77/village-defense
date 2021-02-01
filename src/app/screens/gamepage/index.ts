@@ -17,6 +17,7 @@ export class GamePage {
   private populationElement!: HTMLElement
   private defenceElement!: HTMLElement
 
+  private progressHeader!: HTMLElement
   private progressBar!: HTMLElement
 
   private isGameOverModalVisible = false
@@ -76,6 +77,7 @@ export class GamePage {
       '.defence__count'
     ) as HTMLElement
 
+    this.progressHeader = document.querySelector('.info__heading') as HTMLElement
     this.progressBar = document.querySelector('.progress-bar') as HTMLElement
   }
 
@@ -121,6 +123,7 @@ export class GamePage {
       this.updateStoneAmount()
       this.updatePopulation()
       this.updateDefence()
+      this.setBackgrondImage()
       this.updateNextAttackProgressBar()
 
       if (this.game.isGameOver()) {
@@ -157,7 +160,21 @@ export class GamePage {
     const currentTime = this.game.getPeaceTimeDuration()
     const width = 100 - (currentTime / totalTime) * 100
 
+    this.checkPogressBarStatus(width)
+
     this.progressBar.style.width = `${width.toFixed(2)}%`
+  }
+
+  private checkPogressBarStatus(width: number) {
+    if(width < 10) {
+      this.progressHeader.style.animation = "warnCicle 2s ease-in-out 0s alternate infinite none"
+      this.progressBar.style.backgroundColor = "red"
+    } else if(width >= 99) { // 1px margin to prevent from getting less then 100 in the interval
+      this.progressHeader.style.animation = "none"
+      this.progressHeader.style.backgroundColor = "rgba(255, 255, 255, 0.7)"
+      this.progressHeader.style.color = "var(--primary-color)"
+      this.progressBar.style.backgroundColor = "var(--primary-dark-color)"
+    }
   }
 
   private renderBuildings() {
@@ -216,7 +233,6 @@ export class GamePage {
             .join('')}
         </ul>
       </div>
-    </div>
     `
   }
 
