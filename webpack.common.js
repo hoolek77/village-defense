@@ -41,7 +41,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Village Defense',
+      title: 'Village Defence',
       template: path.resolve(__dirname, './src/index.html'),
       inject: true,
       filename: './index.html',

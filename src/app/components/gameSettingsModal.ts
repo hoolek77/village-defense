@@ -4,7 +4,7 @@ import { Difficulty } from '../models'
 import { renderPopup, removePopup } from './popup'
 import { createElement } from '../utils'
 
-export class GameSettingsView {
+export class GameSettingsModal {
   private app: App
   private audio: Audio
   private settingsBtn: HTMLButtonElement
@@ -18,6 +18,7 @@ export class GameSettingsView {
     ) as HTMLButtonElement
 
     this.audioElement = document.querySelector('audio') as HTMLAudioElement
+
     this.currentVolume = this.audioElement?.volume
 
     this.app = app
@@ -26,13 +27,6 @@ export class GameSettingsView {
     this.currentDifficulty = this.app.gameSettings.difficulty
 
     this.render()
-  }
-
-  private removeDefaultBtn() {
-    const popupCloseBtn: HTMLDivElement = document.querySelector(
-      '.popup__close-btn'
-    ) as HTMLDivElement
-    popupCloseBtn.style.display = 'none'
   }
 
   private getCurrentVolumeValue() {
@@ -73,7 +67,8 @@ export class GameSettingsView {
     ) as HTMLInputElement
     volumeInput?.addEventListener('input', () => {
       const value = +volumeInput.value / 100
-      this.audio.audioSettings(value)
+      this.currentVolume = value
+      this.audio.playAudio(value)
     })
 
     const difficultyEasyInput = document.querySelector(
@@ -98,9 +93,10 @@ export class GameSettingsView {
     })
 
     const popupCloseBtn = document.querySelector(
-      '.save__close-btn'
-    ) as HTMLDivElement
+      '.popup__close-btn'
+    ) as HTMLButtonElement
     popupCloseBtn.addEventListener('click', () => {
+      this.audio.audioSettings(this.currentVolume)
       const popup = document.querySelector('.popup') as HTMLDivElement
       popup.classList.remove('popup--active')
       removePopup()
@@ -110,7 +106,6 @@ export class GameSettingsView {
       '.popup__overlay'
     ) as HTMLDivElement
     popupOverlay.addEventListener('click', () => {
-      this.audio.audioSettings(this.currentVolume)
       this.app.gameSettings.difficulty = this.currentDifficulty
     })
   }
@@ -119,11 +114,6 @@ export class GameSettingsView {
     const wrapper = createElement({
       type: 'div',
       classes: ['settings__wrapper'],
-    })
-    const settingsHeading = createElement({
-      type: 'h1',
-      classes: ['settings__heading'],
-      content: 'Settings',
     })
     const volumeHeading = createElement({
       type: 'h2',
@@ -216,33 +206,28 @@ export class GameSettingsView {
     difficultyHardDiv.appendChild(difficultyHardInput)
     difficultyHardDiv.appendChild(difficultyHardLabel)
 
-    const saveAndCloseBtn = createElement({
-      type: 'div',
-      classes: ['start__screen__button', 'save__close-btn'],
-      content: 'Save and Close',
-    })
-
     wrapper.append(
-      settingsHeading,
       volumeHeading,
       volumeParagraph,
       volumeInput,
       difficultyHeading,
       difficultyEasyDiv,
       difficultyMediumDiv,
-      difficultyHardDiv,
-      saveAndCloseBtn
+      difficultyHardDiv
     )
     return wrapper
   }
 
   private render() {
     this.settingsBtn.addEventListener('click', () => {
-      renderPopup(this.createElements(), 'X')
+      renderPopup({
+        headerText: 'Settings',
+        popupContentHTML: this.createElements(),
+        closeBtnText: 'Save and Close',
+      })
       this.addListeners()
       this.getCurrentVolumeValue()
       this.getCurrentGameDifficulty()
-      this.removeDefaultBtn()
     })
   }
 }

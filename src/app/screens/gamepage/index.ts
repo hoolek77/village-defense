@@ -1,4 +1,5 @@
 import { App } from '../../app'
+import { GameOverModal } from '../../components'
 import { Game } from '../../game'
 import { Building } from '../../models'
 import { createElement } from '../../utils'
@@ -17,6 +18,8 @@ export class GamePage {
   private defenceElement!: HTMLElement
 
   private progressBar!: HTMLElement
+
+  private isGameOverModalVisible = false
 
   constructor(app: App, game: Game) {
     this.app = app
@@ -97,10 +100,14 @@ export class GamePage {
 
   private setClosePageEvent() {
     this.quitButton.addEventListener('click', () => {
-      this.app.resetGame()
-      this.app.showHomePage(true)
-      this.game.stop()
+      this.quitGame()
     })
+  }
+
+  private quitGame() {
+    this.app.resetGame()
+    this.app.showHomePage(true)
+    this.game.stop()
   }
 
   private startGame() {
@@ -115,6 +122,13 @@ export class GamePage {
       this.updatePopulation()
       this.updateDefence()
       this.updateNextAttackProgressBar()
+
+      if (this.game.isGameOver()) {
+        if (!this.isGameOverModalVisible) {
+          this.isGameOverModalVisible = true
+          this.showGameOverModal()
+        }
+      }
     })
   }
 
@@ -168,8 +182,8 @@ export class GamePage {
         const button = e.currentTarget as HTMLElement
 
         if (button) {
-          const buildingTitle = button.dataset.building || ''
-          const building = this.game.getBuilding(buildingTitle)
+          const buildingName = button.dataset.building || ''
+          const building = this.game.getBuilding(buildingName)
 
           if (building) {
             building.startBuilding()
@@ -186,7 +200,9 @@ export class GamePage {
       <div class="building">
       <h3 class="building__heading">${building.getTitle()}</h3>
       <p class="building__level">Level: ${building.getLevel()}</p>
-      <button class="building__upgrade-button" data-building="${building.getTitle()}">
+      <button class="building__upgrade-button" data-building="${
+        building.constructor.name
+      }">
         <i class="fas fa-plus-circle"></i>
       </button>
       <div class="building__details">
@@ -202,5 +218,12 @@ export class GamePage {
       </div>
     </div>
     `
+  }
+
+  private showGameOverModal() {
+    new GameOverModal(this.game).show(() => {
+      this.isGameOverModalVisible = false
+      this.quitGame()
+    })
   }
 }
