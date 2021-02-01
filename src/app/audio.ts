@@ -12,9 +12,15 @@ export class Audio {
   }
 
   audioSettings(volume: number) {
-    this.audioState = true
+    this.audioState = volume == 0 ? false : true
+
+    this.changeSpeakerState()
     this.changeAudioVolume(volume)
     this.playAudio(volume)
+  }
+
+  playAudio(volume?: number) {
+    this.audio.volume = volume ?? this.volume
   }
 
   private _init() {
@@ -22,12 +28,12 @@ export class Audio {
     this.playAudio()
   }
 
-  private playAudio(volume?: number) {
-    this.audio.volume = volume ?? this.volume
-  }
-
   private handleAudioStateChange() {
     this.audioState = !this.audioState
+    this.changeSpeakerState()
+  }
+
+  private changeSpeakerState() {
     if (this.audioState) {
       this.unmute()
       this.unmuteSpeaker.classList.remove('hide')

@@ -1,4 +1,4 @@
-//export * from './warehouse'
 export * from './popup'
-export * from './info'
-export * from './gameSettingsView'
+export * from './infoModal'
+export * from './gameSettingsModal'
+export * from './gameOverModal'
