@@ -348,7 +348,7 @@ export class Game {
   }
 
   private handlewWallWasBuilt(wall: Wall) {
-    this.villageDefence += wall.defence[wall.getLevel()]
+    this.villageDefence += wall.getDefence()
   }
 
   private handleWarehouseWasBuilt(warehouse: Warehouse) {

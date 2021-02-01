@@ -10,7 +10,7 @@ const MAX_LEVEL = 3
 const DEFENCE: number[] = [0, 10, 15, 20]
 
 export class Wall extends Building {
-  readonly defence = DEFENCE
+  private defence = DEFENCE
 
   constructor(game: Game) {
     super(
@@ -32,6 +32,10 @@ export class Wall extends Building {
       DEFAULT_TIME_TO_BUILD,
       MAX_LEVEL
     )
+  }
+
+  getDefence() {
+    return this.defence[this.level]
   }
 
   getTitle() {
