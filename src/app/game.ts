@@ -321,7 +321,7 @@ export class Game {
   }
 
   private handlewWallWasBuilt(wall: Wall) {
-    this.villageDefence += wall.defense
+    this.villageDefence += wall.defensePerLevel[wall.getLevel()]
   }
 
   private handleWarehouseWasBuilt(warehouse: Warehouse) {
@@ -351,7 +351,9 @@ export class Game {
   }
 
   private getTownHall(): TownHall | undefined {
-    return this.buildings.find((building) => building instanceof TownHall) as TownHall
+    return this.buildings.find(
+      (building) => building instanceof TownHall
+    ) as TownHall
   }
 
   private getAllResourcesCount() {
@@ -397,16 +399,17 @@ export class Game {
     }
   }
 
-  private reduceTimeBuilding(){
+  private reduceTimeBuilding() {
     const townHall = this.getTownHall()
     const percent = townHall?.reducingAmountResources()
     const buildings = this.getBuildings()
-    buildings.forEach(building => {
-      if(percent){
-        const timetoreduce = percent*building.timeToBuildInMiliseconds
-        return (building.timeToBuildInMiliseconds = building.timeToBuildInMiliseconds-timetoreduce)
+    buildings.forEach((building) => {
+      if (percent) {
+        const timetoreduce = percent * building.timeToBuildInMiliseconds
+        return (building.timeToBuildInMiliseconds =
+          building.timeToBuildInMiliseconds - timetoreduce)
       }
-    });
+    })
   }
 
   private stealResources(enemies: Unit[]) {
@@ -449,7 +452,7 @@ export class Game {
     }
 
     if (wall) {
-      maxEnemiesCount += Math.round((wall.getLevel() * wall.defense) / 10)
+      maxEnemiesCount += Math.round(this.villageDefence / 10)
     }
 
     switch (this.difficulty) {
