@@ -348,7 +348,7 @@ export class Game {
   }
 
   private handlewWallWasBuilt(wall: Wall) {
-    this.villageDefence += wall.defence
+    this.villageDefence += wall.getDefence()
   }
 
   private handleWarehouseWasBuilt(warehouse: Warehouse) {
@@ -481,7 +481,7 @@ export class Game {
     }
 
     if (wall) {
-      maxEnemiesCount += Math.round((wall.getLevel() * wall.defence) / 10)
+      maxEnemiesCount += Math.round(this.villageDefence / 10)
     }
 
     switch (this.difficulty) {

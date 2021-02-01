@@ -3,7 +3,7 @@ export const DEFAULT_WOOD = 100
 export const DEFAULT_STONE = 100
 export const DEFAULT_STORAGE_CAPACITY = 600
 
-export const START_POPULATION = 10
+export const START_POPULATION = 100
 
 export const EASY_ATTACK_COUNTDOWN_IN_MILISECONDS = 10 * 60 * 1000
 export const MEDIUM_ATTACK_COUNTDOWN_IN_MILISECONDS = 0.15 * 60 * 1000 // TODO: change to 8 after testing
