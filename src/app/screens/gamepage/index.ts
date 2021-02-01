@@ -76,7 +76,9 @@ export class GamePage {
       '.defence__count'
     ) as HTMLElement
 
-    this.progressBar = document.querySelector('.progress-bar') as HTMLElement
+    this.progressBar = document.querySelector(
+      '.next-attack-progress-bar'
+    ) as HTMLElement
   }
 
   private bindEvents() {
@@ -122,6 +124,7 @@ export class GamePage {
       this.updatePopulation()
       this.updateDefence()
       this.updateNextAttackProgressBar()
+      this.updateBuildings()
 
       if (this.game.isGameOver()) {
         if (!this.isGameOverModalVisible) {
@@ -158,6 +161,32 @@ export class GamePage {
     const width = 100 - (currentTime / totalTime) * 100
 
     this.progressBar.style.width = `${width.toFixed(2)}%`
+  }
+
+  private updateBuildings() {
+    this.game.getBuildings().forEach((building) => {
+      const buildingName = building.constructor.name
+
+      const progressBar = document.querySelector(
+        `.building__progress-bar--${buildingName}`
+      ) as HTMLElement
+
+      const upgradeButton = document.querySelector(
+        `.building__upgrade-button--${buildingName}`
+      ) as HTMLButtonElement
+
+      if (building.isBuilding) {
+        const totalTime = building.timeToBuildInMiliseconds
+        const remainingTime = building.remainingTimeToBuild
+        const width = 100 - (remainingTime / totalTime) * 100
+
+        progressBar.style.width = `${width.toFixed(2)}%`
+        upgradeButton.disabled = true
+      } else {
+        progressBar.style.width = '0%'
+        upgradeButton.disabled = false
+      }
+    })
   }
 
   private renderBuildings() {
@@ -200,9 +229,17 @@ export class GamePage {
       <div class="building">
       <h3 class="building__heading">${building.getTitle()}</h3>
       <p class="building__level">Level: ${building.getLevel()}</p>
-      <button class="building__upgrade-button" data-building="${
+      <div class="progress building__progress">
+        <div
+          class="progress-bar building__progress-bar building__progress-bar--${
+            building.constructor.name
+          }"
+          role="progressbar">
+        </div>
+      </div>
+      <button class="building__upgrade-button building__upgrade-button--${
         building.constructor.name
-      }">
+      }" data-building="${building.constructor.name}">
         <i class="fas fa-plus-circle"></i>
       </button>
       <div class="building__details">

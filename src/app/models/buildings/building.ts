@@ -4,7 +4,9 @@ import { Resource } from '../types'
 
 export class Building {
   protected level = 0
-  protected isBuilding = false
+
+  isBuilding = false
+  remainingTimeToBuild = this.timeToBuildInMiliseconds
 
   constructor(
     protected game: Game,
@@ -48,11 +50,12 @@ export class Building {
   update() {
     if (this.isBuilding) {
       console.log(`${this} is building`)
-      this.timeToBuildInMiliseconds -= GAME_LOOP_DELAY_IN_MILISECONDS
+      this.remainingTimeToBuild -= GAME_LOOP_DELAY_IN_MILISECONDS
 
-      if (this.timeToBuildInMiliseconds <= 0) {
+      if (this.remainingTimeToBuild <= 0) {
         this.isBuilding = false
         this.level++
+        this.remainingTimeToBuild = this.timeToBuildInMiliseconds
 
         this.game.handleBuildingWasBuilt(this)
         this.handleBuildingWasBuilt()
