@@ -3,10 +3,10 @@ import {
   DEFAULT_STONE,
   DEFAULT_STORAGE_CAPACITY,
   DEFAULT_WOOD,
-  EASY_ATTACK_COUNTDOWN_IN_SECONDS,
-  HARD_ATTACK_COUNTDOWN_IN_SECONDS,
-  MEDIUM_ATTACK_COUNTDOWN_IN_SECONDS,
-  ONE_SECOND,
+  EASY_ATTACK_COUNTDOWN_IN_MILISECONDS,
+  GAME_LOOP_DELAY_IN_MILISECONDS,
+  HARD_ATTACK_COUNTDOWN_IN_MILISECONDS,
+  MEDIUM_ATTACK_COUNTDOWN_IN_MILISECONDS,
   START_POPULATION,
 } from './constants'
 import {
@@ -54,8 +54,17 @@ export class Game {
 
   private population = START_POPULATION
 
-  private gameTimeInSeconds = 0
-  private nextAttackCountdownInSeconds = this.calculateNextAttack()
+  private elapsedTimeInMilliseconds = 0
+  private startTime = 0
+
+  private peaceTime = 0
+  private peaceTimeDuration = 0
+
+  private attackDurationInMiliseconds = 5 * 1000
+  private attackDuration = 0
+  private attackStartTime = 0
+  private attackInProgress = false
+  private nextAttackTotalInMiliseconds = this.calculateNextAttack()
 
   private intervalId?: number
 
@@ -76,7 +85,13 @@ export class Game {
   start(onGameUpdate: () => void) {
     this.onGameUpdate = onGameUpdate
 
-    this.intervalId = window.setInterval(() => this.update(), ONE_SECOND)
+    this.startTime = Date.now()
+    this.peaceTime = Date.now()
+
+    this.intervalId = window.setInterval(
+      () => this.update(),
+      GAME_LOOP_DELAY_IN_MILISECONDS
+    )
   }
 
   stop() {
@@ -124,8 +139,6 @@ export class Game {
       this.handlewWallWasBuilt(building as Wall)
     } else if (building instanceof Warehouse) {
       this.handleWarehouseWasBuilt(building as Warehouse)
-    } else if (building instanceof Goldmine) {
-      this.handleGoldmineWasBuilt(building as Goldmine)
     } else if (building instanceof TownHall) {
       this.reduceTimeBuilding()
     }
@@ -155,12 +168,75 @@ export class Game {
     return this.getUnitsDefence(this.villageUnits) + this.villageDefence
   }
 
-  getNextAttack() {
-    return this.nextAttackCountdownInSeconds
+  getNextAttackTotal() {
+    return this.nextAttackTotalInMiliseconds
+  }
+
+  getPeaceTimeDuration() {
+    return this.peaceTimeDuration
   }
 
   getBuilding(title: string) {
     return this.buildings.find((building) => building.getTitle() === title)
+  }
+
+  private update() {
+    console.log('Updating game')
+
+    this.updateBuildings()
+    this.renderBuildings()
+    this.renderUnits()
+
+    if (this.onGameUpdate) {
+      this.onGameUpdate()
+    }
+
+    this.elapsedTimeInMilliseconds = Date.now() - this.startTime
+
+    if (!this.attackInProgress) {
+      this.peaceTimeDuration = Date.now() - this.peaceTime
+    }
+
+    console.log('elapsed game time', this.elapsedTimeInMilliseconds)
+    console.log('pease time duration', this.peaceTimeDuration)
+    console.log('next attack total in ms', this.nextAttackTotalInMiliseconds)
+    if (
+      this.attackInProgress ||
+      this.peaceTimeDuration >= this.nextAttackTotalInMiliseconds
+    ) {
+      // start attack simulation
+      if (!this.attackInProgress) {
+        this.attackInProgress = true
+        this.attackStartTime = Date.now()
+      }
+
+      this.attackDuration = Date.now() - this.attackStartTime
+
+      // to update progress bar before attack ends (it needs time to render to 100%)
+      if (this.attackDuration + 1000 >= this.attackDurationInMiliseconds) {
+        this.peaceTimeDuration = 0
+        this.nextAttackTotalInMiliseconds = this.calculateNextAttack()
+        if (this.onGameUpdate) {
+          this.onGameUpdate()
+        }
+      }
+
+      // attack was finished
+      if (this.attackDuration >= this.attackDurationInMiliseconds) {
+        this.attackInProgress = false
+        this.attackStartTime = 0
+        this.attackDuration = 0
+      }
+
+      if (!this.attackInProgress) {
+        this.peaceTimeDuration = 0
+        this.peaceTime = Date.now()
+
+        this.nextAttackTotalInMiliseconds = this.calculateNextAttack()
+
+        this.handleAttack()
+      }
+    }
   }
 
   private resetGame() {
@@ -172,8 +248,15 @@ export class Game {
 
     this.population = START_POPULATION
 
-    this.gameTimeInSeconds = 0
-    this.nextAttackCountdownInSeconds = this.calculateNextAttack()
+    this.startTime = 0
+    this.elapsedTimeInMilliseconds = 0
+    this.peaceTime = 0
+    this.peaceTimeDuration = 0
+
+    this.attackDuration = 0
+    this.attackStartTime = 0
+    this.attackInProgress = false
+    this.nextAttackTotalInMiliseconds = this.calculateNextAttack()
 
     this.changeGoldAmount(DEFAULT_GOLD)
     this.changeWoodAmount(DEFAULT_WOOD)
@@ -245,8 +328,16 @@ export class Game {
     this.storageCapacity += warehouse.capacity
   }
 
-  private handleGoldmineWasBuilt(goldmine: Goldmine) {
-    this.changeGoldAmount(this.getGoldAmount() + goldmine.goldProduction)
+  handleGoldmineWasBuilt(goldmine: Goldmine) {
+    this.changeGoldAmount(this.getGoldAmount() + goldmine.getProduction())
+  }
+
+  handleQuarryWasBuilt(quarry: Quarry) {
+    this.changeStoneAmount(this.getStoneAmount() + quarry.getProduction())
+  }
+
+  handleSawmillWasBuilt(sawmill: Sawmill) {
+    this.changeWoodAmount(this.getWoodAmount() + sawmill.getProduction())
   }
 
   private getWarehouse(): Warehouse | undefined {
@@ -271,30 +362,6 @@ export class Game {
 
   private getListOfAvailableResources() {
     return this.resources.filter((resource) => resource.count > 0)
-  }
-
-  private update() {
-    console.log('Updating game')
-    console.log('game time', this.gameTimeInSeconds)
-    console.log('next attak', this.nextAttackCountdownInSeconds)
-    console.log(this.getBuildings()[0])
-    console.log(this.getBuildings()[1])
-
-    this.updateBuildings()
-    this.renderBuildings()
-    this.renderUnits()
-
-    if (this.onGameUpdate) {
-      this.onGameUpdate()
-    }
-
-    this.gameTimeInSeconds++
-    this.nextAttackCountdownInSeconds--
-
-    if (this.nextAttackCountdownInSeconds <= 0) {
-      this.nextAttackCountdownInSeconds = this.calculateNextAttack()
-      this.handleAttack()
-    }
   }
 
   private renderBuildings() {
@@ -336,8 +403,8 @@ export class Game {
     const buildings = this.getBuildings()
     buildings.forEach(building => {
       if(percent){
-        const timetoreduce = percent*building.timeToBuildInSeconds
-        return (building.timeToBuildInSeconds = building.timeToBuildInSeconds-timetoreduce)
+        const timetoreduce = percent*building.timeToBuildInMiliseconds
+        return (building.timeToBuildInMiliseconds = building.timeToBuildInMiliseconds-timetoreduce)
       }
     });
   }
@@ -435,43 +502,55 @@ export class Game {
   private calculateNextAttack() {
     let interval = 0
 
-    const FIRST_GAME_TIME_THRESHOLD = 2 * 60 // TODO: change to 10 after testing
-    const SECOND_GAME_TIME_THRESHOLD = 15 * 60
-    const THIRD_GAME_TIME_THRESHOLD = 20 * 60
+    const FIRST_GAME_TIME_THRESHOLD = 2 * 60 * 1000 // TODO: change to 10 after testing
+    const SECOND_GAME_TIME_THRESHOLD = 15 * 60 * 1000
+    const THIRD_GAME_TIME_THRESHOLD = 20 * 60 * 1000
 
     switch (this.difficulty) {
       case Difficulty.Easy:
-        interval = EASY_ATTACK_COUNTDOWN_IN_SECONDS
+        interval = EASY_ATTACK_COUNTDOWN_IN_MILISECONDS
 
-        if (this.gameTimeInSeconds >= THIRD_GAME_TIME_THRESHOLD) {
+        if (this.elapsedTimeInMilliseconds >= THIRD_GAME_TIME_THRESHOLD) {
           interval *= 0.4
-        } else if (this.gameTimeInSeconds >= SECOND_GAME_TIME_THRESHOLD) {
+        } else if (
+          this.elapsedTimeInMilliseconds >= SECOND_GAME_TIME_THRESHOLD
+        ) {
           interval *= 0.6
-        } else if (this.gameTimeInSeconds >= FIRST_GAME_TIME_THRESHOLD) {
+        } else if (
+          this.elapsedTimeInMilliseconds >= FIRST_GAME_TIME_THRESHOLD
+        ) {
           interval *= 0.8
         }
 
         break
       case Difficulty.Medium:
-        interval = MEDIUM_ATTACK_COUNTDOWN_IN_SECONDS
+        interval = MEDIUM_ATTACK_COUNTDOWN_IN_MILISECONDS
 
-        if (this.gameTimeInSeconds >= THIRD_GAME_TIME_THRESHOLD) {
+        if (this.elapsedTimeInMilliseconds >= THIRD_GAME_TIME_THRESHOLD) {
           interval *= 0.3
-        } else if (this.gameTimeInSeconds >= SECOND_GAME_TIME_THRESHOLD) {
+        } else if (
+          this.elapsedTimeInMilliseconds >= SECOND_GAME_TIME_THRESHOLD
+        ) {
           interval *= 0.5
-        } else if (this.gameTimeInSeconds >= FIRST_GAME_TIME_THRESHOLD) {
+        } else if (
+          this.elapsedTimeInMilliseconds >= FIRST_GAME_TIME_THRESHOLD
+        ) {
           interval *= 0.8
         }
 
         break
       case Difficulty.Hard:
-        interval = HARD_ATTACK_COUNTDOWN_IN_SECONDS
+        interval = HARD_ATTACK_COUNTDOWN_IN_MILISECONDS
 
-        if (this.gameTimeInSeconds >= THIRD_GAME_TIME_THRESHOLD) {
+        if (this.elapsedTimeInMilliseconds >= THIRD_GAME_TIME_THRESHOLD) {
           interval *= 0.2
-        } else if (this.gameTimeInSeconds >= SECOND_GAME_TIME_THRESHOLD) {
+        } else if (
+          this.elapsedTimeInMilliseconds >= SECOND_GAME_TIME_THRESHOLD
+        ) {
           interval *= 0.4
-        } else if (this.gameTimeInSeconds >= FIRST_GAME_TIME_THRESHOLD) {
+        } else if (
+          this.elapsedTimeInMilliseconds >= FIRST_GAME_TIME_THRESHOLD
+        ) {
           interval *= 0.8
         }
 

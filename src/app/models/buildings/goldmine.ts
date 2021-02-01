@@ -2,15 +2,16 @@ import { Game } from '../../game'
 import { ResourceType } from '../types'
 import { Building } from './building'
 
-const GOLD_PRODUCTION = 10
+const GOLD_PRODUCTION: number[] = [0, 3, 5, 7, 10, 12]
 const GOLD = 5
 const WOOD = 1
 const STONE = 4
-const DEFAULT_TIME_TO_BUILD = 200
+const DEFAULT_TIME_TO_BUILD = 200 * 1000
 const MAX_LEVEL = 5
 
 export class Goldmine extends Building {
   readonly goldProduction = GOLD_PRODUCTION
+  private passiveIncomeInterval: any
 
   constructor(game: Game) {
     super(
@@ -32,6 +33,19 @@ export class Goldmine extends Building {
       DEFAULT_TIME_TO_BUILD,
       MAX_LEVEL
     )
+  }
+
+  handleBuildingWasBuilt() {
+    if (this.passiveIncomeInterval) {
+      return
+    }
+    this.passiveIncomeInterval = setInterval(() => {
+      this.game.handleGoldmineWasBuilt(this)
+    }, 30000)
+  }
+
+  getProduction() {
+    return this.goldProduction[this.level]
   }
 
   getTitle() {

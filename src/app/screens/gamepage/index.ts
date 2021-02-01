@@ -108,12 +108,14 @@ export class GamePage {
   }
 
   private updateUI() {
-    this.updateGoldAmount()
-    this.updateWoodAmount()
-    this.updateStoneAmount()
-    this.updatePopulation()
-    this.updateDefence()
-    this.updateNextAttackProgressBar()
+    requestAnimationFrame(() => {
+      this.updateGoldAmount()
+      this.updateWoodAmount()
+      this.updateStoneAmount()
+      this.updatePopulation()
+      this.updateDefence()
+      this.updateNextAttackProgressBar()
+    })
   }
 
   private updateGoldAmount() {
@@ -137,8 +139,11 @@ export class GamePage {
   }
 
   private updateNextAttackProgressBar() {
-    const width = (this.game.getNextAttack() * 100) / 30
-    this.progressBar.style.width = `${width}%`
+    const totalTime = this.game.getNextAttackTotal()
+    const currentTime = this.game.getPeaceTimeDuration()
+    const width = 100 - (currentTime / totalTime) * 100
+
+    this.progressBar.style.width = `${width.toFixed(2)}%`
   }
 
   private renderBuildings() {

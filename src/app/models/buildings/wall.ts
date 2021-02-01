@@ -5,7 +5,7 @@ import { Building } from './building'
 const GOLD = 1
 const WOOD = 1
 const STONE = 3
-const DEFAULT_TIME_TO_BUILD = 15 // TODO: change after testing
+const DEFAULT_TIME_TO_BUILD = 15 * 1000 // TODO: change after testing
 const MAX_LEVEL = 3
 const DEFENSE = 10
 
