@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .population__heading,
@@ -26,4 +27,5 @@
   background-image: url('/src/assets/images/homepage/elves.png');
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
 }
