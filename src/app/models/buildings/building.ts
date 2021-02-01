@@ -9,7 +9,7 @@ export class Building {
   constructor(
     protected game: Game,
     protected resourcesNeededToBuild: Resource[],
-    protected timeToBuildInMiliseconds: number,
+    public timeToBuildInMiliseconds: number,
     protected maxLevel: number
   ) {}
 
