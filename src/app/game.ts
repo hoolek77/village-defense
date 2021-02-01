@@ -139,6 +139,8 @@ export class Game {
       this.handlewWallWasBuilt(building as Wall)
     } else if (building instanceof Warehouse) {
       this.handleWarehouseWasBuilt(building as Warehouse)
+    } else if (building instanceof TownHall) {
+      this.reduceTimeBuilding()
     }
   }
 
@@ -355,6 +357,10 @@ export class Game {
     return this.buildings.find((building) => building instanceof Wall) as Wall
   }
 
+  private getTownHall(): TownHall | undefined {
+    return this.buildings.find((building) => building instanceof TownHall) as TownHall
+  }
+
   private getAllResourcesCount() {
     return this.resources.reduce((prev, resource) => {
       return prev + resource.count
@@ -396,6 +402,18 @@ export class Game {
     if (this.population < 0) {
       this.population = 0
     }
+  }
+
+  private reduceTimeBuilding(){
+    const townHall = this.getTownHall()
+    const percent = townHall?.reducingAmountResources()
+    const buildings = this.getBuildings()
+    buildings.forEach(building => {
+      if(percent){
+        const timetoreduce = percent*building.timeToBuildInMiliseconds
+        return (building.timeToBuildInMiliseconds = building.timeToBuildInMiliseconds-timetoreduce)
+      }
+    });
   }
 
   private stealResources(enemies: Unit[]) {
