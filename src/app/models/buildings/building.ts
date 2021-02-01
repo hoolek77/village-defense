@@ -79,11 +79,14 @@ export class Building {
         this.isBuilding = false
         this.handleBuildingWasBuilt()
         this.game.handleBuildingWasBuilt(this)
+        this.handleBuildingContent()
       }
     }
   }
 
-  protected handleBuildingWasBuilt() {
+  protected handleBuildingWasBuilt() {}
+
+  private handleBuildingContent() {
     this.level++
     this.updateBuildingContainer()
     this.remainingTimeToBuild = this.timeToBuildInMiliseconds
