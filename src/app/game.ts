@@ -66,6 +66,8 @@ export class Game {
   private attackInProgress = false
   private nextAttackTotalInMiliseconds = this.calculateNextAttack()
 
+  private attackSurvived = 0
+
   private intervalId?: number
 
   private onGameUpdate?: () => void
@@ -95,10 +97,7 @@ export class Game {
   }
 
   stop() {
-    if (this.intervalId !== undefined) {
-      window.clearInterval(this.intervalId!)
-    }
-
+    this.stopGameLoop()
     this.resetGame()
     this.addBuildings()
   }
@@ -176,8 +175,22 @@ export class Game {
     return this.peaceTimeDuration
   }
 
-  getBuilding(title: string) {
-    return this.buildings.find((building) => building.getTitle() === title)
+  getBuilding(buildingName: string) {
+    return this.buildings.find(
+      (building) => building.constructor.name === buildingName
+    )
+  }
+
+  getGameElapsedTimeInSeconds() {
+    return this.elapsedTimeInMilliseconds / 1000
+  }
+
+  getSurvivedAttacks() {
+    return this.attackSurvived
+  }
+
+  isGameOver() {
+    return this.population <= 0
   }
 
   private update() {
@@ -191,15 +204,20 @@ export class Game {
       this.onGameUpdate()
     }
 
+    if (this.isGameOver()) {
+      this.stopGameLoop()
+      return
+    }
+
     this.elapsedTimeInMilliseconds = Date.now() - this.startTime
 
     if (!this.attackInProgress) {
       this.peaceTimeDuration = Date.now() - this.peaceTime
     }
 
-    console.log('elapsed game time', this.elapsedTimeInMilliseconds)
-    console.log('pease time duration', this.peaceTimeDuration)
-    console.log('next attack total in ms', this.nextAttackTotalInMiliseconds)
+    // console.log('elapsed game time', this.elapsedTimeInMilliseconds)
+    // console.log('pease time duration', this.peaceTimeDuration)
+    // console.log('next attack total in ms', this.nextAttackTotalInMiliseconds)
     if (
       this.attackInProgress ||
       this.peaceTimeDuration >= this.nextAttackTotalInMiliseconds
@@ -216,7 +234,8 @@ export class Game {
       if (this.attackDuration + 1000 >= this.attackDurationInMiliseconds) {
         this.peaceTimeDuration = 0
         this.nextAttackTotalInMiliseconds = this.calculateNextAttack()
-        if (this.onGameUpdate) {
+
+        if (!this.isGameOver() && this.onGameUpdate) {
           this.onGameUpdate()
         }
       }
@@ -239,6 +258,12 @@ export class Game {
     }
   }
 
+  private stopGameLoop() {
+    if (this.intervalId !== undefined) {
+      window.clearInterval(this.intervalId!)
+    }
+  }
+
   private resetGame() {
     this.storageCapacity = DEFAULT_STORAGE_CAPACITY
     this.villageDefence = 0
@@ -257,6 +282,8 @@ export class Game {
     this.attackStartTime = 0
     this.attackInProgress = false
     this.nextAttackTotalInMiliseconds = this.calculateNextAttack()
+
+    this.attackSurvived = 0
 
     this.changeGoldAmount(DEFAULT_GOLD)
     this.changeWoodAmount(DEFAULT_WOOD)
@@ -321,7 +348,7 @@ export class Game {
   }
 
   private handlewWallWasBuilt(wall: Wall) {
-    this.villageDefence += wall.defense
+    this.villageDefence += wall.defence
   }
 
   private handleWarehouseWasBuilt(warehouse: Warehouse) {
@@ -351,7 +378,9 @@ export class Game {
   }
 
   private getTownHall(): TownHall | undefined {
-    return this.buildings.find((building) => building instanceof TownHall) as TownHall
+    return this.buildings.find(
+      (building) => building instanceof TownHall
+    ) as TownHall
   }
 
   private getAllResourcesCount() {
@@ -386,6 +415,8 @@ export class Game {
       console.log('population after reduction', this.population)
       console.log('all resources count', this.getAllResourcesCount())
       this.stealResources(enemies)
+    } else {
+      this.attackSurvived++
     }
   }
 
@@ -397,16 +428,17 @@ export class Game {
     }
   }
 
-  private reduceTimeBuilding(){
+  private reduceTimeBuilding() {
     const townHall = this.getTownHall()
     const percent = townHall?.reducingAmountResources()
     const buildings = this.getBuildings()
-    buildings.forEach(building => {
-      if(percent){
-        const timetoreduce = percent*building.timeToBuildInMiliseconds
-        return (building.timeToBuildInMiliseconds = building.timeToBuildInMiliseconds-timetoreduce)
+    buildings.forEach((building) => {
+      if (percent) {
+        const timetoreduce = percent * building.timeToBuildInMiliseconds
+        return (building.timeToBuildInMiliseconds =
+          building.timeToBuildInMiliseconds - timetoreduce)
       }
-    });
+    })
   }
 
   private stealResources(enemies: Unit[]) {
@@ -449,20 +481,20 @@ export class Game {
     }
 
     if (wall) {
-      maxEnemiesCount += Math.round((wall.getLevel() * wall.defense) / 10)
+      maxEnemiesCount += Math.round((wall.getLevel() * wall.defence) / 10)
     }
 
     switch (this.difficulty) {
       case Difficulty.Easy:
-        maxEnemiesCount += Math.round(maxEnemiesCount * 1.2)
+        maxEnemiesCount += Math.round(maxEnemiesCount * 1.1)
 
         break
       case Difficulty.Medium:
-        maxEnemiesCount += Math.round(maxEnemiesCount * 1.8)
+        maxEnemiesCount += Math.round(maxEnemiesCount * 1.3)
 
         break
       case Difficulty.Hard:
-        maxEnemiesCount += Math.round(maxEnemiesCount * 2)
+        maxEnemiesCount += Math.round(maxEnemiesCount * 1.5)
 
         break
     }

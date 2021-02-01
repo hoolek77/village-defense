@@ -1,0 +1,14 @@
+.game-over__content {
+  margin: 0 auto;
+  width: 60%;
+}
+
+.game-over__heading {
+  font-size: 3rem;
+  margin-bottom: 3rem;
+}
+
+.game-over__statistics {
+  font-size: 2.4rem;
+  text-align: left;
+}

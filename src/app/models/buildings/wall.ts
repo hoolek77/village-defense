@@ -7,10 +7,10 @@ const WOOD = 1
 const STONE = 3
 const DEFAULT_TIME_TO_BUILD = 15 * 1000 // TODO: change after testing
 const MAX_LEVEL = 3
-const DEFENSE = 10
+const DEFENCE = 10
 
 export class Wall extends Building {
-  readonly defense = DEFENSE
+  readonly defence = DEFENCE
 
   constructor(game: Game) {
     super(
