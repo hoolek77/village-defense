@@ -35,7 +35,7 @@
               <button class="start__screen__button" id="start-game-button">
                 Start
               </button>
-    
+
               <div
                 class="start__screen__button start__screen__button--list"
                 id="character-dropdown"
@@ -65,7 +65,9 @@
               <button class="start__screen__button" id="settings-button">
                 Settings
               </button>
-              <button class="start__screen__button" id="info-button">Info</button>
+              <button class="start__screen__button" id="info-button">
+                Info
+              </button>
             </div>
           </div>
         </div>
@@ -79,13 +81,13 @@
           <button class="quit-button">Quit</button>
         </div>
         <div class="main-area">
-            <h2 class="info__heading">Next Attack</h2>
-            <div class="progress">
-              <div
-                class="progress-bar progress-bar-striped progress-bar-animated active"
-                role="progressbar"
-              ></div>
-            </div>
+          <h2 class="info__heading">Next Attack</h2>
+          <div class="progress next-attack-progress">
+            <div
+              class="progress-bar progress-bar-striped progress-bar-animated active next-attack-progress-bar"
+              role="progressbar"
+            ></div>
+          </div>
         </div>
         <div class="buildings-box">
           <div class="buildings">
@@ -140,9 +142,7 @@
             <p>Gold: <span id="goldAmount">0</span></p>
           </div>
         </div>
-        <div class="info-box">
-          
-        </div>
+        <div class="info-box"></div>
       </section>
     </template>
 
