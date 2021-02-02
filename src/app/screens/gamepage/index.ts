@@ -213,7 +213,6 @@ export class GamePage {
 
   private renderBuildings() {
     const list = document.querySelector('.buildings__list') as HTMLElement
-
     this.game.getBuildings().forEach((building) => {
       const buildingItemElement = createElement({
         type: 'li',
@@ -231,7 +230,6 @@ export class GamePage {
     upgradeButtonElements.forEach((upgradeButtonElement) => {
       upgradeButtonElement.addEventListener('click', (e) => {
         const button = e.currentTarget as HTMLElement
-
         if (button) {
           const buildingName = button.dataset.building || ''
           const building = this.game.getBuilding(buildingName)
@@ -250,7 +248,9 @@ export class GamePage {
     return `
       <div class="building">
       <h3 class="building__heading">${building.getTitle()}</h3>
-      <p class="building__level">Level: ${building.getLevel()}</p>
+      <p class="building__level building__level--${
+        building.constructor.name
+      }">Level: ${building.getLevel()}</p>
       <div class="progress building__progress">
         <div
           class="progress-bar building__progress-bar building__progress-bar--${
@@ -270,7 +270,7 @@ export class GamePage {
         <ul class="building__details-resources">
           ${resources
             .map((resource) => {
-              return `<li class="building__price building__price--${resource.type}">${resource.count} ${resource.type}</li>`
+              return `<li class="building__price building__price--${resource.type} building__price--${building.constructor.name}">${resource.count} ${resource.type}</li>`
             })
             .join('')}
         </ul>

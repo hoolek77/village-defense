@@ -352,7 +352,14 @@ export class Game {
   }
 
   private handleWarehouseWasBuilt(warehouse: Warehouse) {
-    this.storageCapacity += warehouse.capacity
+    this.storageCapacity += parseInt((warehouse.capacity * 1.5).toFixed(0))
+    this.increaseResourcesNeededToBuild(warehouse)
+  }
+
+  private increaseResourcesNeededToBuild(builing: Building) {
+    builing.resourcesNeededToBuild.forEach((res) => {
+      res.count = parseInt((res.count * 1.5).toFixed(0))
+    })
   }
 
   handleGoldmineWasBuilt(goldmine: Goldmine) {
