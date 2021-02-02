@@ -26,13 +26,11 @@ export class Battle {
 
   private createBattle() {
     const battleEffects = createElement({
-      type: 'iframe',
+      type: 'img',
+      classes: ['battle__effects'],
     })
 
     battleEffects.setAttribute('src', '../../assets/gif/battle.gif')
-    battleEffects.setAttribute('frameborder', '0')
-    battleEffects.setAttribute('width', '500')
-    battleEffects.setAttribute('height', '300')
 
     this.battleContainer.appendChild(battleEffects)
   }
@@ -53,6 +51,7 @@ export class Battle {
       const battleContainer = document.querySelector(
         '.battle__container'
       ) as HTMLElement
+      battleContainer.style.animation = 'battleExit'
       battleContainer.remove()
       this.infoHeading.style.opacity = '1'
       this.progress.style.opacity = '1'

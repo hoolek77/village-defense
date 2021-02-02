@@ -4,4 +4,35 @@
   height: 100%;
   align-items: center;
   justify-content: center;
+  animation: battleEntry;
+  animation-duration: 0.8s;
+  transition: all 0.8s;
+}
+
+.battle__effects {
+  width: 100%;
+  height: auto;
+  box-shadow: 1px 1px 2px 3px #0a0a0a;
+}
+
+@keyframes battleEntry {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes battleExit {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
 }
