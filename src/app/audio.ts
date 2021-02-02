@@ -11,6 +11,10 @@ export class Audio {
     this._init()
   }
 
+  changeAudioSource(source: string) {
+    this.audio.src = source
+  }
+
   audioSettings(volume: number) {
     this.audioState = volume == 0 ? false : true
 
