@@ -182,7 +182,9 @@ export class GamePage {
     return `
       <div class="building">
       <h3 class="building__heading">${building.getTitle()}</h3>
-      <p class="building__level building__level--${building.getTitle()}">Level: ${building.getLevel()}</p>
+      <p class="building__level building__level--${
+        building.constructor.name
+      }">Level: ${building.getLevel()}</p>
       <button class="building__upgrade-button" data-building="${building.getTitle()}">
         <i class="fas fa-plus-circle"></i>
       </button>
@@ -192,11 +194,7 @@ export class GamePage {
         <ul class="building__details-resources">
           ${resources
             .map((resource) => {
-              return `<li class="building__price building__price--${
-                resource.type
-              } building__price--${building.getTitle()}">${resource.count} ${
-                resource.type
-              }</li>`
+              return `<li class="building__price building__price--${resource.type} building__price--${building.constructor.name}">${resource.count} ${resource.type}</li>`
             })
             .join('')}
         </ul>

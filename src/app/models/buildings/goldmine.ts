@@ -49,7 +49,7 @@ export class Goldmine extends Building {
   }
 
   getTitle() {
-    return 'GoldMine'
+    return 'Gold Mine'
   }
 
   getDescription() {

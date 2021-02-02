@@ -49,14 +49,14 @@ export class Building {
 
   getLevelContainer() {
     const levelContainer = document.querySelector(
-      `.building__level--${this.getTitle()}`
+      `.building__level--${this.constructor.name}`
     ) as HTMLElement
     return levelContainer
   }
 
   getBuildingPriceContainer() {
     const container = document.querySelectorAll(
-      `.building__price--${this.getTitle()}`
+      `.building__price--${this.constructor.name}`
     )
     return container
   }
