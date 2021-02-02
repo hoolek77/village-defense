@@ -4,7 +4,9 @@ import { Resource } from '../types'
 
 export class Building {
   protected level = 0
-  protected isBuilding = false
+
+  isBuilding = false
+  remainingTimeToBuild = this.timeToBuildInMiliseconds
 
   constructor(
     protected game: Game,
@@ -12,8 +14,6 @@ export class Building {
     public timeToBuildInMiliseconds: number,
     protected maxLevel: number
   ) {}
-
-  protected remainingTimeToBuild = this.timeToBuildInMiliseconds
 
   getLevel() {
     return this.level

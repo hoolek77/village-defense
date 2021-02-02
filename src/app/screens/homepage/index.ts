@@ -9,7 +9,7 @@ import {
   getFractionForName,
   setCSSProperty,
 } from '../../utils'
-import { InfoContentProvider, GameSettingsView } from '../../components'
+import { InfoModal, GameSettingsModal } from '../../components'
 
 export class HomePage {
   private app: App
@@ -185,7 +185,7 @@ export class HomePage {
     this.triggerInfoButton()
     this.triggerStartButton()
     this.triggerSettingsButton()
-    new InfoContentProvider()
-    new GameSettingsView(this.app, this.audio)
+    new InfoModal()
+    new GameSettingsModal(this.app, this.audio)
   }
 }

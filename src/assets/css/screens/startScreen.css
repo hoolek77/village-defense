@@ -3,7 +3,6 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,10 +53,14 @@
   animation: fadeIn 1s;
 }
 
-.start__screen--exclamation {
+.start__screen--content {
+  margin-top: 5vh;
+  width: 100%;
+}
+
+.start__screen--header {
   z-index: 5;
   width: 100%;
-  height: 5vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,6 +70,13 @@
   letter-spacing: 0.1em;
   font-weight: 900;
 }
+
+.start__screen--body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .start__screen__logoContainer {
   width: 50vw;
   height: 90vh;
@@ -88,6 +98,7 @@
   width: 100%;
   height: 100%;
 }
+
 .start__screen__logo--background {
   width: 50%;
   height: 70vh;
@@ -98,15 +109,18 @@
   border-radius: 5px;
   box-shadow: 0 5px 25px 3px rgb(0, 0, 0);
 }
+
 .elves__background {
   background: url('/src/assets/images/homepage/elves_background.jpg');
   background-position: 30%;
 }
+
 .dwarves__background {
   background: url('/src/assets/images/homepage/dwarves_background.jpg');
   background-size: cover;
   background-position: 70% 100%;
 }
+
 .humans__background {
   background: url('/src/assets/images/homepage/humans_background.jpg');
   background-position: 50% 100%;
@@ -119,9 +133,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 6vh 5vw 6vh;
+  padding: 6vh 5vw 15vh;
   z-index: 2;
-  padding-bottom: 15vh;
 }
 
 .start__screen__button,

@@ -2,7 +2,8 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  width: 100%;
+  align-self: center;
 }
 
 .builidings__hedaing {
@@ -89,7 +90,7 @@
     transform 0.3s ease-out;
 }
 
-.building__upgrade-button:active {
+.building__upgrade-button:active:enabled {
   transform: scale(0.9);
 }
 
@@ -97,7 +98,7 @@
   outline: none;
 }
 
-.building__upgrade-button:hover {
+.building__upgrade-button:hover:enabled {
   color: var(--primary-dark-color);
 }
 
@@ -109,4 +110,13 @@
 .building:hover .building__details {
   opacity: 1;
   transform: scale(1) translateY(-50%);
+}
+
+.building__progress {
+  height: 5px;
+  width: 80%;
+}
+
+.building__progress-bar {
+  background-color: var(--primary-dark-color);
 }

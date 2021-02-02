@@ -5,12 +5,11 @@
   flex-direction: column;
   justify-content: center;
   padding: 0 2rem 1rem;
-  font-size: 1.4rem;
+  font-size: 2rem;
 }
 
-.footer__header {
-  font-size: 3rem;
-  margin: 0;
+.authors__header {
+  font-size: 2.5rem;
 }
 
 .authors__list {
@@ -79,8 +78,6 @@
 }
 
 .popup__close-btn {
-  width: 32px;
-  height: 32px;
   opacity: 0.3;
 }
 

@@ -19,7 +19,6 @@ export class App {
     this.appMainContainer = <HTMLElement>document.querySelector('#app')
 
     this.audio = new Audio()
-
     this.gameSettings = new GameSettings()
 
     this.game = new Game(
@@ -35,13 +34,13 @@ export class App {
   showHomePage(startHidden: boolean) {
     this.gamePage?.close(this.appMainContainer)
     this.homePage.show(this.appMainContainer, startHidden)
+    this.toggleBodyScroll(false)
   }
 
   showSplashPage() {
     if (!this.splashPage) {
       this.splashPage = new SplashPage(this)
     }
-
     this.homePage.close(this.appMainContainer)
     this.splashPage.show(this.appMainContainer)
   }
@@ -53,9 +52,14 @@ export class App {
 
     this.splashPage?.close(this.appMainContainer)
     this.gamePage?.show(this.appMainContainer)
+    this.toggleBodyScroll(true)
   }
 
   resetGame() {
     this.gameSettings.fraction = Fractions.Elves
+  }
+
+  private toggleBodyScroll(isGamePage: boolean) {
+    document.body.style.overflow =  isGamePage ? "auto" : "hidden"
   }
 }
