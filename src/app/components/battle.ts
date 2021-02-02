@@ -35,7 +35,7 @@ export class Battle {
     this.battleContainer.appendChild(battleEffects)
   }
 
-  renderBattle() {
+  private renderBattle() {
     if (this.mainArea.childElementCount === 2) {
       this.mainArea.appendChild(this.battleContainer)
       this.infoHeading.style.opacity = '0'
@@ -45,7 +45,7 @@ export class Battle {
     }
   }
 
-  removeBattle() {
+  private removeBattle() {
     if (this.infoHeading.style.opacity === '0') {
       console.log('removing')
       const battleContainer = document.querySelector(
