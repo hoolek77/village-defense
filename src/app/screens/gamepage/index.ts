@@ -1,11 +1,14 @@
 import { App } from '../../app'
+import { Audio } from '../../audio'
 import { GameOverModal } from '../../components'
+import { Battle } from '../../components'
 import { Game } from '../../game'
 import { Building } from '../../models'
 import { createElement } from '../../utils'
 export class GamePage {
   private app: App
   private game: Game
+  private audio: Audio
 
   private quitButton!: HTMLButtonElement
   private gameScreen!: HTMLElement
@@ -22,9 +25,10 @@ export class GamePage {
 
   private isGameOverModalVisible = false
 
-  constructor(app: App, game: Game) {
+  constructor(app: App, game: Game, audio: Audio) {
     this.app = app
     this.game = game
+    this.audio = audio
   }
 
   show(appContainer: HTMLElement) {
@@ -77,7 +81,9 @@ export class GamePage {
       '.defence__count'
     ) as HTMLElement
 
-    this.progressHeader = document.querySelector('.info__heading') as HTMLElement
+    this.progressHeader = document.querySelector(
+      '.info__heading'
+    ) as HTMLElement
     this.progressBar = document.querySelector('.progress-bar') as HTMLElement
   }
 
@@ -125,6 +131,7 @@ export class GamePage {
       this.updateDefence()
       this.setBackgrondImage()
       this.updateNextAttackProgressBar()
+      this.showBattle()
 
       if (this.game.isGameOver()) {
         if (!this.isGameOverModalVisible) {
@@ -166,14 +173,16 @@ export class GamePage {
   }
 
   private checkPogressBarStatus(width: number) {
-    if(width < 10) {
-      this.progressHeader.style.animation = "warnCicle 2s ease-in-out 0s alternate infinite none"
-      this.progressBar.style.backgroundColor = "red"
-    } else if(width >= 99) { // 1px margin to prevent from getting less then 100 in the interval
-      this.progressHeader.style.animation = "none"
-      this.progressHeader.style.backgroundColor = "rgba(255, 255, 255, 0.7)"
-      this.progressHeader.style.color = "var(--primary-color)"
-      this.progressBar.style.backgroundColor = "var(--primary-dark-color)"
+    if (width < 10) {
+      this.progressHeader.style.animation =
+        'warnCicle 2s ease-in-out 0s alternate infinite none'
+      this.progressBar.style.backgroundColor = 'red'
+    } else if (width >= 99) {
+      // 1px margin to prevent from getting less then 100 in the interval
+      this.progressHeader.style.animation = 'none'
+      this.progressHeader.style.backgroundColor = 'rgba(255, 255, 255, 0.7)'
+      this.progressHeader.style.color = 'var(--primary-color)'
+      this.progressBar.style.backgroundColor = 'var(--primary-dark-color)'
     }
   }
 
@@ -234,6 +243,10 @@ export class GamePage {
         </ul>
       </div>
     `
+  }
+
+  private showBattle() {
+    new Battle(this.audio, this.game).handleBattle()
   }
 
   private showGameOverModal() {

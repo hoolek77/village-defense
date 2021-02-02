@@ -193,6 +193,10 @@ export class Game {
     return this.population <= 0
   }
 
+  isAttackInProgress() {
+    return this.attackInProgress
+  }
+
   private update() {
     console.log('Updating game')
 

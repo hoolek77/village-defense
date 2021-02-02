@@ -47,7 +47,7 @@ export class App {
 
   showGamePage() {
     if (!this.gamePage) {
-      this.gamePage = new GamePage(this, this.game)
+      this.gamePage = new GamePage(this, this.game, this.audio)
     }
 
     this.splashPage?.close(this.appMainContainer)
@@ -60,6 +60,6 @@ export class App {
   }
 
   private toggleBodyScroll(isGamePage: boolean) {
-    document.body.style.overflow =  isGamePage ? "auto" : "hidden"
+    document.body.style.overflow = isGamePage ? 'auto' : 'hidden'
   }
 }
