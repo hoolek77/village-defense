@@ -42,7 +42,7 @@ export class House extends Building {
     return 'Esse officia eu Lorem excepteur aliqua non. Dolor quis nisi irure eiusmod et magna eiusmod mollit non qui ad laborum nulla.'
   }
 
-  increasePopulation(){
+  handleBuildingWasBuilt(){
     this.population = Math.round(this.population * 1.1)
   }
 

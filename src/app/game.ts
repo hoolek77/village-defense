@@ -390,8 +390,6 @@ export class Game {
   }
 
   private handleHouseWasBuilt(house: House) {
-    house.increasePopulation()
-
     this.addGameMessage(
       `Your village is growing. ${house.population} new residents have arrived.`
     )
