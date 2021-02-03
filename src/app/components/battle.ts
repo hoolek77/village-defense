@@ -5,34 +5,60 @@ import { Game } from '../game'
 export class Battle {
   private audio: Audio
   private game: Game
-  private mainArea: HTMLElement = document.querySelector(
-    '.main-area'
-  ) as HTMLElement
-  private infoHeading: HTMLElement = document.querySelector(
-    '.info__heading'
-  ) as HTMLElement
-  private progress: HTMLElement = document.querySelector(
-    '.progress'
-  ) as HTMLElement
-  private battleContainer: HTMLElement = createElement({
-    type: 'div',
-    classes: ['battle__container'],
-  })
+  private mainArea!: HTMLElement
+  private infoHeading!: HTMLElement
+  private progress!: HTMLElement
+  private battleContainer!: HTMLElement
 
   constructor(audio: Audio, game: Game) {
     this.audio = audio
     this.game = game
+    this.getUIElements()
+  }
+
+  private getUIElements() {
+    this.mainArea = document.querySelector('.main-area') as HTMLElement
+    this.infoHeading = document.querySelector('.info__heading') as HTMLElement
+    this.progress = document.querySelector('.progress') as HTMLElement
+    this.battleContainer = createElement({
+      type: 'div',
+      classes: ['battle__container'],
+    })
   }
 
   private createBattle() {
-    const battleEffects = createElement({
+    const battleHeading = createElement({
+      type: 'h1',
+      classes: ['battle__heading'],
+      content: 'Your village is under attack!!',
+    })
+    const battleEffectsContainer = createElement({
+      type: 'div',
+      classes: ['battle__effects-container'],
+    })
+    const battleEffectsRight = createElement({
       type: 'img',
-      classes: ['battle__effects'],
+      classes: ['battle__effects-right'],
     })
 
-    battleEffects.setAttribute('src', '../../assets/gif/battle.gif')
+    battleEffectsRight.setAttribute(
+      'src',
+      '../../assets/images/villageImages/sword.png'
+    )
 
-    this.battleContainer.appendChild(battleEffects)
+    const battleEffectsLeft = createElement({
+      type: 'img',
+      classes: ['battle__effects-left'],
+    })
+
+    battleEffectsLeft.setAttribute(
+      'src',
+      '../../assets/images/villageImages/sword.png'
+    )
+
+    battleEffectsContainer.append(battleEffectsLeft, battleEffectsRight)
+
+    this.battleContainer.append(battleHeading, battleEffectsContainer)
   }
 
   private renderBattle() {
@@ -46,7 +72,7 @@ export class Battle {
   }
 
   private removeBattle() {
-    if (this.infoHeading.style.opacity === '0') {
+    if (this.infoHeading.style.opacity == '0') {
       console.log('removing')
       const battleContainer = document.querySelector(
         '.battle__container'

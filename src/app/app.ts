@@ -47,7 +47,7 @@ export class App {
 
   showGamePage() {
     if (!this.gamePage) {
-      this.gamePage = new GamePage(this, this.game, this.audio)
+      this.gamePage = new GamePage(this)
     }
 
     this.splashPage?.close(this.appMainContainer)

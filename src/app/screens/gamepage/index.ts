@@ -1,7 +1,6 @@
 import { App } from '../../app'
 import { Audio } from '../../audio'
-import { GameOverModal } from '../../components'
-import { Battle } from '../../components'
+import { GameOverModal, Battle } from '../../components'
 import { Game } from '../../game'
 import { Building } from '../../models'
 import { createElement } from '../../utils'
@@ -25,10 +24,10 @@ export class GamePage {
 
   private isGameOverModalVisible = false
 
-  constructor(app: App, game: Game, audio: Audio) {
+  constructor(app: App) {
     this.app = app
-    this.game = game
-    this.audio = audio
+    this.game = this.app.game
+    this.audio = this.app.audio
   }
 
   show(appContainer: HTMLElement) {
