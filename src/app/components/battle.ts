@@ -68,7 +68,8 @@ export class Battle {
   private renderBattle() {
     if (this.mainArea.childElementCount === 2) {
       this.mainArea.appendChild(this.battleContainer)
-      this.gameMessagesContainer.style.display = 'none'
+      this.gameMessagesContainer.style.transform = 'scale(0)'
+      this.gameMessagesContainer.style.height = '0'
       this.infoHeading.style.opacity = '0'
       this.progress.style.opacity = '0'
       this.createBattle()
@@ -84,7 +85,8 @@ export class Battle {
       ) as HTMLElement
       battleContainer.style.animation = 'battleExit'
       battleContainer.remove()
-      this.gameMessagesContainer.style.display = 'block'
+      this.gameMessagesContainer.style.transform = 'scale(1)'
+      this.gameMessagesContainer.style.height = '400px'
       this.infoHeading.style.opacity = '1'
       this.progress.style.opacity = '1'
       this.audio.changeAudioSource('../../assets/audio/music.mp3')
