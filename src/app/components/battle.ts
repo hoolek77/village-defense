@@ -6,6 +6,7 @@ export class Battle {
   private audio: Audio
   private game: Game
   private mainArea!: HTMLElement
+  private gameMessagesContainer!: HTMLElement
   private infoHeading!: HTMLElement
   private progress!: HTMLElement
   private battleContainer!: HTMLElement
@@ -18,6 +19,9 @@ export class Battle {
 
   private getUIElements() {
     this.mainArea = document.querySelector('.main-area') as HTMLElement
+    this.gameMessagesContainer = document.querySelector(
+      '.game-messages-container'
+    ) as HTMLElement
     this.infoHeading = document.querySelector('.info__heading') as HTMLElement
     this.progress = document.querySelector('.progress') as HTMLElement
     this.battleContainer = createElement({
@@ -64,6 +68,7 @@ export class Battle {
   private renderBattle() {
     if (this.mainArea.childElementCount === 2) {
       this.mainArea.appendChild(this.battleContainer)
+      this.gameMessagesContainer.style.display = 'none'
       this.infoHeading.style.opacity = '0'
       this.progress.style.opacity = '0'
       this.createBattle()
@@ -79,6 +84,7 @@ export class Battle {
       ) as HTMLElement
       battleContainer.style.animation = 'battleExit'
       battleContainer.remove()
+      this.gameMessagesContainer.style.display = 'block'
       this.infoHeading.style.opacity = '1'
       this.progress.style.opacity = '1'
       this.audio.changeAudioSource('../../assets/audio/music.mp3')
