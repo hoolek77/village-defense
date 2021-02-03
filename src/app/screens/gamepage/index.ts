@@ -1,7 +1,7 @@
 import { App } from '../../app'
 import { GameOverModal } from '../../components'
 import { Game } from '../../game'
-import { Building } from '../../models'
+import { Building, GameMessage, MessageType } from '../../models'
 import { createElement } from '../../utils'
 export class GamePage {
   private app: App
@@ -210,11 +210,15 @@ export class GamePage {
     }
   }
 
-  private addMessageToList(message: string) {
+  private getTypeOfMessage(message: GameMessage) {
+    return `game-messages__item--${message.type}`
+  }
+
+  private addMessageToList(message: GameMessage) {
     const messageItemElement = createElement({
       type: 'li',
-      content: message,
-      classes: ['game-messages__item'],
+      content: message.message,
+      classes: ['game-messages__item', this.getTypeOfMessage(message)],
     })
 
     this.messageList.appendChild(messageItemElement)
@@ -228,9 +232,10 @@ export class GamePage {
       this.progressBar.style.backgroundColor = 'red'
 
       if (Math.floor(width) === 5) {
-        this.game.addGameMessage(
-          'Be ready. The enemy is approaching your gates.'
-        )
+        this.game.addGameMessage({
+          message: 'Be ready. The enemy is approaching your gates.',
+          type: MessageType.WARNING,
+        })
       }
     } else if (width >= 99) {
       // 1px margin to prevent from getting less then 100 in the interval

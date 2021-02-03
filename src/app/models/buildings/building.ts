@@ -1,6 +1,6 @@
 import { GAME_LOOP_DELAY_IN_MILISECONDS } from '../../constants'
 import { Game } from '../../game'
-import { Resource } from '../types'
+import { MessageType, Resource } from '../types'
 
 export class Building {
   protected level = 0
@@ -40,13 +40,15 @@ export class Building {
       this.isBuilding = true
 
       this.game.handleStartingConstructionOfBuilding(this)
-      this.game.addGameMessage(
-        `You have started to upgrading the ${this.getTitle()}.`
-      )
+      this.game.addGameMessage({
+        message: `You have started to upgrading the ${this.getTitle()}.`,
+        type: MessageType.INFO,
+      })
     } else {
-      this.game.addGameMessage(
-        `You don't have enough resources to buy the ${this.getTitle()}`
-      )
+      this.game.addGameMessage({
+        message: `You don't have enough resources to buy the ${this.getTitle()}`,
+        type: MessageType.WARNING,
+      })
     }
   }
 
@@ -88,9 +90,10 @@ export class Building {
         this.handleBuildingWasBuilt()
         this.game.handleBuildingWasBuilt(this)
 
-        this.game.addGameMessage(
-          `The ${this.getTitle()} was upgraded to the level ${this.getLevel()}.`
-        )
+        this.game.addGameMessage({
+          message: `The ${this.getTitle()} was upgraded to the level ${this.getLevel()}.`,
+          type: MessageType.SUCCESS,
+        })
       }
     }
   }
