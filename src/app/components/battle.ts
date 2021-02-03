@@ -89,10 +89,10 @@ export class Battle {
 
       battleContainer.style.animationName = 'battleExit'
       this.audio.changeAudioSource('../../assets/audio/music.mp3')
+      this.nextAttackInfoContainer.style.opacity = '1'
 
       setTimeout(() => {
         this.gameMessagesContainer.style.transform = 'translateY(0)'
-        this.nextAttackInfoContainer.style.opacity = '1'
         battleContainer.remove()
       }, 1000)
     }
