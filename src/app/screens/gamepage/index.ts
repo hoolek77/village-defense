@@ -82,10 +82,6 @@ export class GamePage {
       '.defence__count'
     ) as HTMLElement
 
-    this.progressHeader = document.querySelector(
-      '.info__heading'
-    ) as HTMLElement
-    this.progressBar = document.querySelector('.progress-bar') as HTMLElement
     this.messageList = document.querySelector('.game-messages') as HTMLElement
 
     this.progressBar = document.querySelector(
