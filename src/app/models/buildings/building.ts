@@ -40,6 +40,13 @@ export class Building {
       this.isBuilding = true
 
       this.game.handleStartingConstructionOfBuilding(this)
+      this.game.addGameMessage(
+        `You have started to upgrading the ${this.getTitle()}.`
+      )
+    } else {
+      this.game.addGameMessage(
+        `You don't have enough resources to buy the ${this.getTitle()}`
+      )
     }
   }
 
@@ -77,9 +84,13 @@ export class Building {
       console.log(this.remainingTimeToBuild)
       if (this.remainingTimeToBuild <= 0) {
         this.isBuilding = false
+        this.handleBuildingContent()
         this.handleBuildingWasBuilt()
         this.game.handleBuildingWasBuilt(this)
-        this.handleBuildingContent()
+
+        this.game.addGameMessage(
+          `The ${this.getTitle()} was upgraded to the level ${this.getLevel()}.`
+        )
       }
     }
   }

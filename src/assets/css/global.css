@@ -45,32 +45,46 @@ body {
   overflow: hidden;
 }
 
+body::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
 a:hover {
   cursor: pointer;
 }
 
-.hide { 
+.hide {
   display: none;
 }
 
-.show { 
+.show {
   display: block;
 }
 
-.fa-volume-off, .fa-volume-up {
-  -webkit-text-stroke: .5px black;
-  text-shadow: -.2px 0 black, 0 .2px black, .2px 0 black, 0 -.2px black;
+.fa-volume-off,
+.fa-volume-up {
+  -webkit-text-stroke: 0.5px black;
+  text-shadow: -0.2px 0 black, 0 0.2px black, 0.2px 0 black, 0 -0.2px black;
 }
 
-.main__audio { 
-  position: absolute; 
-  top: 2rem; 
-  right: 2rem; 
-  z-index: 2; 
-  font-size: 2rem; 
+.main__audio {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 2;
+  font-size: 2rem;
   color: white;
 }
 
 a.main__audio--menu:hover {
-  color: rgb(226, 226, 226)
+  color: rgb(226, 226, 226);
 }

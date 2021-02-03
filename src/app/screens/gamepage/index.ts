@@ -17,6 +17,8 @@ export class GamePage {
   private populationElement!: HTMLElement
   private defenceElement!: HTMLElement
 
+  private messageList!: HTMLElement
+
   private progressHeader!: HTMLElement
   private progressBar!: HTMLElement
 
@@ -77,6 +79,8 @@ export class GamePage {
       '.defence__count'
     ) as HTMLElement
 
+    this.messageList = document.querySelector('.game-messages') as HTMLElement
+
     this.progressBar = document.querySelector(
       '.next-attack-progress-bar'
     ) as HTMLElement
@@ -131,6 +135,7 @@ export class GamePage {
       this.setBackgrondImage()
       this.updateNextAttackProgressBar()
       this.updateBuildings()
+      this.renderGameMessages()
 
       if (this.game.isGameOver()) {
         if (!this.isGameOverModalVisible) {
@@ -197,11 +202,36 @@ export class GamePage {
     })
   }
 
+  private renderGameMessages() {
+    const message = this.game.getGameMessages().shift()
+
+    if (message) {
+      this.addMessageToList(message)
+    }
+  }
+
+  private addMessageToList(message: string) {
+    const messageItemElement = createElement({
+      type: 'li',
+      content: message,
+      classes: ['game-messages__item'],
+    })
+
+    this.messageList.appendChild(messageItemElement)
+    this.messageList.scrollTop = this.messageList.scrollHeight
+  }
+
   private checkPogressBarStatus(width: number) {
     if (width < 10) {
       this.progressHeader.style.animation =
         'warnCicle 2s ease-in-out 0s alternate infinite none'
       this.progressBar.style.backgroundColor = 'red'
+
+      if (Math.floor(width) === 5) {
+        this.game.addGameMessage(
+          'Be ready. The enemy is approaching your gates.'
+        )
+      }
     } else if (width >= 99) {
       // 1px margin to prevent from getting less then 100 in the interval
       this.progressHeader.style.animation = 'none'
