@@ -19,6 +19,8 @@ export class GamePage {
   private populationElement!: HTMLElement
   private defenceElement!: HTMLElement
 
+  private messageList!: HTMLElement
+
   private progressHeader!: HTMLElement
   private progressBar!: HTMLElement
 
@@ -84,6 +86,15 @@ export class GamePage {
       '.info__heading'
     ) as HTMLElement
     this.progressBar = document.querySelector('.progress-bar') as HTMLElement
+    this.messageList = document.querySelector('.game-messages') as HTMLElement
+
+    this.progressBar = document.querySelector(
+      '.next-attack-progress-bar'
+    ) as HTMLElement
+
+    this.progressHeader = document.querySelector(
+      '.info__heading'
+    ) as HTMLElement
   }
 
   private bindEvents() {
@@ -131,6 +142,8 @@ export class GamePage {
       this.setBackgrondImage()
       this.updateNextAttackProgressBar()
       this.showBattle()
+      this.updateBuildings()
+      this.renderGameMessages()
 
       if (this.game.isGameOver()) {
         if (!this.isGameOverModalVisible) {
@@ -171,11 +184,62 @@ export class GamePage {
     this.progressBar.style.width = `${width.toFixed(2)}%`
   }
 
+  private updateBuildings() {
+    this.game.getBuildings().forEach((building) => {
+      const buildingName = building.constructor.name
+
+      const progressBar = document.querySelector(
+        `.building__progress-bar--${buildingName}`
+      ) as HTMLElement
+
+      const upgradeButton = document.querySelector(
+        `.building__upgrade-button--${buildingName}`
+      ) as HTMLButtonElement
+
+      if (building.isBuilding) {
+        const totalTime = building.timeToBuildInMiliseconds
+        const remainingTime = building.remainingTimeToBuild
+        const width = 100 - (remainingTime / totalTime) * 100
+
+        progressBar.style.width = `${width.toFixed(2)}%`
+        upgradeButton.disabled = true
+      } else {
+        progressBar.style.width = '0%'
+        upgradeButton.disabled = false
+      }
+    })
+  }
+
+  private renderGameMessages() {
+    const message = this.game.getGameMessages().shift()
+
+    if (message) {
+      this.addMessageToList(message)
+    }
+  }
+
+  private addMessageToList(message: string) {
+    const messageItemElement = createElement({
+      type: 'li',
+      content: message,
+      classes: ['game-messages__item'],
+    })
+
+    this.messageList.appendChild(messageItemElement)
+    this.messageList.scrollTop = this.messageList.scrollHeight
+  }
+
   private checkPogressBarStatus(width: number) {
     if (width < 10) {
       this.progressHeader.style.animation =
         'warnCicle 2s ease-in-out 0s alternate infinite none'
       this.progressBar.style.backgroundColor = 'red'
+
+      if (Math.floor(width) === 5) {
+        this.game.addGameMessage(
+          'Be ready. The enemy is approaching your gates.'
+        )
+      }
     } else if (width >= 99) {
       // 1px margin to prevent from getting less then 100 in the interval
       this.progressHeader.style.animation = 'none'
@@ -187,7 +251,6 @@ export class GamePage {
 
   private renderBuildings() {
     const list = document.querySelector('.buildings__list') as HTMLElement
-
     this.game.getBuildings().forEach((building) => {
       const buildingItemElement = createElement({
         type: 'li',
@@ -205,7 +268,6 @@ export class GamePage {
     upgradeButtonElements.forEach((upgradeButtonElement) => {
       upgradeButtonElement.addEventListener('click', (e) => {
         const button = e.currentTarget as HTMLElement
-
         if (button) {
           const buildingName = button.dataset.building || ''
           const building = this.game.getBuilding(buildingName)
@@ -224,10 +286,20 @@ export class GamePage {
     return `
       <div class="building">
       <h3 class="building__heading">${building.getTitle()}</h3>
-      <p class="building__level">Level: ${building.getLevel()}</p>
-      <button class="building__upgrade-button" data-building="${
+      <p class="building__level building__level--${
         building.constructor.name
-      }">
+      }">Level: ${building.getLevel()}</p>
+      <div class="progress building__progress">
+        <div
+          class="progress-bar building__progress-bar building__progress-bar--${
+            building.constructor.name
+          }"
+          role="progressbar">
+        </div>
+      </div>
+      <button class="building__upgrade-button building__upgrade-button--${
+        building.constructor.name
+      }" data-building="${building.constructor.name}">
         <i class="fas fa-plus-circle"></i>
       </button>
       <div class="building__details">
@@ -236,7 +308,7 @@ export class GamePage {
         <ul class="building__details-resources">
           ${resources
             .map((resource) => {
-              return `<li class="building__price building__price--${resource.type}">${resource.count} ${resource.type}</li>`
+              return `<li class="building__price building__price--${resource.type} building__price--${building.constructor.name}">${resource.count} ${resource.type}</li>`
             })
             .join('')}
         </ul>

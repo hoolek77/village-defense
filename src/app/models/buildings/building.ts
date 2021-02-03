@@ -4,11 +4,13 @@ import { Resource } from '../types'
 
 export class Building {
   protected level = 0
-  protected isBuilding = false
+
+  isBuilding = false
+  remainingTimeToBuild = this.timeToBuildInMiliseconds
 
   constructor(
     protected game: Game,
-    protected resourcesNeededToBuild: Resource[],
+    public resourcesNeededToBuild: Resource[],
     public timeToBuildInMiliseconds: number,
     protected maxLevel: number
   ) {}
@@ -38,6 +40,13 @@ export class Building {
       this.isBuilding = true
 
       this.game.handleStartingConstructionOfBuilding(this)
+      this.game.addGameMessage(
+        `You have started to upgrading the ${this.getTitle()}.`
+      )
+    } else {
+      this.game.addGameMessage(
+        `You don't have enough resources to buy the ${this.getTitle()}`
+      )
     }
   }
 
@@ -45,22 +54,54 @@ export class Building {
     return this.level + 1 <= this.maxLevel
   }
 
+  getLevelContainer() {
+    const levelContainer = document.querySelector(
+      `.building__level--${this.constructor.name}`
+    ) as HTMLElement
+    return levelContainer
+  }
+
+  getBuildingPriceContainer() {
+    const container = document.querySelectorAll(
+      `.building__price--${this.constructor.name}`
+    )
+    return container
+  }
+
+  updateBuildingContainer() {
+    let i = 0
+    this.getLevelContainer().textContent = `Level: ${this.level}`
+    this.getBuildingPriceContainer().forEach((element) => {
+      element.textContent = `${this.resourcesNeededToBuild[i].count} ${this.resourcesNeededToBuild[i].type}`
+      i++
+    })
+  }
+
   update() {
     if (this.isBuilding) {
       console.log(`${this} is building`)
-      this.timeToBuildInMiliseconds -= GAME_LOOP_DELAY_IN_MILISECONDS
-
-      if (this.timeToBuildInMiliseconds <= 0) {
+      this.remainingTimeToBuild -= GAME_LOOP_DELAY_IN_MILISECONDS
+      console.log(this.remainingTimeToBuild)
+      if (this.remainingTimeToBuild <= 0) {
         this.isBuilding = false
-        this.level++
-
-        this.game.handleBuildingWasBuilt(this)
+        this.handleBuildingContent()
         this.handleBuildingWasBuilt()
+        this.game.handleBuildingWasBuilt(this)
+
+        this.game.addGameMessage(
+          `The ${this.getTitle()} was upgraded to the level ${this.getLevel()}.`
+        )
       }
     }
   }
 
   protected handleBuildingWasBuilt() {}
+
+  private handleBuildingContent() {
+    this.level++
+    this.updateBuildingContainer()
+    this.remainingTimeToBuild = this.timeToBuildInMiliseconds
+  }
 
   render() {}
 
