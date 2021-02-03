@@ -22,7 +22,7 @@ npm start #to build and run the app on localhost
 
 ## Tools used
 
-- TypeScript - for modern TypeScript feautures
+- TypeScript - better development by adding types
 - Babel - for compiling ES6+ JavaScript code into a backwards compatible version of it
 - Webpack - for bundling all JavaScript files
 - Prettier - for same code formatting in the whole project
