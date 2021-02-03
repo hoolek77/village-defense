@@ -390,6 +390,8 @@ export class Game {
   }
 
   private handleHouseWasBuilt(house: House) {
+    house.population = Math.round(house.population * 1.1)
+
     this.addGameMessage(
       `Your village is growing. ${house.population} new residents have arrived.`
     )

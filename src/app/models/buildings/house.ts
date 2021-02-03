@@ -7,10 +7,10 @@ const GOLD = 1
 const WOOD = 3
 const STONE = 1
 const DEFAULT_TIME_TO_BUILD = 10 * 1000
-const MAX_LEVEL = 3
+const MAX_LEVEL = 100
 
 export class House extends Building {
-  readonly population = POPULATION
+  population:number = POPULATION
 
   constructor(game: Game) {
     super(
