@@ -129,6 +129,7 @@ export class GamePage {
   }
 
   private startGame() {
+    this.showBattle()
     this.game.start(this.updateUI.bind(this))
   }
 
