@@ -218,7 +218,7 @@ export class Game {
       message: `The miners did their best. You have got ${gold} gold ${
         gold === 1 ? 'bar' : 'bars'
       }.`,
-      type: MessageType.SUCCESS,
+      type: MessageType.INFO,
     })
 
     this.changeGoldAmount(this.getGoldAmount() + gold)
@@ -244,7 +244,7 @@ export class Game {
       message: `The sawmill is going strong. You have got ${wood}  ${
         wood === 1 ? 'log' : 'logs'
       } of wood.`,
-      type: MessageType.SUCCESS,
+      type: MessageType.INFO,
     })
 
     this.changeWoodAmount(this.getWoodAmount() + wood)
@@ -410,7 +410,7 @@ export class Game {
   private handlewWallWasBuilt(wall: Wall) {
     this.addGameMessage({
       message: `The new wall added ${wall.getDefence()} points to your defence.`,
-      type: MessageType.WARNING,
+      type: MessageType.INFO,
     })
 
     this.villageDefence += wall.getDefence()
@@ -419,7 +419,7 @@ export class Game {
   private handleWarehouseWasBuilt(warehouse: Warehouse) {
     this.addGameMessage({
       message: `The capacity of the resource locker has increased. You can now store ${this.storageCapacity} resources.`,
-      type: MessageType.WARNING,
+      type: MessageType.INFO,
     })
 
     this.storageCapacity += parseInt((warehouse.capacity * 1.5).toFixed(0))

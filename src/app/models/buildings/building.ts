@@ -92,7 +92,7 @@ export class Building {
 
         this.game.addGameMessage({
           message: `The ${this.getTitle()} was upgraded to the level ${this.getLevel()}.`,
-          type: MessageType.SUCCESS,
+          type: MessageType.INFO,
         })
       }
     }
