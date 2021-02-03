@@ -48,6 +48,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  overflow: hidden;
+  position: relative;
 }
 
 .buildings-box {
@@ -71,6 +73,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  transition: opacity 0.3s ease-out;
   width: 100%;
 }
 
@@ -131,6 +134,7 @@
   color: #fff;
   height: 400px;
   width: 100%;
+  transition: all 0.7s ease-in;
 }
 
 .game-messages {
@@ -144,9 +148,6 @@
 
 .game-messages::-webkit-scrollbar {
   width: 0.5rem;
-}
-
-.game-messages::-webkit-scrollbar-track {
 }
 
 .game-messages::-webkit-scrollbar-thumb {
