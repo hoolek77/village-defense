@@ -343,12 +343,20 @@ export class Game {
     }
   }
 
+  private increaseResourcesNeededToBuild(builing: Building) {
+    builing.resourcesNeededToBuild.forEach((res) => {
+      res.count = parseInt((res.count * 1.5).toFixed(0))
+    })
+  }
+
   private handleHouseWasBuilt(house: House) {
     this.population += house.population
+    this.increaseResourcesNeededToBuild(house)
   }
 
   private handlewWallWasBuilt(wall: Wall) {
     this.villageDefence += wall.getDefence()
+    this.increaseResourcesNeededToBuild(wall)
   }
 
   private handleWarehouseWasBuilt(warehouse: Warehouse) {
@@ -356,22 +364,19 @@ export class Game {
     this.increaseResourcesNeededToBuild(warehouse)
   }
 
-  private increaseResourcesNeededToBuild(builing: Building) {
-    builing.resourcesNeededToBuild.forEach((res) => {
-      res.count = parseInt((res.count * 1.5).toFixed(0))
-    })
-  }
-
   handleGoldmineWasBuilt(goldmine: Goldmine) {
     this.changeGoldAmount(this.getGoldAmount() + goldmine.getProduction())
+    this.increaseResourcesNeededToBuild(goldmine)
   }
 
   handleQuarryWasBuilt(quarry: Quarry) {
     this.changeStoneAmount(this.getStoneAmount() + quarry.getProduction())
+    this.increaseResourcesNeededToBuild(quarry)
   }
 
   handleSawmillWasBuilt(sawmill: Sawmill) {
     this.changeWoodAmount(this.getWoodAmount() + sawmill.getProduction())
+    this.increaseResourcesNeededToBuild(sawmill)
   }
 
   private getWarehouse(): Warehouse | undefined {
