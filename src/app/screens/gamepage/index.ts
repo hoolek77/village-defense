@@ -236,7 +236,7 @@ export class GamePage {
         'warnCicle 2s ease-in-out 0s alternate infinite none'
       this.progressBar.style.backgroundColor = 'red'
 
-      if (Math.floor(width) === 5) {
+      if (Math.floor(width) === 9) {
         this.game.addGameMessage(
           'Be ready. The enemy is approaching your gates.'
         )
