@@ -203,6 +203,9 @@ export class Game {
     return this.population <= 0
   }
 
+  isAttackInProgress() {
+    return this.attackInProgress
+  }
   getGameMessages() {
     return this.gameMessages
   }

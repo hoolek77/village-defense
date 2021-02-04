@@ -1,11 +1,13 @@
 import { App } from '../../app'
-import { GameOverModal } from '../../components'
+import { Audio } from '../../audio'
+import { GameOverModal, Battle } from '../../components'
 import { Game } from '../../game'
 import { Building, GameMessage, MessageType } from '../../models'
 import { createElement } from '../../utils'
 export class GamePage {
   private app: App
   private game: Game
+  private audio: Audio
 
   private quitButton!: HTMLButtonElement
   private gameScreen!: HTMLElement
@@ -24,9 +26,10 @@ export class GamePage {
 
   private isGameOverModalVisible = false
 
-  constructor(app: App, game: Game) {
+  constructor(app: App) {
     this.app = app
-    this.game = game
+    this.game = this.app.game
+    this.audio = this.app.audio
   }
 
   show(appContainer: HTMLElement) {
@@ -122,6 +125,7 @@ export class GamePage {
   }
 
   private startGame() {
+    this.showBattle()
     this.game.start(this.updateUI.bind(this))
   }
 
@@ -134,6 +138,7 @@ export class GamePage {
       this.updateDefence()
       this.setBackgrondImage()
       this.updateNextAttackProgressBar()
+      this.showBattle()
       this.updateBuildings()
       this.renderGameMessages()
 
@@ -231,7 +236,7 @@ export class GamePage {
         'warnCicle 2s ease-in-out 0s alternate infinite none'
       this.progressBar.style.backgroundColor = 'red'
 
-      if (Math.floor(width) === 5) {
+      if (Math.floor(width) === 9) {
         this.game.addGameMessage({
           message: 'Be ready. The enemy is approaching your gates.',
           type: MessageType.WARNING,
@@ -311,6 +316,10 @@ export class GamePage {
         </ul>
       </div>
     `
+  }
+
+  private showBattle() {
+    new Battle(this.audio, this.game).handleBattle()
   }
 
   private showGameOverModal() {
