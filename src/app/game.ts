@@ -214,43 +214,74 @@ export class Game {
     this.gameMessages.push(message)
   }
 
+  getTotalResourceCount() {
+    return this.getGoldAmount() + this.getWoodAmount() + this.getStoneAmount()
+  }
+
   handleGoldmineWasBuilt(goldmine: Goldmine) {
     const gold = goldmine.getProduction()
 
-    this.addGameMessage({
-      message: `The miners did their best. You have got ${gold} gold ${
-        gold === 1 ? 'bar' : 'bars'
-      }.`,
-      type: MessageType.INFO,
-    })
-
-    this.changeGoldAmount(this.getGoldAmount() + gold)
+    if (this.getTotalResourceCount() + gold > this.storageCapacity) {
+      this.changeGoldAmount(
+        this.storageCapacity - (this.getStoneAmount() + this.getWoodAmount())
+      )
+      this.addGameMessage({
+        message: `Watch out! Storage is filled to the brim. There is no more room for your precious gold. Upgrade Warehouse to increase storage capacity.`,
+        type: MessageType.WARNING,
+      })
+    } else {
+      this.changeGoldAmount(this.getGoldAmount() + gold)
+      this.addGameMessage({
+        message: `The miners did their best. You have got ${gold} gold ${
+          gold === 1 ? 'bar' : 'bars'
+        }.`,
+        type: MessageType.INFO,
+      })
+    }
   }
 
   handleQuarryWasBuilt(quarry: Quarry) {
     const stone = quarry.getProduction()
 
-    this.addGameMessage({
-      message: `Good day. You have got ${stone} ${
-        stone === 1 ? 'stone' : 'stones'
-      }.`,
-      type: MessageType.INFO,
-    })
-
-    this.changeStoneAmount(this.getStoneAmount() + stone)
+    if (this.getTotalResourceCount() + stone > this.storageCapacity) {
+      this.changeStoneAmount(
+        this.storageCapacity - (this.getWoodAmount() + this.getGoldAmount())
+      )
+      this.addGameMessage({
+        message: `Ahh, your storage is full. Upgrade Warehouse, so you can find room for your stone.`,
+        type: MessageType.WARNING,
+      })
+    } else {
+      this.changeStoneAmount(this.getStoneAmount() + stone)
+      this.addGameMessage({
+        message: `Good day. You have got ${stone} ${
+          stone === 1 ? 'stone' : 'stones'
+        }.`,
+        type: MessageType.INFO,
+      })
+    }
   }
 
   handleSawmillWasBuilt(sawmill: Sawmill) {
     const wood = sawmill.getProduction()
 
-    this.addGameMessage({
-      message: `The sawmill is going strong. You have got ${wood}  ${
-        wood === 1 ? 'log' : 'logs'
-      } of wood.`,
-      type: MessageType.INFO,
-    })
-
-    this.changeWoodAmount(this.getWoodAmount() + wood)
+    if (this.getTotalResourceCount() + wood > this.storageCapacity) {
+      this.changeWoodAmount(
+        this.storageCapacity - (this.getStoneAmount() + this.getGoldAmount())
+      )
+      this.addGameMessage({
+        message: `Oh no, there is no more room for your wood. Upgrade Warehouse to increase your storage capacity.`,
+        type: MessageType.WARNING,
+      })
+    } else {
+      this.addGameMessage({
+        message: `The sawmill is going strong. You have got ${wood}  ${
+          wood === 1 ? 'log' : 'logs'
+        } of wood.`,
+        type: MessageType.INFO,
+      })
+      this.changeWoodAmount(this.getWoodAmount() + wood)
+    }
   }
 
   private update() {
