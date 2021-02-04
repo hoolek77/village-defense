@@ -426,13 +426,6 @@ export class Game {
     })
 
     this.storageCapacity += parseInt((warehouse.capacity * 1.5).toFixed(0))
-    this.increaseResourcesNeededToBuild(warehouse)
-  }
-
-  private increaseResourcesNeededToBuild(builing: Building) {
-    builing.resourcesNeededToBuild.forEach((res) => {
-      res.count = parseInt((res.count * 1.5).toFixed(0))
-    })
   }
 
   private getWarehouse(): Warehouse | undefined {
