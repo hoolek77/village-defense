@@ -26,6 +26,8 @@ import {
   Barracks,
   Quarry,
   Sawmill,
+  GameMessage,
+  MessageType,
 } from './models'
 
 import { randomBetween } from './utils'
@@ -68,7 +70,7 @@ export class Game {
 
   private attackSurvived = 0
 
-  private gameMessages: string[] = []
+  private gameMessages: GameMessage[] = []
 
   private intervalId?: number
 
@@ -97,9 +99,11 @@ export class Game {
       GAME_LOOP_DELAY_IN_MILISECONDS
     )
 
-    this.addGameMessage(
-      'Welcome! Start managing your village and protect it from nasty goblins.'
-    )
+    this.addGameMessage({
+      message:
+        'Welcome! Start managing your village and protect it from nasty goblins.',
+      type: MessageType.INFO,
+    })
   }
 
   stop() {
@@ -206,18 +210,19 @@ export class Game {
     return this.gameMessages
   }
 
-  addGameMessage(message: string) {
+  addGameMessage(message: GameMessage) {
     this.gameMessages.push(message)
   }
 
   handleGoldmineWasBuilt(goldmine: Goldmine) {
     const gold = goldmine.getProduction()
 
-    this.addGameMessage(
-      `The miners did their best. You have got ${gold} gold ${
+    this.addGameMessage({
+      message: `The miners did their best. You have got ${gold} gold ${
         gold === 1 ? 'bar' : 'bars'
-      }.`
-    )
+      }.`,
+      type: MessageType.INFO,
+    })
 
     this.changeGoldAmount(this.getGoldAmount() + gold)
   }
@@ -225,9 +230,12 @@ export class Game {
   handleQuarryWasBuilt(quarry: Quarry) {
     const stone = quarry.getProduction()
 
-    this.addGameMessage(
-      `Good day. You have got ${stone} ${stone === 1 ? 'stone' : 'stones'}.`
-    )
+    this.addGameMessage({
+      message: `Good day. You have got ${stone} ${
+        stone === 1 ? 'stone' : 'stones'
+      }.`,
+      type: MessageType.INFO,
+    })
 
     this.changeStoneAmount(this.getStoneAmount() + stone)
   }
@@ -235,11 +243,12 @@ export class Game {
   handleSawmillWasBuilt(sawmill: Sawmill) {
     const wood = sawmill.getProduction()
 
-    this.addGameMessage(
-      `The sawmill is going strong. You have got ${wood}  ${
+    this.addGameMessage({
+      message: `The sawmill is going strong. You have got ${wood}  ${
         wood === 1 ? 'log' : 'logs'
-      } of wood.`
-    )
+      } of wood.`,
+      type: MessageType.INFO,
+    })
 
     this.changeWoodAmount(this.getWoodAmount() + wood)
   }
@@ -393,25 +402,28 @@ export class Game {
   }
 
   private handleHouseWasBuilt(house: House) {
-    this.addGameMessage(
-      `Your village is growing. ${house.population} new residents have arrived.`
-    )
+    this.addGameMessage({
+      message: `Your village is growing. ${house.population} new residents have arrived.`,
+      type: MessageType.INFO,
+    })
 
     this.population += house.population
   }
 
   private handlewWallWasBuilt(wall: Wall) {
-    this.addGameMessage(
-      `The new wall added ${wall.getDefence()} points to your defence.`
-    )
+    this.addGameMessage({
+      message: `The new wall added ${wall.getDefence()} points to your defence.`,
+      type: MessageType.INFO,
+    })
 
     this.villageDefence += wall.getDefence()
   }
 
   private handleWarehouseWasBuilt(warehouse: Warehouse) {
-    this.addGameMessage(
-      `The capacity of the resource locker has increased. You can now store ${this.storageCapacity} resources.`
-    )
+    this.addGameMessage({
+      message: `The capacity of the resource locker has increased. You can now store ${this.storageCapacity} resources.`,
+      type: MessageType.INFO,
+    })
 
     this.storageCapacity += parseInt((warehouse.capacity * 1.5).toFixed(0))
     this.increaseResourcesNeededToBuild(warehouse)
@@ -466,7 +478,10 @@ export class Game {
     const enemies = this.getEnemies()
 
     if (!this.isVillageDefended(enemies)) {
-      this.addGameMessage(`You lost the battle.`)
+      this.addGameMessage({
+        message: `You lost the battle.`,
+        type: MessageType.ERROR,
+      })
       console.log('population', this.population)
       this.reducePopulation(enemies)
       console.log('population after reduction', this.population)
@@ -475,7 +490,10 @@ export class Game {
     } else {
       this.attackSurvived++
 
-      this.addGameMessage('Congratulations! You have repulsed the attack.')
+      this.addGameMessage({
+        message: 'Congratulations! You have repulsed the attack.',
+        type: MessageType.SUCCESS,
+      })
     }
   }
 
@@ -483,11 +501,12 @@ export class Game {
     const reducedPopulation = Math.round(enemies.length * 0.8)
     this.population -= reducedPopulation
 
-    this.addGameMessage(
-      `The population of your residents has decreased by ${reducedPopulation} ${
+    this.addGameMessage({
+      message: `The population of your residents has decreased by ${reducedPopulation} ${
         reducedPopulation === 1 ? 'person' : 'people'
-      }.`
-    )
+      }.`,
+      type: MessageType.ERROR,
+    })
 
     if (this.population < 0) {
       this.population = 0
@@ -527,9 +546,10 @@ export class Game {
     const availableResources = this.getListOfAvailableResources()
 
     if (numberOfResourcesToSteal > 0) {
-      this.addGameMessage(
-        `You have lost ${numberOfResourcesToSteal} of your resources.`
-      )
+      this.addGameMessage({
+        message: `You have lost ${numberOfResourcesToSteal} of your resources.`,
+        type: MessageType.ERROR,
+      })
     }
 
     while (numberOfResourcesToSteal > 0) {

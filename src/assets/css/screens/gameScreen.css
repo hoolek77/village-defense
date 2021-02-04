@@ -145,6 +145,24 @@
   overflow-y: auto;
   padding: 0;
 }
+.game-messages__item {
+  font-size: 1.4em;
+}
+.game-messages__item--info {
+  color: white;
+}
+.game-messages__item--warning {
+  color: #ffcc00;
+  font-weight: 600;
+}
+.game-messages__item--error {
+  color: #ff6666;
+  font-weight: 800;
+}
+.game-messages__item--success {
+  color: #4bb543;
+  font-weight: 800;
+}
 
 .game-messages::-webkit-scrollbar {
   width: 0.5rem;
