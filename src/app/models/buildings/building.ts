@@ -78,6 +78,7 @@ export class Building {
       if (this.remainingTimeToBuild <= 0) {
         this.isBuilding = false
         this.handleBuildingWasBuilt()
+        this.increaseResourcesNeededToBuild()
         this.game.handleBuildingWasBuilt(this)
         this.handleBuildingContent()
       }
@@ -90,6 +91,12 @@ export class Building {
     this.level++
     this.updateBuildingContainer()
     this.remainingTimeToBuild = this.timeToBuildInMiliseconds
+  }
+
+  private increaseResourcesNeededToBuild() {
+    this.resourcesNeededToBuild.forEach((res) => {
+      res.count = parseInt((res.count * 1.5).toFixed(0))
+    })
   }
 
   render() {}
