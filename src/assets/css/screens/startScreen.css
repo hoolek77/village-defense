@@ -23,6 +23,13 @@
   height: 100%;
   z-index: 0;
   animation: fadeIn 1s;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 0%,
+    var(--primary-color) 52%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  z-index: -1;
 }
 
 .start_screen--elves {
