@@ -281,6 +281,7 @@ export class Game {
     this.updateBuildings()
     this.renderBuildings()
     this.renderUnits()
+    this.checkIfRandomEvent()
 
     if (this.onGameUpdate) {
       this.onGameUpdate()
@@ -446,6 +447,108 @@ export class Game {
     })
 
     this.storageCapacity += parseInt((warehouse.capacity * 1.5).toFixed(0))
+  }
+
+  private checkIfRandomEvent() {
+    const randomInt = Math.floor(Math.random() * 10000)
+
+    if (randomInt < 30) {
+      this.handleRandomEvent()
+    } else {
+      return
+    }
+  }
+
+  private handleRandomEvent() {
+    const randomInt = Math.floor(Math.random() * 5)
+
+    switch (randomInt) {
+      case 0:
+        this.handleRandomGoldStealEvent()
+        break
+      case 1:
+        this.handleRandomBuilidngLevelDecreaseEvent()
+        break
+      case 2:
+        this.handleRandomWoodIncreaseEvent()
+        break
+      case 3:
+        this.handleMurderEvent()
+        break
+      case 4:
+        this.handleBornEvent()
+      default:
+        break
+    }
+  }
+
+  private handleRandomGoldStealEvent() {
+    if (this.getGoldAmount() === 0) {
+      return
+    }
+    const goldTaken = Math.floor(0.05 * this.getGoldAmount())
+    const gold = Math.floor(0.95 * this.getGoldAmount())
+    this.changeGoldAmount(gold)
+    this.addGameMessage({
+      message: `Oh no, thieves have stolen ${goldTaken} gold from your storage`,
+      type: MessageType.ERROR,
+    })
+  }
+
+  private handleRandomBuilidngLevelDecreaseEvent() {
+    const randomBuilding = this.buildings[
+      Math.floor(Math.random() * this.buildings.length - 1)
+    ]
+
+    if (randomBuilding.level === 0) {
+      return
+    }
+
+    randomBuilding.level = randomBuilding.getLevel() - 1
+    this.addGameMessage({
+      message: `Watch out, there was a storm and lighting has hit your ${randomBuilding.getTitle()}. It's level got decreased by one.`,
+      type: MessageType.ERROR,
+    })
+  }
+
+  private handleMurderEvent() {
+    this.population = this.getPopulation() - 1
+    this.addGameMessage({
+      message:
+        'There was a murder in your village and population decreased by 1',
+      type: MessageType.ERROR,
+    })
+  }
+
+  private handleBornEvent() {
+    this.population = this.getPopulation() + 1
+    this.addGameMessage({
+      message:
+        'New child was born in your village and your population increased by 1',
+      type: MessageType.SUCCESS,
+    })
+  }
+
+  private handleRandomWoodIncreaseEvent() {
+    if (this.getBuilding('Sawmill')!.level === 0) return
+
+    const wood = Math.floor(1.05 * this.getWoodAmount())
+    if (wood < 1) return
+
+    if (
+      this.getTotalResourceCount() - this.getWoodAmount() + wood >
+      this.storageCapacity
+    ) {
+      return
+    } else {
+      this.changeWoodAmount(wood)
+      this.addGameMessage({
+        message: `Your loggers did awesome job and produced ${Math.floor(
+          0.05 * this.getWoodAmount()
+        )} more wood that expected`,
+        type: MessageType.SUCCESS,
+      })
+    }
   }
 
   private getWarehouse(): Warehouse | undefined {
