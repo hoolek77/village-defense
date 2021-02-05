@@ -475,12 +475,16 @@ export class Game {
         break
       case 4:
         this.handleBornEvent()
+        break
       case 5:
         this.handleRandomTradeEvent()
+        break
       case 6:
         this.handleRandomStoneIncreaseEvent()
+        break
       case 7:
         this.handleRandomDefenceIncreaseEvent()
+        break
       default:
         break
     }
