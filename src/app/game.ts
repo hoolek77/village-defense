@@ -450,7 +450,7 @@ export class Game {
   }
 
   private checkIfRandomEvent() {
-    const randomInt = Math.floor(Math.random() * 10000)
+    const randomInt = Math.floor(Math.random() * 100)
 
     if (randomInt < 30) {
       this.handleRandomEvent()
@@ -538,6 +538,10 @@ export class Game {
 
   private handleRandomWoodIncreaseEvent() {
     const sawmill = this.getBuilding(Sawmill.name)
+    if (sawmill) {
+      if (sawmill.getLevel() < 1) return
+    }
+
     if (!sawmill) return
 
     const wood = Math.floor(1.05 * this.getWoodAmount())
@@ -561,6 +565,10 @@ export class Game {
 
   private handleRandomStoneIncreaseEvent() {
     const quarry = this.getBuilding(Sawmill.name)
+    if (quarry) {
+      if (quarry.getLevel() < 1) return
+    }
+
     if (!quarry) return
 
     const stone = Math.floor(1.05 * this.getStoneAmount())
