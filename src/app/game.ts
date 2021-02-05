@@ -519,7 +519,7 @@ export class Game {
   }
 
   private handleMurderEvent() {
-    this.population = this.getPopulation() - 1
+    this.population--
     this.addGameMessage({
       message:
         'There was a murder in your village and population decreased by 1',
