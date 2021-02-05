@@ -107,7 +107,6 @@ export class HomePage {
 
   private onFractionDidChange(fractionName: string) {
     this.app.gameSettings.fraction = getFractionForName(fractionName)
-    this.updateTheme()
 
     this.startScreen.style.background = getComputedStyle(
       this.startScreenBackground
@@ -115,6 +114,7 @@ export class HomePage {
     this.removeClasses()
     this.changeLogo()
     this.changeBackground()
+    this.updateTheme()
   }
 
   private updateTheme() {
