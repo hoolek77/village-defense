@@ -537,11 +537,8 @@ export class Game {
   }
 
   private handleRandomWoodIncreaseEvent() {
-    if (!this.getBuilding('Sawmill')) {
-      return
-    } else {
-      if (this.getBuilding('Sawmill')!.getLevel() < 1) return
-    }
+    const sawmill = this.getBuilding(Sawmill.name)
+    if (!sawmill) return
 
     const wood = Math.floor(1.05 * this.getWoodAmount())
     if (wood < 1) return
@@ -563,11 +560,8 @@ export class Game {
   }
 
   private handleRandomStoneIncreaseEvent() {
-    if (!this.getBuilding('Quarry')) {
-      return
-    } else {
-      if (this.getBuilding('Quarry')!.getLevel() < 1) return
-    }
+    const quarry = this.getBuilding(Sawmill.name)
+    if (!quarry) return
 
     const stone = Math.floor(1.05 * this.getStoneAmount())
     if (stone < 1) return
