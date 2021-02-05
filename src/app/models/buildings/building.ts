@@ -19,6 +19,16 @@ export class Building {
     return this.level
   }
 
+  destroyBuildingLevel() {
+    if (this.level >= 1) {
+      this.level--
+      this.game.addGameMessage({
+        message: `Watch out, there was a storm and lighting has hit your ${this.getTitle()}. It's level got decreased by one.`,
+        type: MessageType.ERROR,
+      })
+    }
+  }
+
   getResourcesNeededToBuild() {
     return this.resourcesNeededToBuild
   }
