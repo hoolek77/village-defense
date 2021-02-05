@@ -80,11 +80,6 @@ export class Game {
     private fraction: Fractions = Fractions.Humans,
     private difficulty: Difficulty = Difficulty.Medium
   ) {
-    // TODO: remove after testing
-    // this.addVillageUnit(new Knight())
-    // const wall = new Wall(this)
-    // setTimeout(() => wall.startBuilding(), 20000)
-    // this.addBuilding(wall)
     this.addBuildings()
   }
 
@@ -130,18 +125,15 @@ export class Game {
         hasEnoughResources = false
       }
     })
-    console.log('has villable available resources', hasEnoughResources)
+
     return hasEnoughResources
   }
 
   handleStartingConstructionOfBuilding(building: Building) {
-    console.log('resources before building', this.getAllResourcesCount())
     this.updateResources(building.getResourcesNeededToBuild())
-    console.log('resources after building started', this.getAllResourcesCount())
   }
 
   handleBuildingWasBuilt(building: Building) {
-    console.log('New building was built', building)
     if (building instanceof House) {
       this.handleHouseWasBuilt(building as House)
     } else if (building instanceof Wall) {
@@ -206,6 +198,7 @@ export class Game {
   isAttackInProgress() {
     return this.attackInProgress
   }
+
   getGameMessages() {
     return this.gameMessages
   }
@@ -304,9 +297,6 @@ export class Game {
       this.peaceTimeDuration = Date.now() - this.peaceTime
     }
 
-    // console.log('elapsed game time', this.elapsedTimeInMilliseconds)
-    // console.log('pease time duration', this.peaceTimeDuration)
-    // console.log('next attack total in ms', this.nextAttackTotalInMiliseconds)
     if (
       this.attackInProgress ||
       this.peaceTimeDuration >= this.nextAttackTotalInMiliseconds
@@ -392,7 +382,6 @@ export class Game {
 
   private addBuilding(building: Building) {
     this.buildings.push(building)
-    // building.startBuilding()
   }
 
   private getResourceForType(resourceType: ResourceType) {
@@ -498,7 +487,6 @@ export class Game {
   }
 
   private handleAttack() {
-    console.log('Attack')
     const enemies = this.getEnemies()
 
     if (!this.isVillageDefended(enemies)) {
@@ -506,10 +494,8 @@ export class Game {
         message: `You lost the battle.`,
         type: MessageType.ERROR,
       })
-      console.log('population', this.population)
+
       this.reducePopulation(enemies)
-      console.log('population after reduction', this.population)
-      console.log('all resources count', this.getAllResourcesCount())
       this.stealResources(enemies)
     } else {
       this.attackSurvived++
@@ -561,7 +547,6 @@ export class Game {
     )
     console.log('percent of protected resources', percent)
     console.log('enemies capacity', enemiesCapacity)
-    console.log('all resources count', allResourcesCount)
 
     if (enemiesCapacity < numberOfResourcesToSteal) {
       numberOfResourcesToSteal = enemiesCapacity
@@ -584,7 +569,6 @@ export class Game {
         }
       })
     }
-    console.log('resources after stealing', this.getAllResourcesCount())
   }
 
   private getEnemies(): Unit[] {

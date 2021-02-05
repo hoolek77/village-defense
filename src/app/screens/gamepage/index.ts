@@ -203,6 +203,8 @@ export class GamePage {
       } else {
         progressBar.style.width = '0%'
         upgradeButton.disabled = false
+
+        this.updateBuildingContainer(building)
       }
     })
   }
@@ -279,6 +281,35 @@ export class GamePage {
           }
         }
       })
+    })
+  }
+
+  private getBuildingLevelContainer(building: Building) {
+    const levelContainer = document.querySelector(
+      `.building__level--${building.constructor.name}`
+    ) as HTMLElement
+
+    return levelContainer
+  }
+
+  private getBuildingPriceContainer(building: Building) {
+    const container = document.querySelectorAll(
+      `.building__price--${building.constructor.name}`
+    )
+
+    return container
+  }
+
+  private updateBuildingContainer(building: Building) {
+    let i = 0
+    this.getBuildingLevelContainer(
+      building
+    ).textContent = `Level: ${building.getLevel()}`
+    this.getBuildingPriceContainer(building).forEach((element) => {
+      element.textContent = `${building.getResourcesNeededToBuild()[i].count} ${
+        building.getResourcesNeededToBuild()[i].type
+      }`
+      i++
     })
   }
 

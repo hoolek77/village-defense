@@ -41,7 +41,7 @@ export class Building {
 
       this.game.handleStartingConstructionOfBuilding(this)
       this.game.addGameMessage({
-        message: `You have started to upgrading the ${this.getTitle()}.`,
+        message: `You have started upgrading the ${this.getTitle()}.`,
         type: MessageType.INFO,
       })
     } else {
@@ -53,40 +53,18 @@ export class Building {
   }
 
   canUpgarde() {
-    return this.level + 1 <= this.maxLevel
-  }
-
-  getLevelContainer() {
-    const levelContainer = document.querySelector(
-      `.building__level--${this.constructor.name}`
-    ) as HTMLElement
-    return levelContainer
-  }
-
-  getBuildingPriceContainer() {
-    const container = document.querySelectorAll(
-      `.building__price--${this.constructor.name}`
-    )
-    return container
-  }
-
-  updateBuildingContainer() {
-    let i = 0
-    this.getLevelContainer().textContent = `Level: ${this.level}`
-    this.getBuildingPriceContainer().forEach((element) => {
-      element.textContent = `${this.resourcesNeededToBuild[i].count} ${this.resourcesNeededToBuild[i].type}`
-      i++
-    })
+    return this.level < this.maxLevel
   }
 
   update() {
     if (this.isBuilding) {
-      console.log(`${this} is building`)
       this.remainingTimeToBuild -= GAME_LOOP_DELAY_IN_MILISECONDS
-      console.log(this.remainingTimeToBuild)
+
       if (this.remainingTimeToBuild <= 0) {
         this.isBuilding = false
-        this.handleBuildingContent()
+        this.level++
+        this.remainingTimeToBuild = this.timeToBuildInMiliseconds
+
         this.handleBuildingWasBuilt()
         this.increaseResourcesNeededToBuild()
         this.game.handleBuildingWasBuilt(this)
@@ -100,12 +78,6 @@ export class Building {
   }
 
   protected handleBuildingWasBuilt() {}
-
-  private handleBuildingContent() {
-    this.level++
-    this.updateBuildingContainer()
-    this.remainingTimeToBuild = this.timeToBuildInMiliseconds
-  }
 
   private increaseResourcesNeededToBuild() {
     this.resourcesNeededToBuild.forEach((res) => {

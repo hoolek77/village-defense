@@ -82,7 +82,6 @@ export class Battle {
 
   private removeBattle() {
     if (this.nextAttackInfoContainer.style.opacity == '0') {
-      console.log('removing')
       const battleContainer = document.querySelector(
         '.battle__container'
       ) as HTMLElement
