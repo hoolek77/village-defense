@@ -2,7 +2,7 @@ import { App } from '../../app'
 import { Audio } from '../../audio'
 import { GameOverModal, Battle } from '../../components'
 import { Game } from '../../game'
-import { Building, GameMessage, MessageType } from '../../models'
+import { Building, GameMessage, MessageType, Warrior } from '../../models'
 import { createElement } from '../../utils'
 export class GamePage {
   private app: App
@@ -130,7 +130,7 @@ export class GamePage {
 
   private bindEventsForAddUnitButton() {
     this.addUnitButtonElement.addEventListener('click', () => {
-      console.log('ADD UNIT')
+      this.game.startRecruitingUnit(new Warrior(this.game))
     })
   }
 
@@ -152,6 +152,7 @@ export class GamePage {
       this.updateStoneAmount()
       this.updatePopulation()
       this.updateDefence()
+      this.updateUnits()
       this.setBackgrondImage()
       this.updateNextAttackProgressBar()
       this.showBattle()
@@ -185,6 +186,10 @@ export class GamePage {
 
   private updateDefence() {
     this.defenceElement.textContent = this.game.getVillageDefence().toString()
+  }
+
+  private updateUnits() {
+    this.unitsElement.textContent = this.game.getRecruitedUnits().toString()
   }
 
   private updateNextAttackProgressBar() {
