@@ -450,7 +450,7 @@ export class Game {
   }
 
   private checkIfRandomEvent() {
-    const randomInt = Math.floor(Math.random() * 10000)
+    const randomInt = Math.floor(Math.random() * 100)
 
     if (randomInt < 30) {
       this.handleRandomEvent()
@@ -499,7 +499,7 @@ export class Game {
       Math.floor(Math.random() * this.buildings.length - 1)
     ]
 
-    if (randomBuilding.getLevel() === 0) return
+    if (!this.getBuilding(`${randomBuilding}`)) return
 
     randomBuilding.setLevel(randomBuilding.getLevel() - 1)
     this.addGameMessage({
@@ -527,7 +527,7 @@ export class Game {
   }
 
   private handleRandomWoodIncreaseEvent() {
-    if (this.getBuilding('Sawmill')!.getLevel() === 0) return
+    if (!this.getBuilding('Sawmill')) return
 
     const wood = Math.floor(1.05 * this.getWoodAmount())
     if (wood < 1) return
