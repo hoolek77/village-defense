@@ -450,7 +450,7 @@ export class Game {
   }
 
   private checkIfRandomEvent() {
-    const randomInt = Math.floor(Math.random() * 100)
+    const randomInt = Math.floor(Math.random() * 10000)
 
     if (randomInt < 30) {
       this.handleRandomEvent()
