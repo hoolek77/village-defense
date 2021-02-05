@@ -19,8 +19,10 @@ export class Building {
     return this.level
   }
 
-  setLevel(level: number) {
-    this.level = level
+  destroyBuildingLevel() {
+    if (this.level > 1) {
+      this.level--
+    }
   }
 
   getResourcesNeededToBuild() {

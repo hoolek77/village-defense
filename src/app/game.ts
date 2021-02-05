@@ -511,7 +511,7 @@ export class Game {
 
     if (!this.getBuilding(`${randomBuilding}`)) return
 
-    randomBuilding.setLevel(randomBuilding.getLevel() - 1)
+    randomBuilding.destroyBuildingLevel()
     this.addGameMessage({
       message: `Watch out, there was a storm and lighting has hit your ${randomBuilding.getTitle()}. It's level got decreased by one.`,
       type: MessageType.ERROR,
