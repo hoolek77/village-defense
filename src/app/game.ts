@@ -16,7 +16,6 @@ import {
   Wall,
   Warehouse,
   Goblin,
-  Warrior,
   Goldmine,
   Difficulty,
   ResourceType,
@@ -109,16 +108,23 @@ export class Game {
 
   startRecruitingUnit(unit: Unit) {
     if (this.canRecruitUnit(unit)) {
-      unit.startRecruiting()
+      if (this.hasBarrackEnoghCapacity()) {
+        unit.startRecruiting()
 
-      this.changeGoldAmount(this.getGoldAmount() - unit.goldNeededToRecruit)
+        this.changeGoldAmount(this.getGoldAmount() - unit.goldNeededToRecruit)
 
-      this.villageUnits.push(unit)
+        this.villageUnits.push(unit)
 
-      this.addGameMessage({
-        message: `You have started recruiting the ${unit.getTitle()}.`,
-        type: MessageType.INFO,
-      })
+        this.addGameMessage({
+          message: `You have started recruiting the ${unit.getTitle()}.`,
+          type: MessageType.INFO,
+        })
+      } else {
+        this.addGameMessage({
+          message: `There is no room in the barracks for your units. Please upgrade it if you want to recruit a new unit.`,
+          type: MessageType.WARNING,
+        })
+      }
     } else {
       this.addGameMessage({
         message: `You cannot recruit the ${unit.getTitle()}`,
@@ -428,6 +434,16 @@ export class Game {
     )
   }
 
+  private hasBarrackEnoghCapacity() {
+    const barracks = this.getBarracks()
+
+    if (!barracks) {
+      return false
+    }
+
+    return this.villageUnits.length < barracks.getCapacity()
+  }
+
   private changeGoldAmount(goldAmount: number) {
     const gold = this.getResourceForType(ResourceType.Gold)
 
@@ -486,6 +502,12 @@ export class Game {
 
   private getWall(): Wall | undefined {
     return this.buildings.find((building) => building instanceof Wall) as Wall
+  }
+
+  private getBarracks(): Barracks | undefined {
+    return this.buildings.find(
+      (building) => building instanceof Barracks
+    ) as Barracks
   }
 
   private getTownHall(): TownHall | undefined {
