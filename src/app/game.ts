@@ -450,7 +450,7 @@ export class Game {
   }
 
   private checkIfRandomEvent() {
-    const randomInt = Math.floor(Math.random() * 100)
+    const randomInt = Math.floor(Math.random() * 10000)
 
     if (randomInt < 30) {
       this.handleRandomEvent()
@@ -505,17 +505,13 @@ export class Game {
   }
 
   private handleRandomBuilidngLevelDecreaseEvent() {
-    const randomBuilding = this.buildings[
+    const randomBuilding: Building = this.buildings[
       Math.floor(Math.random() * this.buildings.length - 1)
     ]
 
-    if (!this.getBuilding(`${randomBuilding}`)) return
-
-    randomBuilding.destroyBuildingLevel()
-    this.addGameMessage({
-      message: `Watch out, there was a storm and lighting has hit your ${randomBuilding.getTitle()}. It's level got decreased by one.`,
-      type: MessageType.ERROR,
-    })
+    if (randomBuilding) {
+      randomBuilding.destroyBuildingLevel()
+    }
   }
 
   private handleMurderEvent() {
@@ -540,9 +536,7 @@ export class Game {
     const sawmill = this.getBuilding(Sawmill.name)
     if (sawmill) {
       if (sawmill.getLevel() < 1) return
-    }
-
-    if (!sawmill) return
+    } else return
 
     const wood = Math.floor(1.05 * this.getWoodAmount())
     if (wood < 1) return
@@ -567,9 +561,7 @@ export class Game {
     const quarry = this.getBuilding(Quarry.name)
     if (quarry) {
       if (quarry.getLevel() < 1) return
-    }
-
-    if (!quarry) return
+    } else return
 
     const stone = Math.floor(1.05 * this.getStoneAmount())
     if (stone < 1) return
