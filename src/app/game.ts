@@ -458,7 +458,7 @@ export class Game {
   }
 
   private handleRandomEvent() {
-    const randomInt = Math.floor(Math.random() * 5)
+    const randomInt = Math.floor(Math.random() * 8)
 
     switch (randomInt) {
       case 0:
@@ -475,6 +475,12 @@ export class Game {
         break
       case 4:
         this.handleBornEvent()
+      case 5:
+        this.handleRandomTradeEvent()
+      case 6:
+        this.handleRandomStoneIncreaseEvent()
+      case 7:
+        this.handleRandomDefenceIncreaseEvent()
       default:
         break
     }
@@ -527,7 +533,11 @@ export class Game {
   }
 
   private handleRandomWoodIncreaseEvent() {
-    if (!this.getBuilding('Sawmill')) return
+    if (!this.getBuilding('Sawmill')) {
+      return
+    } else {
+      if (this.getBuilding('Sawmill')!.getLevel() < 1) return
+    }
 
     const wood = Math.floor(1.05 * this.getWoodAmount())
     if (wood < 1) return
@@ -542,10 +552,67 @@ export class Game {
       this.addGameMessage({
         message: `Your loggers did awesome job and produced ${Math.floor(
           0.05 * this.getWoodAmount()
-        )} more wood that expected`,
+        )} more wood than expected`,
         type: MessageType.SUCCESS,
       })
     }
+  }
+
+  private handleRandomStoneIncreaseEvent() {
+    if (!this.getBuilding('Quarry')) {
+      return
+    } else {
+      if (this.getBuilding('Quarry')!.getLevel() < 1) return
+    }
+
+    const stone = Math.floor(1.05 * this.getStoneAmount())
+    if (stone < 1) return
+
+    if (
+      this.getTotalResourceCount() - this.getStoneAmount() + stone >
+      this.storageCapacity
+    ) {
+      return
+    } else {
+      this.changeStoneAmount(stone)
+      this.addGameMessage({
+        message: `Your miners did stunishing job today and produced ${Math.floor(
+          0.05 * this.getStoneAmount()
+        )} more Stone than expected`,
+        type: MessageType.SUCCESS,
+      })
+    }
+  }
+
+  private handleRandomTradeEvent() {
+    const wood = Math.floor(Math.random() * 10) + 1
+    const stone = Math.floor(Math.random() * 10) + 1
+    const gold = Math.floor(Math.random() * 10) + 1
+
+    if (
+      !this.getGoldAmount() ||
+      !this.getWoodAmount() ||
+      !this.getStoneAmount()
+    )
+      return
+
+    this.changeGoldAmount(this.getGoldAmount() + gold)
+    this.changeWoodAmount(this.getWoodAmount() + wood)
+    this.changeStoneAmount(this.getStoneAmount() + stone)
+
+    this.addGameMessage({
+      message: `Your villagers did awesome trade with local tradesman. You earned ${gold} gold, ${stone} stone, ${wood} wood.`,
+      type: MessageType.SUCCESS,
+    })
+  }
+
+  private handleRandomDefenceIncreaseEvent() {
+    const defence = Math.floor(Math.random() * 5) + 1
+    this.villageDefence += defence
+    this.addGameMessage({
+      message: `One of your warriors became extraordinary knight. Your village defence increased by ${defence}`,
+      type: MessageType.SUCCESS,
+    })
   }
 
   private getWarehouse(): Warehouse | undefined {
