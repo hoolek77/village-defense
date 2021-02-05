@@ -454,8 +454,6 @@ export class Game {
 
     if (randomInt < 30) {
       this.handleRandomEvent()
-    } else {
-      return
     }
   }
 
@@ -483,10 +481,11 @@ export class Game {
   }
 
   private handleRandomGoldStealEvent() {
-    if (this.getGoldAmount() === 0) {
-      return
-    }
+    if (this.getGoldAmount() === 0) return
+
     const goldTaken = Math.floor(0.05 * this.getGoldAmount())
+    if (goldTaken < 1) return
+
     const gold = Math.floor(0.95 * this.getGoldAmount())
     this.changeGoldAmount(gold)
     this.addGameMessage({
@@ -500,11 +499,9 @@ export class Game {
       Math.floor(Math.random() * this.buildings.length - 1)
     ]
 
-    if (randomBuilding.level === 0) {
-      return
-    }
+    if (randomBuilding.getLevel() === 0) return
 
-    randomBuilding.level = randomBuilding.getLevel() - 1
+    randomBuilding.setLevel(randomBuilding.getLevel() - 1)
     this.addGameMessage({
       message: `Watch out, there was a storm and lighting has hit your ${randomBuilding.getTitle()}. It's level got decreased by one.`,
       type: MessageType.ERROR,
@@ -521,7 +518,7 @@ export class Game {
   }
 
   private handleBornEvent() {
-    this.population = this.getPopulation() + 1
+    this.population++
     this.addGameMessage({
       message:
         'New child was born in your village and your population increased by 1',
@@ -530,7 +527,7 @@ export class Game {
   }
 
   private handleRandomWoodIncreaseEvent() {
-    if (this.getBuilding('Sawmill')!.level === 0) return
+    if (this.getBuilding('Sawmill')!.getLevel() === 0) return
 
     const wood = Math.floor(1.05 * this.getWoodAmount())
     if (wood < 1) return

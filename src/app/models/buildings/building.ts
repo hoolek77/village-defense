@@ -3,7 +3,7 @@ import { Game } from '../../game'
 import { MessageType, Resource } from '../types'
 
 export class Building {
-  level = 0
+  protected level = 0
 
   isBuilding = false
   remainingTimeToBuild = this.timeToBuildInMiliseconds
@@ -17,6 +17,10 @@ export class Building {
 
   getLevel() {
     return this.level
+  }
+
+  setLevel(level: number) {
+    this.level = level
   }
 
   getResourcesNeededToBuild() {
