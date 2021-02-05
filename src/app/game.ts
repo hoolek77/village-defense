@@ -564,7 +564,7 @@ export class Game {
   }
 
   private handleRandomStoneIncreaseEvent() {
-    const quarry = this.getBuilding(Sawmill.name)
+    const quarry = this.getBuilding(Quarry.name)
     if (quarry) {
       if (quarry.getLevel() < 1) return
     }
