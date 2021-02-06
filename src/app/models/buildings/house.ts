@@ -39,7 +39,7 @@ export class House extends Building {
   }
 
   getDescription() {
-    return 'Esse officia eu Lorem excepteur aliqua non. Dolor quis nisi irure eiusmod et magna eiusmod mollit non qui ad laborum nulla.'
+    return 'With each new house level, the population of your village increases.'
   }
 
   handleBuildingWasBuilt(){

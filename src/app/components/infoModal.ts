@@ -21,9 +21,9 @@ export class InfoModal {
       type: 'p',
       classes: ['info__desc'],
       content: `
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu faucibus urna. Mauris eu lorem ac felis rhoncus tempor ut eget felis. In ullamcorper fringilla lorem. Nam blandit, sapien sed venenatis lobortis, lacus ligula pellentesque libero, a feugiat velit neque sit amet turpis. Integer tempor elementum lectus quis tincidunt. Cras egestas orci sed nisi tempus ultrices. Maecenas enim arcu, volutpat non nunc nec, consequat faucibus lorem.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu faucibus urna. Mauris eu lorem ac felis rhoncus tempor ut eget felis. In ullamcorper fringilla lorem. Nam blandit, sapien sed venenatis lobortis, lacus ligula pellentesque libero, a feugiat velit neque sit amet turpis. Integer tempor elementum lectus quis tincidunt. Cras egestas orci sed nisi tempus ultrices. Maecenas enim arcu, volutpat non nunc nec, consequat faucibus lorem.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu faucibus urna. Mauris eu lorem ac felis rhoncus tempor ut eget felis. In ullamcorper fringilla lorem. Nam blandit, sapien sed venenatis lobortis, lacus ligula pellentesque libero, a feugiat velit neque sit amet turpis. Integer tempor elementum lectus quis tincidunt. Cras egestas orci sed nisi tempus ultrices. Maecenas enim arcu, volutpat non nunc nec, consequat faucibus lorem.
+      Are you ready to conquer the world? Today you can follow in the footsteps of history's greatest commanders.
+      
+      Your task in this game is to develop your own village, from a small settlement to a large fortified stronghold, to create a strong army that will stand up to invaders. Face your opponents and protect your village! 
       `,
     })
     const authorsHeader = createElement({

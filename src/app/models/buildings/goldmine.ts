@@ -53,7 +53,7 @@ export class Goldmine extends Building {
   }
 
   getDescription() {
-    return 'Esse officia eu Lorem excepteur aliqua non. Dolor quis nisi irure eiusmod et magna eiusmod mollit non qui ad laborum nulla.'
+    return 'Build gold mines to mine gold. With each level you are able to mine more gold.'
   }
 
   toString = (): string => {
