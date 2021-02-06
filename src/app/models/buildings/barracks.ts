@@ -2,13 +2,16 @@ import { Game } from '../../game'
 import { ResourceType } from '../types'
 import { Building } from './building'
 
+const CAPACITY = 30
 const GOLD = 1
 const WOOD = 1
 const STONE = 3
-const DEFAULT_TIME_TO_BUILD = 200 * 1000 // in ms
+const DEFAULT_TIME_TO_BUILD = 20 * 1000 // in ms
 const MAX_LEVEL = 3
 
 export class Barracks extends Building {
+  private capacity = CAPACITY
+
   constructor(game: Game) {
     super(
       game,
@@ -36,7 +39,11 @@ export class Barracks extends Building {
   }
 
   getDescription() {
-    return 'It helps to create units faster.'
+    return 'It allows to recruit units to protect the village.'
+  }
+
+  getCapacity() {
+    return this.capacity * this.level
   }
 
   toString = (): string => {

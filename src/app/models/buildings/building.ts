@@ -95,8 +95,6 @@ export class Building {
     })
   }
 
-  render() {}
-
   toString = (): string => {
     return `Building: [level = ${this.level}]`
   }
