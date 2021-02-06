@@ -686,7 +686,7 @@ export class Game {
 
   private reduceTimeBuilding() {
     const townHall = this.getTownHall()
-    const percent = townHall?.reducingAmountResources()
+    const percent = townHall?.reducingConstructionTime()
     const buildings = this.getBuildings()
     buildings.forEach((building) => {
       if (percent) {
