@@ -16,7 +16,6 @@ import {
   Wall,
   Warehouse,
   Goblin,
-  Knight,
   Goldmine,
   Difficulty,
   ResourceType,
@@ -107,8 +106,31 @@ export class Game {
     this.addBuildings()
   }
 
-  addVillageUnit(unit: Unit) {
-    this.villageUnits.push(unit)
+  startRecruitingUnit(unit: Unit) {
+    if (this.canRecruitUnit(unit)) {
+      if (this.hasBarrackEnoghCapacity()) {
+        unit.startRecruiting()
+
+        this.changeGoldAmount(this.getGoldAmount() - unit.goldNeededToRecruit)
+
+        this.villageUnits.push(unit)
+
+        this.addGameMessage({
+          message: `You have started recruiting the ${unit.getTitle()}.`,
+          type: MessageType.INFO,
+        })
+      } else {
+        this.addGameMessage({
+          message: `There is no room in the barracks for your units. Please upgrade it if you want to recruit a new unit.`,
+          type: MessageType.WARNING,
+        })
+      }
+    } else {
+      this.addGameMessage({
+        message: `You cannot recruit the ${unit.getTitle()}`,
+        type: MessageType.WARNING,
+      })
+    }
   }
 
   hasAvailableResources(resources: Resource[]) {
@@ -167,6 +189,10 @@ export class Game {
 
   getVillageDefence() {
     return this.getUnitsDefence(this.villageUnits) + this.villageDefence
+  }
+
+  getRecruitedUnits() {
+    return this.villageUnits.filter((unit) => unit.isRecruited()).length
   }
 
   getNextAttackTotal() {
@@ -279,8 +305,7 @@ export class Game {
 
   private update() {
     this.updateBuildings()
-    this.renderBuildings()
-    this.renderUnits()
+    this.updateUnits()
     this.checkIfRandomEvent()
 
     if (this.onGameUpdate) {
@@ -397,6 +422,27 @@ export class Game {
         villageResource.count -= res.count
       }
     })
+  }
+
+  private canRecruitUnit(unit: Unit) {
+    return (
+      this.hasAvailableResources([
+        {
+          type: ResourceType.Gold,
+          count: unit.goldNeededToRecruit,
+        },
+      ]) && this.villageUnits.length < this.population
+    )
+  }
+
+  private hasBarrackEnoghCapacity() {
+    const barracks = this.getBarracks()
+
+    if (!barracks) {
+      return false
+    }
+
+    return this.villageUnits.length < barracks.getCapacity()
   }
 
   private changeGoldAmount(goldAmount: number) {
@@ -619,6 +665,12 @@ export class Game {
     return this.buildings.find((building) => building instanceof Wall) as Wall
   }
 
+  private getBarracks(): Barracks | undefined {
+    return this.buildings.find(
+      (building) => building instanceof Barracks
+    ) as Barracks
+  }
+
   private getTownHall(): TownHall | undefined {
     return this.buildings.find(
       (building) => building instanceof TownHall
@@ -635,16 +687,12 @@ export class Game {
     return this.resources.filter((resource) => resource.count > 0)
   }
 
-  private renderBuildings() {
-    this.buildings.forEach((building) => building.render())
-  }
-
   private updateBuildings() {
     this.buildings.forEach((building) => building.update())
   }
 
-  private renderUnits() {
-    this.villageUnits.forEach((unit) => unit.render())
+  private updateUnits() {
+    this.villageUnits.forEach((unit) => unit.update())
   }
 
   private handleAttack() {
@@ -686,7 +734,7 @@ export class Game {
 
   private reduceTimeBuilding() {
     const townHall = this.getTownHall()
-    const percent = townHall?.reducingAmountResources()
+    const percent = townHall?.reducingConstructionTime()
     const buildings = this.getBuildings()
     buildings.forEach((building) => {
       if (percent) {
@@ -762,7 +810,7 @@ export class Game {
 
     const numberOfEnemies = randomBetween(1, maxEnemiesCount)
     console.log('enemies', numberOfEnemies)
-    return [...Array(numberOfEnemies)].map(() => new Goblin())
+    return [...Array(numberOfEnemies)].map(() => new Goblin(this))
   }
 
   private isVillageDefended(enemies: Unit[]) {
@@ -776,7 +824,11 @@ export class Game {
 
   private getUnitsDefence(units: Unit[]) {
     return units.reduce((defence, unit) => {
-      return defence + unit.defence
+      if (unit.isRecruited()) {
+        return defence + unit.defence
+      } else {
+        return defence
+      }
     }, 0)
   }
 

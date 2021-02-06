@@ -1,0 +1,29 @@
+*[data-tooltip] {
+  position: relative;
+}
+
+*[data-tooltip]:hover:before {
+  background: var(--primary-color);
+  border-radius: 4px;
+  color: #fff;
+  content: attr(data-tooltip);
+  font-size: 1.6rem;
+  padding: 4px 8px;
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 200px;
+}
+
+*[data-tooltip]:hover:after {
+  background: var(--primary-color);
+  content: '';
+  height: 6px;
+  position: absolute;
+  right: calc(100% + 9px);
+  top: 50%;
+  transform: rotate(45deg) translateY(-50%);
+  white-space: nowrap;
+  width: 6px;
+}

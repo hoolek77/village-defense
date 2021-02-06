@@ -2,7 +2,7 @@ import { App } from '../../app'
 import { Audio } from '../../audio'
 import { GameOverModal, Battle } from '../../components'
 import { Game } from '../../game'
-import { Building, GameMessage, MessageType } from '../../models'
+import { Building, GameMessage, MessageType, Warrior } from '../../models'
 import { createElement } from '../../utils'
 export class GamePage {
   private app: App
@@ -11,13 +11,15 @@ export class GamePage {
 
   private quitButton!: HTMLButtonElement
   private gameScreen!: HTMLElement
-  private unitsImg!: HTMLDivElement
+  private fractionImg!: HTMLDivElement
 
   private goldAmountElement!: HTMLElement
   private woodAmountElement!: HTMLElement
   private stoneAmountElement!: HTMLElement
   private populationElement!: HTMLElement
   private defenceElement!: HTMLElement
+  private unitsElement!: HTMLElement
+  private addUnitButtonElement!: HTMLButtonElement
 
   private messageList!: HTMLElement
 
@@ -63,7 +65,9 @@ export class GamePage {
       '.quit-button'
     ) as HTMLButtonElement
     this.gameScreen = document.querySelector('.game__screen') as HTMLElement
-    this.unitsImg = document.querySelector('.units__image') as HTMLDivElement
+    this.fractionImg = document.querySelector(
+      '.fraction__image'
+    ) as HTMLDivElement
 
     this.goldAmountElement = document.querySelector(
       '#goldAmount'
@@ -82,6 +86,11 @@ export class GamePage {
       '.defence__count'
     ) as HTMLElement
 
+    this.unitsElement = document.querySelector('.units__count') as HTMLElement
+    this.addUnitButtonElement = document.querySelector(
+      '.units__add-button'
+    ) as HTMLButtonElement
+
     this.messageList = document.querySelector('.game-messages') as HTMLElement
 
     this.progressBar = document.querySelector(
@@ -95,17 +104,18 @@ export class GamePage {
 
   private bindEvents() {
     this.setClosePageEvent()
+    this.bindEventsForAddUnitButton()
   }
 
   private setupUI() {
     this.setBackgrondImage()
-    this.setUnitsFractionImage()
+    this.setFractionImage()
     this.renderBuildings()
   }
 
-  private setUnitsFractionImage() {
+  private setFractionImage() {
     const fraction = this.app.gameSettings.fraction
-    this.unitsImg.style.backgroundImage = `url('../../../assets/images/homepage/${fraction}.png')`
+    this.fractionImg.style.backgroundImage = `url('../../../assets/images/homepage/${fraction}.png')`
   }
 
   private setBackgrondImage() {
@@ -115,6 +125,12 @@ export class GamePage {
   private setClosePageEvent() {
     this.quitButton.addEventListener('click', () => {
       this.quitGame()
+    })
+  }
+
+  private bindEventsForAddUnitButton() {
+    this.addUnitButtonElement.addEventListener('click', () => {
+      this.game.startRecruitingUnit(new Warrior(this.game))
     })
   }
 
@@ -136,6 +152,7 @@ export class GamePage {
       this.updateStoneAmount()
       this.updatePopulation()
       this.updateDefence()
+      this.updateUnits()
       this.setBackgrondImage()
       this.updateNextAttackProgressBar()
       this.showBattle()
@@ -169,6 +186,10 @@ export class GamePage {
 
   private updateDefence() {
     this.defenceElement.textContent = this.game.getVillageDefence().toString()
+  }
+
+  private updateUnits() {
+    this.unitsElement.textContent = this.game.getRecruitedUnits().toString()
   }
 
   private updateNextAttackProgressBar() {

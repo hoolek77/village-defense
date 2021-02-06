@@ -7,7 +7,7 @@ const WOOD = 15
 const STONE = 20
 const DEFAULT_TIME_TO_BUILD = 300 * 1000
 const MAX_LEVEL = 3
-const REDUCING_AMOUNT_RESOURCES = [0, 0.2, 0.3, 0.5]
+const REDUCING_CONSTRUCTION_TIME = [0, 0.2, 0.3, 0.5]
 
 export class TownHall extends Building {
   constructor(game: Game) {
@@ -40,8 +40,8 @@ export class TownHall extends Building {
     return 'Each new Town Hall level makes your buildings build faster.'
   }
 
-  reducingAmountResources() {
-    return REDUCING_AMOUNT_RESOURCES[this.level]
+  reducingConstructionTime() {
+    return REDUCING_CONSTRUCTION_TIME[this.level]
   }
 
   toString = (): string => {
