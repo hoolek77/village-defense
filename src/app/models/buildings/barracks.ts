@@ -36,7 +36,7 @@ export class Barracks extends Building {
   }
 
   getDescription() {
-    return 'It helps to create units faster.'
+    return 'The higher the level of your barracks, new units are trained faster.'
   }
 
   toString = (): string => {

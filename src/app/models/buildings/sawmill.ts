@@ -53,7 +53,7 @@ export class Sawmill extends Building {
   }
 
   getDescription() {
-    return 'Esse officia eu Lorem excepteur aliqua non. Dolor quis nisi irure eiusmod et magna eiusmod mollit non qui ad laborum nulla.'
+    return 'Build a sawmill to produce wood. With each level the production increases.'
   }
 
   toString = (): string => {

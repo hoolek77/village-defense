@@ -43,7 +43,7 @@ export class Wall extends Building {
   }
 
   getDescription() {
-    return 'Esse officia eu Lorem excepteur aliqua non. Dolor quis nisi irure eiusmod et magna eiusmod mollit non qui ad laborum nulla.'
+    return 'Build defensive walls to increase the defense of your village.'
   }
 
   toString = (): string => {

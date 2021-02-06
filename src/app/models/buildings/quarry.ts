@@ -53,7 +53,7 @@ export class Quarry extends Building {
   }
 
   getDescription() {
-    return 'Esse officia eu Lorem excepteur aliqua non. Dolor quis nisi irure eiusmod et magna eiusmod mollit non qui ad laborum nulla.'
+    return 'Build a quarry to extract stones. With each level the output increases.'
   }
 
   toString = (): string => {

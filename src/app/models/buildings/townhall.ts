@@ -37,7 +37,7 @@ export class TownHall extends Building {
   }
 
   getDescription() {
-    return 'Esse officia eu Lorem excepteur aliqua non. Dolor quis nisi irure eiusmod et magna eiusmod mollit non qui ad laborum nulla.'
+    return 'Each new Town Hall level makes your buildings build faster.'
   }
 
   reducingAmountResources() {
