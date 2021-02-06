@@ -647,6 +647,10 @@ export class Game {
   }
 
   private handleRandomDefenceIncreaseEvent() {
+    const barracks = this.getBuilding(Barracks.name)
+    if (!barracks || barracks.getLevel() < 1 || this.villageUnits.length < 1)
+      return
+
     const defence = Math.floor(Math.random() * 5) + 1
     this.villageDefence += defence
     this.addGameMessage({
