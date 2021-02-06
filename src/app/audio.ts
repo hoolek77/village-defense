@@ -1,13 +1,18 @@
 import { AUDIO_DEFAULT_VOLUME } from './constants'
 
 export class Audio {
-  private volume: number = AUDIO_DEFAULT_VOLUME
+  private volumeLocalStorage
+  private volume: number
   private audio = document.querySelector('audio') as HTMLAudioElement
   private unmuteSpeaker = document.querySelector('.fa-volume-up') as HTMLElement
   private muteSpeaker = document.querySelector('.fa-volume-off') as HTMLElement
   private audioState: boolean = true
 
   constructor() {
+    this.volumeLocalStorage = +localStorage.getItem('volume')!
+    this.volume = this.volumeLocalStorage
+      ? this.volumeLocalStorage
+      : AUDIO_DEFAULT_VOLUME
     this._init()
   }
 

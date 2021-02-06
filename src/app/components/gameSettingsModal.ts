@@ -37,6 +37,15 @@ export class GameSettingsModal {
   }
 
   private getCurrentGameDifficulty() {
+    const data = localStorage.getItem('difficulty')!
+    if (data) {
+      const difficultyInput = document.querySelector(
+        `#difficulty-${data}`
+      ) as HTMLInputElement
+      difficultyInput.checked = true
+      return
+    }
+
     switch (this.app.gameSettings.difficulty) {
       case Difficulty.Easy:
         const difficultyEasyInput = document.querySelector(
@@ -76,6 +85,7 @@ export class GameSettingsModal {
     ) as HTMLInputElement
     difficultyEasyInput?.addEventListener('change', () => {
       this.app.gameSettings.difficulty = Difficulty.Easy
+      localStorage.setItem('difficulty', 'easy')
     })
 
     const difficultyMediumInput = document.querySelector(
@@ -83,6 +93,7 @@ export class GameSettingsModal {
     ) as HTMLInputElement
     difficultyMediumInput?.addEventListener('change', () => {
       this.app.gameSettings.difficulty = Difficulty.Medium
+      localStorage.setItem('difficulty', 'medium')
     })
 
     const difficultyHardInput = document.querySelector(
@@ -90,6 +101,7 @@ export class GameSettingsModal {
     ) as HTMLInputElement
     difficultyHardInput?.addEventListener('change', () => {
       this.app.gameSettings.difficulty = Difficulty.Hard
+      localStorage.setItem('difficulty', 'hard')
     })
 
     const popupCloseBtn = document.querySelector(
@@ -97,6 +109,7 @@ export class GameSettingsModal {
     ) as HTMLButtonElement
     popupCloseBtn.addEventListener('click', () => {
       this.audio.audioSettings(this.currentVolume)
+      localStorage.setItem('volume', `${this.currentVolume}`)
       const popup = document.querySelector('.popup') as HTMLDivElement
       popup.classList.remove('popup--active')
       removePopup()
