@@ -9,6 +9,7 @@ export class Battle {
   private gameMessagesContainer!: HTMLElement
   private nextAttackInfoContainer!: HTMLElement
   private battleContainer!: HTMLElement
+  private battleOverlay!: HTMLElement
 
   constructor(audio: Audio, game: Game) {
     this.audio = audio
@@ -28,6 +29,10 @@ export class Battle {
     this.battleContainer = createElement({
       type: 'div',
       classes: ['battle__container'],
+    })
+    this.battleOverlay = createElement({
+      type: 'div',
+      classes: ['battle__overlay'],
     })
   }
 
@@ -68,11 +73,13 @@ export class Battle {
 
   private renderBattle() {
     if (this.mainArea.childElementCount === 2) {
+      this.mainArea.style.zIndex = '200'
       this.mainArea.insertBefore(
         this.battleContainer,
         this.nextAttackInfoContainer
       )
 
+      document.querySelector('.game__screen')?.appendChild(this.battleOverlay)
       this.gameMessagesContainer.style.transform = 'translateY(-120%)'
       this.nextAttackInfoContainer.style.opacity = '0'
       this.createBattle()
@@ -86,9 +93,15 @@ export class Battle {
         '.battle__container'
       ) as HTMLElement
 
+      const battleOverlay = document.querySelector(
+        '.battle__overlay'
+      ) as HTMLElement
+
+      this.mainArea.style.zIndex = '0'
       battleContainer.style.animationName = 'battleExit'
       this.audio.changeAudioSource('../../assets/audio/music.mp3')
       this.nextAttackInfoContainer.style.opacity = '1'
+      battleOverlay.remove()
 
       setTimeout(() => {
         this.gameMessagesContainer.style.transform = 'translateY(0)'
