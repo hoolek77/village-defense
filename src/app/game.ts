@@ -1,14 +1,5 @@
-import {
-  DEFAULT_GOLD,
-  DEFAULT_STONE,
-  DEFAULT_STORAGE_CAPACITY,
-  DEFAULT_WOOD,
-  EASY_ATTACK_COUNTDOWN_IN_MILISECONDS,
-  GAME_LOOP_DELAY_IN_MILISECONDS,
-  HARD_ATTACK_COUNTDOWN_IN_MILISECONDS,
-  MEDIUM_ATTACK_COUNTDOWN_IN_MILISECONDS,
-  START_POPULATION,
-} from './constants'
+import { GAME_LOOP_DELAY_IN_MILISECONDS } from './constants'
+import { GameSettings } from './gameSettings'
 import {
   Building,
   Unit,
@@ -20,7 +11,6 @@ import {
   Difficulty,
   ResourceType,
   Resource,
-  Fractions,
   TownHall,
   Barracks,
   Quarry,
@@ -35,25 +25,25 @@ export class Game {
   private resources: Resource[] = [
     {
       type: ResourceType.Gold,
-      count: DEFAULT_GOLD,
+      count: 0,
     },
     {
       type: ResourceType.Wood,
-      count: DEFAULT_WOOD,
+      count: 0,
     },
     {
       type: ResourceType.Stone,
-      count: DEFAULT_STONE,
+      count: 0,
     },
   ]
 
-  private storageCapacity = DEFAULT_STORAGE_CAPACITY // max amount of resources we can store
+  private storageCapacity = 0 // max amount of resources we can store
   private villageDefence = 0 // some buildings, e.g. wall, can increase defence
 
   private buildings: Building[] = []
   private villageUnits: Unit[] = []
 
-  private population = START_POPULATION
+  private population = 0
 
   private elapsedTimeInMilliseconds = 0
   private startTime = 0
@@ -65,7 +55,7 @@ export class Game {
   private attackDuration = 0
   private attackStartTime = 0
   private attackInProgress = false
-  private nextAttackTotalInMiliseconds = this.calculateNextAttack()
+  private nextAttackTotalInMiliseconds = 0
 
   private attackSurvived = 0
 
@@ -75,15 +65,13 @@ export class Game {
 
   private onGameUpdate?: () => void
 
-  constructor(
-    private fraction: Fractions = Fractions.Humans,
-    private difficulty: Difficulty = Difficulty.Medium
-  ) {
-    this.addBuildings()
-  }
+  constructor(public gameSettings: GameSettings) {}
 
   start(onGameUpdate: () => void) {
     this.onGameUpdate = onGameUpdate
+
+    this.addBuildings()
+    this.initData()
 
     this.startTime = Date.now()
     this.peaceTime = Date.now()
@@ -103,7 +91,6 @@ export class Game {
   stop() {
     this.stopGameLoop()
     this.resetGame()
-    this.addBuildings()
   }
 
   startRecruitingUnit(unit: Unit) {
@@ -369,14 +356,20 @@ export class Game {
     }
   }
 
+  private initData() {
+    this.storageCapacity = this.gameSettings.initialStorageCapacity
+    this.population = this.gameSettings.initialPopulation
+    this.changeGoldAmount(this.gameSettings.initialGoldAmount)
+    this.changeWoodAmount(this.gameSettings.initialWoodAmount)
+    this.changeStoneAmount(this.gameSettings.initialStoneAmount)
+    this.nextAttackTotalInMiliseconds = this.calculateNextAttack()
+  }
+
   private resetGame() {
-    this.storageCapacity = DEFAULT_STORAGE_CAPACITY
     this.villageDefence = 0
 
     this.buildings = []
     this.villageUnits = []
-
-    this.population = START_POPULATION
 
     this.startTime = 0
     this.elapsedTimeInMilliseconds = 0
@@ -389,10 +382,6 @@ export class Game {
     this.nextAttackTotalInMiliseconds = this.calculateNextAttack()
 
     this.attackSurvived = 0
-
-    this.changeGoldAmount(DEFAULT_GOLD)
-    this.changeWoodAmount(DEFAULT_WOOD)
-    this.changeStoneAmount(DEFAULT_STONE)
   }
 
   private addBuildings() {
@@ -797,7 +786,7 @@ export class Game {
       maxEnemiesCount += Math.round(this.villageDefence / 10)
     }
 
-    switch (this.difficulty) {
+    switch (this.gameSettings.difficulty) {
       case Difficulty.Easy:
         maxEnemiesCount += Math.round(maxEnemiesCount * 1.1)
 
@@ -851,13 +840,13 @@ export class Game {
   private calculateNextAttack() {
     let interval = 0
 
-    const FIRST_GAME_TIME_THRESHOLD = 2 * 60 * 1000 // TODO: change to 10 after testing
+    const FIRST_GAME_TIME_THRESHOLD = 10 * 60 * 1000
     const SECOND_GAME_TIME_THRESHOLD = 15 * 60 * 1000
     const THIRD_GAME_TIME_THRESHOLD = 20 * 60 * 1000
 
-    switch (this.difficulty) {
+    switch (this.gameSettings.difficulty) {
       case Difficulty.Easy:
-        interval = EASY_ATTACK_COUNTDOWN_IN_MILISECONDS
+        interval = this.gameSettings.easyDifficultyAttackCountdownInMiliseconds
 
         if (this.elapsedTimeInMilliseconds >= THIRD_GAME_TIME_THRESHOLD) {
           interval *= 0.4
@@ -873,7 +862,8 @@ export class Game {
 
         break
       case Difficulty.Medium:
-        interval = MEDIUM_ATTACK_COUNTDOWN_IN_MILISECONDS
+        interval = this.gameSettings
+          .mediumDifficultyAttackCountdownInMiliseconds
 
         if (this.elapsedTimeInMilliseconds >= THIRD_GAME_TIME_THRESHOLD) {
           interval *= 0.3
@@ -889,7 +879,7 @@ export class Game {
 
         break
       case Difficulty.Hard:
-        interval = HARD_ATTACK_COUNTDOWN_IN_MILISECONDS
+        interval = this.gameSettings.hardDifficultyAttackCountdownInMiliseconds
 
         if (this.elapsedTimeInMilliseconds >= THIRD_GAME_TIME_THRESHOLD) {
           interval *= 0.2

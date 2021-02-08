@@ -6,7 +6,6 @@ const CAPACITY = 30
 const GOLD = 1
 const WOOD = 1
 const STONE = 3
-const DEFAULT_TIME_TO_BUILD = 20 * 1000 // in ms
 const MAX_LEVEL = 3
 
 export class Barracks extends Building {
@@ -29,7 +28,7 @@ export class Barracks extends Building {
           count: STONE,
         },
       ],
-      DEFAULT_TIME_TO_BUILD,
+      game.gameSettings.barracksDefaultTimeToBuildInMiliseconds,
       MAX_LEVEL
     )
   }

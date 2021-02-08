@@ -6,7 +6,6 @@ const STONE_PRODUCTION: number[] = [0, 4, 8, 12]
 const GOLD = 1
 const WOOD = 1
 const STONE = 3
-const DEFAULT_TIME_TO_BUILD = 100 * 1000
 const MAX_LEVEL = 3
 
 export class Quarry extends Building {
@@ -30,7 +29,7 @@ export class Quarry extends Building {
           count: STONE,
         },
       ],
-      DEFAULT_TIME_TO_BUILD,
+      game.gameSettings.quarryDefaultTimeToBuildInMiliseconds,
       MAX_LEVEL
     )
   }

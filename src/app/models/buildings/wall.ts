@@ -5,7 +5,6 @@ import { Building } from './building'
 const GOLD = 1
 const WOOD = 1
 const STONE = 3
-const DEFAULT_TIME_TO_BUILD = 10 * 1000
 const MAX_LEVEL = 3
 const DEFENCE: number[] = [0, 10, 15, 20]
 
@@ -29,7 +28,7 @@ export class Wall extends Building {
           count: STONE,
         },
       ],
-      DEFAULT_TIME_TO_BUILD,
+      game.gameSettings.wallDefaultTimeToBuildInMiliseconds,
       MAX_LEVEL
     )
   }

@@ -6,11 +6,10 @@ const POPULATION = 10
 const GOLD = 1
 const WOOD = 3
 const STONE = 1
-const DEFAULT_TIME_TO_BUILD = 10 * 1000
 const MAX_LEVEL = 100
 
 export class House extends Building {
-  population:number = POPULATION
+  population: number = POPULATION
 
   constructor(game: Game) {
     super(
@@ -29,7 +28,7 @@ export class House extends Building {
           count: STONE,
         },
       ],
-      DEFAULT_TIME_TO_BUILD,
+      game.gameSettings.houseDefaultTimeToBuildInMiliseconds,
       MAX_LEVEL
     )
   }
@@ -42,7 +41,7 @@ export class House extends Building {
     return 'With each new house level, the population of your village increases.'
   }
 
-  handleBuildingWasBuilt(){
+  handleBuildingWasBuilt() {
     this.population = Math.round(this.population * 1.1)
   }
 

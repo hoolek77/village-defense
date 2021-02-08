@@ -110,7 +110,6 @@ export class GamePage {
   private setupUI() {
     this.setBackgrondImage()
     this.setFractionImage()
-    this.renderBuildings()
   }
 
   private setFractionImage() {
@@ -143,6 +142,7 @@ export class GamePage {
   private startGame() {
     this.showBattle()
     this.game.start(this.updateUI.bind(this))
+    this.renderBuildings()
   }
 
   private updateUI() {

@@ -32,7 +32,6 @@ export class Unit {
 
   update() {
     if (this.isRecruiting) {
-      console.log('is recruiting unit')
       this.remainingTimeToRecruit -= GAME_LOOP_DELAY_IN_MILISECONDS
 
       if (this.remainingTimeToRecruit <= 0) {

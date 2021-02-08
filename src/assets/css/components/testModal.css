@@ -1,0 +1,15 @@
+.test-modal__heading {
+  margin-bottom: 30px;
+}
+
+.test-modal__settings {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.test-modal__label {
+  text-align: right;
+}

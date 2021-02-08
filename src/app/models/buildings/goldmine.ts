@@ -6,7 +6,6 @@ const GOLD_PRODUCTION: number[] = [0, 3, 5, 7, 10, 12]
 const GOLD = 5
 const WOOD = 1
 const STONE = 4
-const DEFAULT_TIME_TO_BUILD = 20 * 1000
 const MAX_LEVEL = 5
 
 export class Goldmine extends Building {
@@ -30,7 +29,7 @@ export class Goldmine extends Building {
           count: STONE,
         },
       ],
-      DEFAULT_TIME_TO_BUILD,
+      game.gameSettings.goldmineDefaultTimeToBuildInMiliseconds,
       MAX_LEVEL
     )
   }
