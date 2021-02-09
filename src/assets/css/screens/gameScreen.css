@@ -1,6 +1,5 @@
 .game__screen {
   background-repeat: no-repeat;
-  background-size: cover;
   position: absolute;
   top: 0;
   left: 0;
@@ -9,12 +8,11 @@
   height: auto;
   display: grid;
   grid-template-columns: 3fr 15fr 3fr;
-  grid-template-rows: 100px calc(100% - 260px) 100px;
+  grid-template-rows: 100px;
   gap: 30px;
   grid-template-areas:
     'exit-area resources-box .'
-    'buildings-box main-area info-box'
-    'buildings-box . info-box';
+    'buildings-box main-area info-box';
   padding: 30px;
   transition: transform 0.5s ease-in-out;
   transform: scale(0);
@@ -47,6 +45,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 300px);
   justify-content: space-around;
   overflow: hidden;
   position: relative;

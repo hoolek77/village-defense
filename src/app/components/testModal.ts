@@ -149,12 +149,12 @@ export class TestModal {
           this.gameSettings.hardDifficultyAttackCountdownInMiliseconds / 1000
         }" />
 
-        <label for="barracksBuildTime" class="test-modal__label">Barracks Time (in seconds)</label>
+        <label for="barracksBuildTime" class="test-modal__label">Barracks Build Time (in seconds)</label>
         <input type="number" name="barracksBuildTime" id="barracksBuildTime" value="${
           this.gameSettings.barracksDefaultTimeToBuildInMiliseconds / 1000
         }" />
 
-        <label for="goldmineBuildTime" class="test-modal__label">Gold Mine Time (in seconds)</label>
+        <label for="goldmineBuildTime" class="test-modal__label">Gold Mine Build Time (in seconds)</label>
         <input type="number" name="goldmineBuildTime" id="goldmineBuildTime" value="${
           this.gameSettings.goldmineDefaultTimeToBuildInMiliseconds / 1000
         }" />
