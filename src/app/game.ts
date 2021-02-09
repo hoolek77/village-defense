@@ -707,6 +707,8 @@ export class Game {
         type: MessageType.SUCCESS,
       })
     }
+
+    this.destroyUnits(enemies)
   }
 
   private reducePopulation(enemies: Unit[]) {
@@ -736,6 +738,31 @@ export class Game {
           building.timeToBuildInMiliseconds - timetoreduce)
       }
     })
+  }
+
+  private destroyUnits(enemies: Unit[]) {
+    const villageUnitsDefence = this.getUnitsDefence(this.villageUnits)
+    const enemiesAttack = this.getUnitsAttack(enemies)
+    let unitsToDestroy = 0
+
+    if (villageUnitsDefence < enemiesAttack) {
+      unitsToDestroy = Math.ceil((enemiesAttack - villageUnitsDefence) / 10)
+    } else {
+      const unitsSurvived = Math.ceil(
+        (villageUnitsDefence - enemiesAttack) / 10
+      )
+
+      unitsToDestroy = this.villageUnits.length - unitsSurvived
+    }
+
+    if (unitsToDestroy > 0 && unitsToDestroy <= this.villageUnits.length) {
+      this.villageUnits.splice(0, unitsToDestroy)
+
+      this.addGameMessage({
+        message: `You have lost ${unitsToDestroy} units.`,
+        type: MessageType.ERROR,
+      })
+    }
   }
 
   private stealResources(enemies: Unit[]) {
