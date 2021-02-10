@@ -15,7 +15,7 @@ export class InfoModal {
   }
 
   private render() {
-    const wrapper = createElement({ type: 'div' })
+    const wrapper = createElement({ type: 'div', classes: ['info__wrapper'] })
     const infoContent = createElement({ type: 'div' })
     const gameDesc = createElement({
       type: 'p',

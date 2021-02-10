@@ -4,10 +4,13 @@ interface popup {
   headerText: string, 
   popupContentHTML: HTMLElement, 
   closeBtnText: string,
-  isOverlayClickable?: boolean
+  isOverlayClickable?: boolean,
+  additionalBtn?:string,
+  additionalBtnClasses?:string[],
+  additionalBtnHandleEvent?: object
 }
 
-export function renderPopup({ headerText, popupContentHTML, closeBtnText, isOverlayClickable = true }: popup) {
+export function renderPopup({ headerText, popupContentHTML, closeBtnText, isOverlayClickable = true, additionalBtn,  additionalBtnClasses, additionalBtnHandleEvent}: popup) {
   const popup = createElement({
     type: 'div',
     classes: ['popup'],
@@ -31,6 +34,16 @@ export function renderPopup({ headerText, popupContentHTML, closeBtnText, isOver
 
   document.body.appendChild(popup)
   document.querySelector('.popup__body-content')?.appendChild(popupContentHTML)
+  if(additionalBtn){
+    const secondBtn = createElement({type: 'button', content:additionalBtn, classes:additionalBtnClasses})
+    if(additionalBtnHandleEvent){
+      for (const [key, value] of Object.entries(additionalBtnHandleEvent)) {
+        secondBtn.addEventListener(key, value)
+      }
+    }
+    document.querySelector('.popup__footer')?.appendChild(secondBtn)
+  }
+
 
   setTimeout(() => {
     popup.classList.add('popup--active')
