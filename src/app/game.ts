@@ -63,6 +63,10 @@ export class Game {
 
   private intervalId?: number
 
+  private isGamePaused: boolean = false
+  private pauseStartTime = 0
+  private pauseTimeInMiliseconds = 0
+
   private onGameUpdate?: () => void
 
   constructor(public gameSettings: GameSettings) {}
@@ -291,6 +295,11 @@ export class Game {
   }
 
   private update() {
+    if (this.isGamePaused) {
+      this.pauseTimeInMiliseconds = Date.now() - this.pauseStartTime
+      return
+    }
+
     this.updateBuildings()
     this.updateUnits()
     this.checkIfRandomEvent()
@@ -350,10 +359,22 @@ export class Game {
     }
   }
 
-  private stopGameLoop() {
-    if (this.intervalId !== undefined) {
-      window.clearInterval(this.intervalId!)
-    }
+  unpauseGame() {
+    this.startTime += this.pauseTimeInMiliseconds
+    this.elapsedTimeInMilliseconds += this.pauseTimeInMiliseconds
+    this.peaceTimeDuration += this.pauseTimeInMiliseconds
+    this.nextAttackTotalInMiliseconds += this.pauseTimeInMiliseconds
+    this.isGamePaused = false
+  }
+
+  pauseGame() {
+    this.pauseStartTime = Date.now()
+    this.pauseTimeInMiliseconds = 0
+    this.isGamePaused = true
+  }
+
+  stopGameLoop() {
+    window.clearInterval(this.intervalId)
   }
 
   private initData() {

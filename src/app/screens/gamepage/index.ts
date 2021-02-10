@@ -1,6 +1,6 @@
 import { App } from '../../app'
 import { Audio } from '../../audio'
-import { GameOverModal, Battle } from '../../components'
+import { GameOverModal, Battle, QuitModal } from '../../components'
 import { Game } from '../../game'
 import { Building, GameMessage, MessageType, Warrior } from '../../models'
 import { createElement } from '../../utils'
@@ -10,6 +10,7 @@ export class GamePage {
   private audio: Audio
 
   private quitButton!: HTMLButtonElement
+  private quitModal: QuitModal
   private gameScreen!: HTMLElement
   private fractionImg!: HTMLDivElement
 
@@ -32,6 +33,7 @@ export class GamePage {
     this.app = app
     this.game = this.app.game
     this.audio = this.app.audio
+    this.quitModal = new QuitModal(this, this.game)
   }
 
   show(appContainer: HTMLElement) {
@@ -123,7 +125,7 @@ export class GamePage {
 
   private setClosePageEvent() {
     this.quitButton.addEventListener('click', () => {
-      this.quitGame()
+      this.quitModal.render()
     })
   }
 
@@ -133,7 +135,7 @@ export class GamePage {
     })
   }
 
-  private quitGame() {
+  quitGame() {
     this.app.resetGame()
     this.app.showHomePage(true)
     this.game.stop()

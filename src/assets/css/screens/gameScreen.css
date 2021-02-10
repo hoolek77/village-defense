@@ -34,10 +34,15 @@
   font-size: 1.2em;
   height: 40px;
   width: 80%;
+  align-self: center;
 }
 
 .quit-button:hover {
   background-color: var(--quit-button-hover-background-color);
+}
+
+.quit-button:focus {
+  outline: none;
 }
 
 .main-area {

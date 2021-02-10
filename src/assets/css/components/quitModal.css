@@ -1,0 +1,20 @@
+.quit__container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 20vh;
+  width: 100%;
+}
+
+.quit__heading {
+  font-size: 3rem;
+}
+
+.quit__yes-btn {
+  margin-left: 1rem;
+  background: #5cb85c;
+  border: none;
+  opacity: 0.4;
+}
