@@ -403,6 +403,10 @@ export class Game {
     this.nextAttackTotalInMiliseconds = this.calculateNextAttack()
 
     this.attackSurvived = 0
+
+    this.isGamePaused = false
+    this.pauseStartTime = 0
+    this.pauseTimeInMiliseconds = 0
   }
 
   private addBuildings() {
