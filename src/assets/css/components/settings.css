@@ -11,6 +11,7 @@
 .settings__wrapper > h2 {
   border-bottom: 1px dotted #7fb886;
   padding-bottom: 3px;
+  width: 45vw;
 }
 
 .settings__heading {
