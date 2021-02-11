@@ -92,6 +92,9 @@
 .author:hover .author__position {
   bottom: -40px;
 }
+.authors__list--mobile {
+  display: none;
+}
 
 @media (max-width: 1800px) {
   .author__container {
@@ -135,5 +138,22 @@
 
   .author__content {
     font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .authors__list--mobile {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0;
+  }
+  .authors__list {
+    display: none;
+  }
+  .author--mobile {
+    list-style-type: none;
+    text-align: center;
+    margin-bottom: 5px;
   }
 }

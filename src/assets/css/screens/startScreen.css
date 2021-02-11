@@ -14,6 +14,7 @@
     rgba(0, 0, 0, 1) 100%
   );
   z-index: 1;
+  height: 100vh;
 }
 .start__screen--background {
   position: absolute;
@@ -30,6 +31,7 @@
     rgba(0, 0, 0, 1) 100%
   );
   z-index: -1;
+  height: 100vh;
 }
 
 .start_screen--elves {
@@ -250,4 +252,28 @@ select:focus > option:hover {
 }
 .start__screen__logo--humans {
   background-image: url('/src/assets/images/homepage/humans.png');
+}
+
+@media screen and (max-width: 768px) {
+  .start__screen__logoContainer {
+    display: none;
+  }
+  .start__screen__actions {
+    width: 100vw;
+    align-items: center;
+  }
+  .start__screen--header {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 359px) {
+  .start__screen {
+    font-size: 10px;
+  }
+}
+@media screen and (min-width: 360px) and (max-width: 768px) {
+  .start__screen {
+    font-size: 12px;
+  }
 }

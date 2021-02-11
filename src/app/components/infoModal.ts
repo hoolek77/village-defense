@@ -5,10 +5,12 @@ export class InfoModal {
   private openInfoBtn: HTMLButtonElement
 
   constructor() {
-    this.openInfoBtn = document.querySelector('#info-button') as HTMLButtonElement
+    this.openInfoBtn = document.querySelector(
+      '#info-button'
+    ) as HTMLButtonElement
 
     this._init()
-  } 
+  }
 
   private _init() {
     this.openInfoBtn?.addEventListener('click', this.render.bind(this))
@@ -116,8 +118,32 @@ export class InfoModal {
         `,
     })
 
+    const authorListMobile = createElement({
+      type: 'ul',
+      classes: ['authors__list--mobile'],
+      innerHTML: `
+          <li class="author--mobile">
+            Piotr Dybowski - Mentor / Client
+          <li class="author--mobile">
+            Ireneusz Bednorz - Product Owner
+          </li>
+          <li class="author--mobile">
+              Szymon Kin - Dev Menager
+          </li>
+          <li class="author--mobile">
+              Bartosz Białecki - Tech Lead
+          </li>
+          <li class="author--mobile">
+              Aleksandra Jankowska - Developer
+          </li>
+          <li class="author--mobile">
+            Jakub Góra - Developer
+          </li>
+        `,
+    })
+
     wrapper.append(infoContent)
-    infoContent.append(gameDesc, authorsHeader, authorList)
+    infoContent.append(gameDesc, authorsHeader, authorList, authorListMobile)
 
     renderPopup({
       headerText: 'Info',

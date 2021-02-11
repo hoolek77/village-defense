@@ -10,7 +10,7 @@
   position: absolute;
   top: 0;
   transition: transform 0.5s ease-in-out;
-  width: 100%;
+  width: 100vw;
 }
 
 .splash__screen--closed {
@@ -23,7 +23,7 @@
   height: 30px;
   overflow: hidden;
   position: relative;
-  width: 500px;
+  width: 70%;
 }
 
 .splash__loading-frame {
@@ -53,4 +53,10 @@
   height: 100%;
   line-height: 30px;
   position: relative;
+}
+
+@media screen and (max-width: 768px) {
+  .splash__loading {
+    width: 90%;
+  }
 }
