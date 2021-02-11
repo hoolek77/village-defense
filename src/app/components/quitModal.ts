@@ -63,11 +63,6 @@ export class QuitModal {
       this.game.unpauseGame()
     })
 
-    // const popupContent = document.querySelector(
-    //   '.popup__content'
-    // ) as HTMLDivElement
-    // popupContent.style.width = 'auto'
-
     const popupFooter = document.querySelector(
       '.popup__footer'
     ) as HTMLDivElement
