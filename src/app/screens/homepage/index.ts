@@ -142,6 +142,19 @@ export class HomePage {
     const fraction = this.app.gameSettings.fraction
     this.startScreenLogo.classList.add(`start__screen__logo--${fraction}`)
     this.startScreenLogoBackground.classList.add(`${fraction}__background`)
+    this.startScreenLogoBackground.classList.add('background__animation')
+    const randomAnimation = Math.floor(Math.random() * 2)
+    const className =
+      randomAnimation === 1 ? 'logo__animation--one' : 'logo__animation--two'
+
+    this.startScreenLogo.classList.add(className)
+    setTimeout(() => {
+      this.startScreenLogo.classList.remove(className)
+    }, 700)
+
+    setTimeout(() => {
+      this.startScreenLogoBackground.classList.remove('background__animation')
+    }, 700)
   }
 
   private changeBackground() {

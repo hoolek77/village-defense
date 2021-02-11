@@ -115,6 +115,7 @@
   z-index: 0;
   border-radius: 5px;
   box-shadow: 0 5px 25px 3px rgb(0, 0, 0);
+  overflow: hidden;
 }
 
 .elves__background {
@@ -250,4 +251,39 @@ select:focus > option:hover {
 }
 .start__screen__logo--humans {
   background-image: url('/src/assets/images/homepage/humans.png');
+}
+
+.logo__animation--one {
+  animation: imageChange1;
+  animation-duration: 0.7s;
+}
+
+.logo__animation--two {
+  animation: imageChange2;
+  animation-duration: 0.7s;
+}
+
+.background__animation {
+  animation: fadeIn;
+  animation-duration: 0.4s;
+}
+
+@keyframes imageChange1 {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes imageChange2 {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
