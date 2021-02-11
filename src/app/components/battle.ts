@@ -2,6 +2,9 @@ import { createElement } from '../utils/createElement'
 import { Audio } from '../audio'
 import { Game } from '../game'
 
+const music = require('../../assets/audio/music.mp3')
+const battle = require('../../assets/audio/battle.mp3')
+
 export class Battle {
   private audio: Audio
   private game: Game
@@ -83,7 +86,7 @@ export class Battle {
       this.gameMessagesContainer.style.transform = 'translateY(-120%)'
       this.nextAttackInfoContainer.style.opacity = '0'
       this.createBattle()
-      this.audio.changeAudioSource('../../assets/audio/battle.mp3')
+      this.audio.changeAudioSource(battle.default)
     }
   }
 
@@ -99,7 +102,7 @@ export class Battle {
 
       this.mainArea.style.zIndex = '0'
       battleContainer.style.animationName = 'battleExit'
-      this.audio.changeAudioSource('../../assets/audio/music.mp3')
+      this.audio.changeAudioSource(music.default)
       this.nextAttackInfoContainer.style.opacity = '1'
       battleOverlay.remove()
 

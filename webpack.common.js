@@ -53,7 +53,8 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: "src/assets/audio", to: "assets/audio" }
+        { from: "src/assets/audio", to: "assets/audio" },
+        { from: "src/assets/audio", to: "" }
       ],
     }),
   ],
