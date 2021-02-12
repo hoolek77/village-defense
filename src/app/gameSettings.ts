@@ -24,4 +24,6 @@ export class GameSettings {
   townhallDefaultTimeToBuildInMiliseconds = 300 * 1000
   wallDefaultTimeToBuildInMiliseconds = 200 * 1000
   warehouseDefaultTimeToBuildInMiliseconds = 300 * 1000
+
+  warriorDefaultTimeToRecruitInMiliseconds = 120 * 1000
 }
