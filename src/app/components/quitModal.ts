@@ -34,12 +34,15 @@ export class QuitModal {
       popupContentHTML: this.quitContainer,
       closeBtnText: 'Cancel',
       isOverlayClickable: true,
-      additionalBtn: 'Yes, I am aware of that',
-      additionalBtnClasses: ['popup__close-btn', 'quit__yes-btn'],
-      additionalBtnHandleEvent: {
-        click: () => {
-          removePopup()
-          this.gamePage.quitGame()
+      additionalBtn: {
+        type: 'btn',
+        content: 'Yes, I am aware of that',
+        classes: ['popup__close-btn', 'quit__yes-btn'],
+        handleEvent: {
+          click: () => {
+            removePopup()
+            this.gamePage.quitGame()
+          },
         },
       },
     })

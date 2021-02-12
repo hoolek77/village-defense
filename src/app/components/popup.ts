@@ -1,16 +1,21 @@
-import { createElement } from "../utils"
+import { createElement } from '../utils'
+import { customHtmlElementModel } from '../models'
 
 interface popup {
-  headerText: string, 
-  popupContentHTML: HTMLElement, 
-  closeBtnText: string,
-  isOverlayClickable?: boolean,
-  additionalBtn?:string,
-  additionalBtnClasses?:string[],
-  additionalBtnHandleEvent?: object
+  headerText: string
+  popupContentHTML: HTMLElement
+  closeBtnText: string
+  isOverlayClickable?: boolean
+  additionalBtn?: customHtmlElementModel
 }
 
-export function renderPopup({ headerText, popupContentHTML, closeBtnText, isOverlayClickable = true, additionalBtn,  additionalBtnClasses, additionalBtnHandleEvent}: popup) {
+export function renderPopup({
+  headerText,
+  popupContentHTML,
+  closeBtnText,
+  isOverlayClickable = true,
+  additionalBtn,
+}: popup) {
   const popup = createElement({
     type: 'div',
     classes: ['popup'],
@@ -29,26 +34,29 @@ export function renderPopup({ headerText, popupContentHTML, closeBtnText, isOver
           </div>
         </div>
       </div>
-    `
+    `,
   })
 
   document.body.appendChild(popup)
   document.querySelector('.popup__body-content')?.appendChild(popupContentHTML)
-  if(additionalBtn){
-    const secondBtn = createElement({type: 'button', content:additionalBtn, classes:additionalBtnClasses})
-    if(additionalBtnHandleEvent){
-      for (const [key, value] of Object.entries(additionalBtnHandleEvent)) {
+  if (additionalBtn) {
+    const secondBtn = createElement({
+      type: 'button',
+      content: additionalBtn.content,
+      classes: additionalBtn.classes,
+    })
+    if (additionalBtn.handleEvent) {
+      for (const [key, value] of Object.entries(additionalBtn.handleEvent)) {
         secondBtn.addEventListener(key, value)
       }
     }
     document.querySelector('.popup__footer')?.appendChild(secondBtn)
   }
 
-
   setTimeout(() => {
     popup.classList.add('popup--active')
 
-    if(isOverlayClickable) {
+    if (isOverlayClickable) {
       const popupOverlayElement = document.querySelector(
         '.popup__overlay'
       ) as HTMLDivElement
