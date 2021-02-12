@@ -253,6 +253,18 @@ select:focus > option:hover {
   background-image: url('/src/assets/images/homepage/humans.png');
 }
 
+@media screen and (min-width: 769px) and (max-width: 1600px) {
+  .start__screen__actions {
+    justify-content: space-around;
+  }
+  .start__screen__logo--background {
+    width: 70%;
+  }
+  .start__screen__button {
+    width: 70%;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .start__screen__logoContainer {
     display: none;
