@@ -23,6 +23,7 @@
   "homepage": "https://github.com/pdybowski/village-defense#readme",
   "devDependencies": {
     "@types/jest": "^26.0.20",
+    "copy-webpack-plugin": "^7.0.0",
     "css-loader": "^5.0.1",
     "css-minimizer-webpack-plugin": "^1.2.0",
     "cypress": "^6.4.0",
