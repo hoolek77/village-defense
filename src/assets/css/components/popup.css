@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
@@ -43,7 +43,7 @@
 }
 
 .popup__header > h1 {
-  font-size: 4.5rem;
+  font-size: 4.5em;
 }
 
 .popup__body {
@@ -67,7 +67,7 @@
   cursor: pointer;
   background: #222;
   color: #fff;
-  font-size: 2rem;
+  font-size: 2em;
   font-weight: 600;
   text-align: center;
   border-radius: 15px;
@@ -75,4 +75,21 @@
 
 .popup__close-btn:focus {
   outline: none;
+}
+
+@media screen and (max-width: 359px) {
+  .popup__content {
+    font-size: 5px;
+  }
+}
+@media screen and (min-width: 360px) and (max-width: 768px) {
+  .popup__content {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .popup__content {
+    width: 90%;
+  }
 }
