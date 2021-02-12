@@ -267,7 +267,7 @@ export class GamePage {
           type: MessageType.WARNING,
         })
       }
-    } else if (width >= 99) {
+    } else if (width >= 95) {
       // 1px margin to prevent from getting less then 100 in the interval
       this.progressHeader.style.animation = 'none'
       this.progressHeader.style.backgroundColor = 'rgba(255, 255, 255, 0.7)'

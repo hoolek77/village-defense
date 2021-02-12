@@ -62,10 +62,5 @@ export class QuitModal {
     popupBtn.addEventListener('click', () => {
       this.game.unpauseGame()
     })
-
-    const popupContent = document.querySelector(
-      '.popup__content'
-    ) as HTMLDivElement
-    popupContent.style.width = 'auto'
   }
 }
