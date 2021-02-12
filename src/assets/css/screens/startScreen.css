@@ -115,6 +115,7 @@
   z-index: 0;
   border-radius: 5px;
   box-shadow: 0 5px 25px 3px rgb(0, 0, 0);
+  overflow: hidden;
 }
 
 .elves__background {
@@ -250,4 +251,74 @@ select:focus > option:hover {
 }
 .start__screen__logo--humans {
   background-image: url('/src/assets/images/homepage/humans.png');
+}
+
+@media screen and (min-width: 769px) and (max-width: 1600px) {
+  .start__screen__actions {
+    justify-content: space-around;
+  }
+  .start__screen__logo--background {
+    width: 70%;
+  }
+  .start__screen__button {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .start__screen__logoContainer {
+    display: none;
+  }
+  .start__screen__actions {
+    width: 100vw;
+    align-items: center;
+  }
+  .start__screen--header {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 359px) {
+  .start__screen {
+    font-size: 10px;
+  }
+}
+@media screen and (min-width: 360px) and (max-width: 768px) {
+  .start__screen {
+    font-size: 12px;
+  }
+}
+.logo__animation--one {
+  animation: imageChange1;
+  animation-duration: 0.7s;
+}
+
+.logo__animation--two {
+  animation: imageChange2;
+  animation-duration: 0.7s;
+}
+
+.background__animation {
+  animation: fadeIn;
+  animation-duration: 0.4s;
+}
+
+@keyframes imageChange1 {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes imageChange2 {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }

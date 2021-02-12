@@ -75,7 +75,7 @@ export class App {
   }
 
   private toggleBodyScroll(isGamePage: boolean) {
-    document.body.style.overflow = isGamePage ? 'auto' : 'hidden'
+    document.body.style.overflowY = isGamePage ? 'auto' : 'hidden'
   }
 
   private bindKeyEvents() {

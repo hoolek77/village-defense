@@ -9,11 +9,11 @@
 }
 
 .quit__heading {
-  font-size: 3rem;
+  font-size: 3em;
 }
 
 .quit__yes-btn {
-  margin-left: 1rem;
+  margin-left: 1em;
   background: #5cb85c;
   border: none;
   opacity: 0.4;

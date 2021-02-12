@@ -11,14 +11,14 @@
 .population__heading,
 .defence__heading,
 .units__heading {
-  font-size: 3rem;
+  font-size: 2.3em;
   margin: 10px 0;
 }
 
 .population__info,
 .defence__info,
 .units__info {
-  font-size: 2.8rem;
+  font-size: 2em;
   margin-top: 0;
   text-align: center;
 }
@@ -47,7 +47,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 3rem;
+  font-size: 1.2em;
   outline: none;
   transition: opacity 0.4s ease-out, transform 0.3s ease-out;
 }

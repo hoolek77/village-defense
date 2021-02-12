@@ -28,6 +28,7 @@ export class GamePage {
   private progressBar!: HTMLElement
 
   private isGameOverModalVisible = false
+  private attackWarningMessageAdded = false
 
   constructor(app: App) {
     this.app = app
@@ -199,7 +200,7 @@ export class GamePage {
     const currentTime = this.game.getPeaceTimeDuration()
     const width = 100 - (currentTime / totalTime) * 100
 
-    this.checkPogressBarStatus(width)
+    this.checkProgressBarStatus(width)
 
     this.progressBar.style.width = `${width.toFixed(2)}%`
   }
@@ -255,13 +256,15 @@ export class GamePage {
     this.messageList.scrollTop = this.messageList.scrollHeight
   }
 
-  private checkPogressBarStatus(width: number) {
+  private checkProgressBarStatus(width: number) {
     if (width < 10) {
       this.progressHeader.style.animation =
         'warnCicle 2s ease-in-out 0s alternate infinite none'
       this.progressBar.style.backgroundColor = 'red'
 
-      if (Math.floor(width) === 9) {
+      if (!this.attackWarningMessageAdded) {
+        this.attackWarningMessageAdded = true
+
         this.game.addGameMessage({
           message: 'Be ready. The enemy is approaching your gates.',
           type: MessageType.WARNING,
@@ -269,6 +272,7 @@ export class GamePage {
       }
     } else if (width >= 95) {
       // 1px margin to prevent from getting less then 100 in the interval
+      this.attackWarningMessageAdded = false
       this.progressHeader.style.animation = 'none'
       this.progressHeader.style.backgroundColor = 'rgba(255, 255, 255, 0.7)'
       this.progressHeader.style.color = 'var(--primary-color)'
