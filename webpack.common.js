@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './src/index.ts',
@@ -50,5 +51,11 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
+    new CopyPlugin({
+      patterns: [
+        { from: 'src/assets/audio', to: 'assets/audio'},
+        { from: 'src/assets/images/resources', to: 'assets/images/resources' },
+      ]
+    })
   ],
 }
