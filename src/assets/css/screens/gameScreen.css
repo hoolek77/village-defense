@@ -1,6 +1,6 @@
 .game__screen {
   background-repeat: no-repeat;
-  /* background-size: cover; */
+  background-size: cover;
   position: absolute;
   top: 0;
   left: 0;
@@ -60,10 +60,16 @@
 .buildings-box {
   grid-area: buildings-box;
   padding: 3vh 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .info-box {
   grid-area: info-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .next-attack-info {
@@ -171,7 +177,6 @@
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .game__screen {
-    background-size: cover;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 100px;
     gap: 30px;
@@ -191,10 +196,22 @@
     position: sticky;
     top: 30px;
     z-index: 2;
+    background: rgba(0, 0, 0, 0.527);
+    border-radius: 20px;
   }
   .resources-box {
     position: sticky;
     top: 30px;
+    background: rgba(0, 0, 0, 0.527);
+    border-radius: 20px;
+  }
+  .building,
+  .info-box-container {
+    max-width: 60%;
+  }
+  .resource__item {
+    margin: 5px;
+    max-width: 6em;
   }
 }
 
@@ -247,7 +264,7 @@
     align-self: center;
   }
   .building__details {
-    width: 55vw;
+    width: 100%;
     height: 150%;
     z-index: 10;
     left: 50%;
@@ -267,14 +284,22 @@
     top: 30px;
     width: 100%;
     z-index: 21;
+    background: rgba(0, 0, 0, 0.527);
+    border-radius: 20px;
   }
   .resource__item {
-    width: 50%;
+    margin: 5px;
   }
   .info-box-container {
     font-size: 10px;
   }
   .quit-button {
     font-size: 2.2em;
+  }
+}
+
+@media screen and (max-width: 359px) {
+  .building__details {
+    width: 50vw;
   }
 }

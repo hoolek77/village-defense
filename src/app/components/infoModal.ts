@@ -40,7 +40,7 @@ export class InfoModal {
           <li class="author">
             <div class="author__container">
               <div class="author__front">
-                  <div class="author__content">Piotr Dybowski</div>
+                  <div class="author__content">Piotr Dybowski <span class="author__content-mobile">- Mentor / Client</span></div>
               </div>
               <div class="author__back">
                   <div class="author__content">
@@ -53,7 +53,7 @@ export class InfoModal {
           <li class="author">
               <div class="author__container">
                 <div class="author__front">
-                    <div class="author__content">Ireneusz Bednorz</div>
+                    <div class="author__content">Ireneusz Bednorz <span class="author__content-mobile">- Product Owner</span></div>
                 </div>
                 <div class="author__back">
                     <div class="author__content">
@@ -66,7 +66,7 @@ export class InfoModal {
           <li class="author">
               <div class="author__container">
                 <div class="author__front">
-                    <div class="author__content">Szymon Kin</div>
+                    <div class="author__content">Szymon Kin <span class="author__content-mobile">- Dev Menager</span></div>
                 </div>
                 <div class="author__back">
                     <div class="author__content">
@@ -79,7 +79,7 @@ export class InfoModal {
           <li class="author">
               <div class="author__container">
                 <div class="author__front">
-                    <div class="author__content">Bartosz Białecki</div>
+                    <div class="author__content">Bartosz Białecki <span class="author__content-mobile">- Tech Lead</span></div>
                 </div>
                 <div class="author__back">
                     <div class="author__content">
@@ -92,7 +92,7 @@ export class InfoModal {
           <li class="author">
               <div class="author__container">
                 <div class="author__front">
-                    <div class="author__content">Aleksandra Jankowska</div>
+                    <div class="author__content">Aleksandra Jankowska <span class="author__content-mobile">- Developer</span></div>
                 </div>
                 <div class="author__back">
                     <div class="author__content">
@@ -105,7 +105,7 @@ export class InfoModal {
           <li class="author">
             <div class="author__container">
               <div class="author__front">
-                  <div class="author__content">Jakub Góra</div>
+                  <div class="author__content">Jakub Góra <span class="author__content-mobile">- Developer</span></div>
               </div>
               <div class="author__back">
                   <div class="author__content">
@@ -118,32 +118,8 @@ export class InfoModal {
         `,
     })
 
-    const authorListMobile = createElement({
-      type: 'ul',
-      classes: ['authors__list--mobile'],
-      innerHTML: `
-          <li class="author--mobile">
-            Piotr Dybowski - Mentor / Client
-          <li class="author--mobile">
-            Ireneusz Bednorz - Product Owner
-          </li>
-          <li class="author--mobile">
-              Szymon Kin - Dev Menager
-          </li>
-          <li class="author--mobile">
-              Bartosz Białecki - Tech Lead
-          </li>
-          <li class="author--mobile">
-              Aleksandra Jankowska - Developer
-          </li>
-          <li class="author--mobile">
-            Jakub Góra - Developer
-          </li>
-        `,
-    })
-
     wrapper.append(infoContent)
-    infoContent.append(gameDesc, authorsHeader, authorList, authorListMobile)
+    infoContent.append(gameDesc, authorsHeader, authorList)
 
     renderPopup({
       headerText: 'Info',
