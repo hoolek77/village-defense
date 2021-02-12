@@ -3,6 +3,10 @@ import { Game } from '../../game'
 import { MessageType, Resource } from '../types'
 
 export class Building {
+  get id() {
+    return 'building'
+  }
+
   protected level = 0
 
   isBuilding = false

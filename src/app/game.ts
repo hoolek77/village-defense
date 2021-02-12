@@ -194,10 +194,8 @@ export class Game {
     return this.peaceTimeDuration
   }
 
-  getBuilding(buildingName: string) {
-    return this.buildings.find(
-      (building) => building.constructor.name === buildingName
-    )
+  getBuilding(buildingId: string) {
+    return this.buildings.find((building) => building.id === buildingId)
   }
 
   getGameElapsedTimeInSeconds() {

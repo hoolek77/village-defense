@@ -9,6 +9,10 @@ const STONE = 3
 const MAX_LEVEL = 3
 
 export class Sawmill extends Building {
+  get id() {
+    return 'sawmill'
+  }
+
   readonly woodProduction = WOOD_PRODUCTION
   private passiveIncomeInterval: any
 

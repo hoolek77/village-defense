@@ -54,20 +54,16 @@ export class Battle {
       classes: ['battle__effects-right'],
     })
 
-    battleEffectsRight.setAttribute(
-      'src',
-      '../../assets/images/villageImages/sword.png'
-    )
+    const swordImagePath = require('../../assets/images/villageImages/sword.png')
+
+    battleEffectsRight.setAttribute('src', swordImagePath.default)
 
     const battleEffectsLeft = createElement({
       type: 'img',
       classes: ['battle__effects-left'],
     })
 
-    battleEffectsLeft.setAttribute(
-      'src',
-      '../../assets/images/villageImages/sword.png'
-    )
+    battleEffectsLeft.setAttribute('src', swordImagePath.default)
 
     battleEffectsContainer.append(battleEffectsLeft, battleEffectsRight)
 

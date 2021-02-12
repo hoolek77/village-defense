@@ -117,11 +117,13 @@ export class GamePage {
 
   private setFractionImage() {
     const fraction = this.app.gameSettings.fraction
-    this.fractionImg.style.backgroundImage = `url('../../../assets/images/homepage/${fraction}.png')`
+    const imagePath = require(`../../../assets/images/homepage/${fraction}.png`)
+    this.fractionImg.style.backgroundImage = `url(${imagePath.default})`
   }
 
   private setBackgrondImage() {
-    this.gameScreen.style.backgroundImage = `url('../../../assets/images/villageImages/${this.app.gameSettings.fraction}-bg.jpg')`
+    const imagePath = require(`../../../assets/images/villageImages/${this.app.gameSettings.fraction}-bg.jpg`)
+    this.gameScreen.style.backgroundImage = `url(${imagePath.default})`
   }
 
   private setClosePageEvent() {
@@ -156,7 +158,6 @@ export class GamePage {
       this.updatePopulation()
       this.updateDefence()
       this.updateUnits()
-      this.setBackgrondImage()
       this.updateNextAttackProgressBar()
       this.showBattle()
       this.updateBuildings()
@@ -207,14 +208,14 @@ export class GamePage {
 
   private updateBuildings() {
     this.game.getBuildings().forEach((building) => {
-      const buildingName = building.constructor.name
+      const buildingId = building.id
 
       const progressBar = document.querySelector(
-        `.building__progress-bar--${buildingName}`
+        `.building__progress-bar--${buildingId}`
       ) as HTMLElement
 
       const upgradeButton = document.querySelector(
-        `.building__upgrade-button--${buildingName}`
+        `.building__upgrade-button--${buildingId}`
       ) as HTMLButtonElement
 
       if (building.isBuilding) {
@@ -313,7 +314,7 @@ export class GamePage {
 
   private getBuildingLevelContainer(building: Building) {
     const levelContainer = document.querySelector(
-      `.building__level--${building.constructor.name}`
+      `.building__level--${building.id}`
     ) as HTMLElement
 
     return levelContainer
@@ -321,7 +322,7 @@ export class GamePage {
 
   private getBuildingPriceContainer(building: Building) {
     const container = document.querySelectorAll(
-      `.building__price--${building.constructor.name}`
+      `.building__price--${building.id}`
     )
 
     return container
@@ -329,9 +330,11 @@ export class GamePage {
 
   private updateBuildingContainer(building: Building) {
     let i = 0
+
     this.getBuildingLevelContainer(
       building
     ).textContent = `Level: ${building.getLevel()}`
+
     this.getBuildingPriceContainer(building).forEach((element) => {
       element.textContent = `${building.getResourcesNeededToBuild()[i].count} ${
         building.getResourcesNeededToBuild()[i].type
@@ -347,19 +350,19 @@ export class GamePage {
       <div class="building">
       <h3 class="building__heading">${building.getTitle()}</h3>
       <p class="building__level building__level--${
-        building.constructor.name
+        building.id
       }">Level: ${building.getLevel()}</p>
       <div class="progress building__progress">
         <div
           class="progress-bar building__progress-bar building__progress-bar--${
-            building.constructor.name
+            building.id
           }"
           role="progressbar">
         </div>
       </div>
       <button class="building__upgrade-button building__upgrade-button--${
-        building.constructor.name
-      }" data-building="${building.constructor.name}">
+        building.id
+      }" data-building="${building.id}">
         <i class="fas fa-plus-circle"></i>
       </button>
       <div class="building__details">
@@ -368,7 +371,7 @@ export class GamePage {
         <ul class="building__details-resources">
           ${resources
             .map((resource) => {
-              return `<li class="building__price building__price--${resource.type} building__price--${building.constructor.name}">${resource.count} ${resource.type}</li>`
+              return `<li class="building__price building__price--${resource.type} building__price--${building.id}">${resource.count} ${resource.type}</li>`
             })
             .join('')}
         </ul>

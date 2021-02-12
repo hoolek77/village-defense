@@ -10,6 +10,10 @@ const MAX_LEVEL = 5
 const RESOURCES_PROTECTION_PERCENTAGES = [0, 0.05, 0.1, 0.25, 0.4, 0.5]
 
 export class Warehouse extends Building {
+  get id() {
+    return 'warehouse'
+  }
+
   readonly capacity = CAPACITY
 
   constructor(game: Game) {

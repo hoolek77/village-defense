@@ -8,7 +8,6 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, './dist'),
-    publicPath: './',
   },
   module: {
     rules: [
@@ -53,9 +52,9 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: 'src/assets/audio', to: 'assets/audio'},
+        { from: 'src/assets/audio', to: 'assets/audio' },
         { from: 'src/assets/images/resources', to: 'assets/images/resources' },
-      ]
-    })
+      ],
+    }),
   ],
 }

@@ -9,6 +9,10 @@ const STONE = 4
 const MAX_LEVEL = 5
 
 export class Goldmine extends Building {
+  get id() {
+    return 'goldmine'
+  }
+
   readonly goldProduction = GOLD_PRODUCTION
   private passiveIncomeInterval: any
 
