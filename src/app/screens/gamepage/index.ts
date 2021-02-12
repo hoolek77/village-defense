@@ -270,7 +270,7 @@ export class GamePage {
           type: MessageType.WARNING,
         })
       }
-    } else if (width >= 99) {
+    } else if (width >= 95) {
       // 1px margin to prevent from getting less then 100 in the interval
       this.attackWarningMessageAdded = false
       this.progressHeader.style.animation = 'none'

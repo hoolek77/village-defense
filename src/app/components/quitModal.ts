@@ -5,7 +5,6 @@ import { Game } from '../game'
 
 export class QuitModal {
   private quitContainer: HTMLElement
-  private quitYesBtn: HTMLButtonElement
 
   constructor(private gamePage: GamePage, private game: Game) {
     this.gamePage = gamePage
@@ -16,11 +15,6 @@ export class QuitModal {
       classes: ['quit__container'],
     })
 
-    this.quitYesBtn = createElement({
-      type: 'button',
-      classes: ['popup__close-btn', 'quit__yes-btn'],
-      content: 'Yes, I am aware of that',
-    }) as HTMLButtonElement
     this.createElements()
   }
 
@@ -29,11 +23,6 @@ export class QuitModal {
       type: 'h2',
       classes: ['quit__heading'],
       innerHTML: 'You would not be able to get back!',
-    })
-
-    this.quitYesBtn.addEventListener('click', () => {
-      removePopup()
-      this.gamePage.quitGame()
     })
 
     this.quitContainer.append(quitHeading)
@@ -45,6 +34,17 @@ export class QuitModal {
       popupContentHTML: this.quitContainer,
       closeBtnText: 'Cancel',
       isOverlayClickable: true,
+      additionalBtn: {
+        type: 'btn',
+        content: 'Yes, I am aware of that',
+        classes: ['popup__close-btn', 'quit__yes-btn'],
+        handleEvent: {
+          click: () => {
+            removePopup()
+            this.gamePage.quitGame()
+          },
+        },
+      },
     })
 
     this.game.pauseGame()
@@ -62,11 +62,5 @@ export class QuitModal {
     popupBtn.addEventListener('click', () => {
       this.game.unpauseGame()
     })
-
-    const popupFooter = document.querySelector(
-      '.popup__footer'
-    ) as HTMLDivElement
-
-    popupFooter.appendChild(this.quitYesBtn)
   }
 }

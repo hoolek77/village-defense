@@ -8,6 +8,10 @@
   font-size: 2rem;
 }
 
+.info__wrapper{
+  width: 65vw;
+}
+
 .authors__header {
   font-size: 2.5rem;
 }
