@@ -59,7 +59,7 @@
   display: flex;
   justify-content: center;
   border-top: 1px dashed lightgray;
-  padding: 10px 0;
+  padding-top: 20px;
 }
 
 .popup__close-btn {
