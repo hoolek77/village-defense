@@ -64,6 +64,9 @@ export class TestModal {
     const warehouseBuildTimeInputElement = document.querySelector(
       '#warehouseBuildTime'
     ) as HTMLInputElement
+    const warriorRecruitTimeInputElement = document.querySelector(
+      '#warriorRecruitTime'
+    ) as HTMLInputElement
 
     const closeButtonElement = document.querySelector(
       '.popup__close-btn'
@@ -102,6 +105,9 @@ export class TestModal {
         parseInt(wallBuildTimeInputElement.value) * 1000
       this.gameSettings.warehouseDefaultTimeToBuildInMiliseconds =
         parseInt(warehouseBuildTimeInputElement.value) * 1000
+
+      this.gameSettings.warriorDefaultTimeToRecruitInMiliseconds =
+        parseInt(warriorRecruitTimeInputElement.value) * 1000
     })
   }
 
@@ -187,6 +193,11 @@ export class TestModal {
         <label for="warehouseBuildTime" class="test-modal__label">Warehouse Build Time (in seconds)</label>
         <input type="number" name="warehouseBuildTime" id="warehouseBuildTime" value="${
           this.gameSettings.warehouseDefaultTimeToBuildInMiliseconds / 1000
+        }" />
+
+        <label for="warriorRecruitTime" class="test-modal__label">Warrior Recruit Time (in seconds)</label>
+        <input type="number" name="warriorRecruitTime" id="warriorRecruitTime" value="${
+          this.gameSettings.warriorDefaultTimeToRecruitInMiliseconds / 1000
         }" />
     </div>
 `
