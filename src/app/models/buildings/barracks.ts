@@ -9,8 +9,12 @@ const STONE = 3
 const MAX_LEVEL = 3
 
 export class Barracks extends Building {
-  get id() {
+  static get id() {
     return 'barracks'
+  }
+
+  get id() {
+    return Barracks.id
   }
 
   private capacity = CAPACITY

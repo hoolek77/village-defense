@@ -9,8 +9,12 @@ const MAX_LEVEL = 3
 const REDUCING_CONSTRUCTION_TIME = [0, 0.2, 0.3, 0.5]
 
 export class TownHall extends Building {
-  get id() {
+  static get id() {
     return 'townhall'
+  }
+
+  get id() {
+    return TownHall.id
   }
 
   constructor(game: Game) {

@@ -9,8 +9,12 @@ const STONE = 3
 const MAX_LEVEL = 3
 
 export class Sawmill extends Building {
-  get id() {
+  static get id() {
     return 'sawmill'
+  }
+
+  get id() {
+    return Sawmill.id
   }
 
   readonly woodProduction = WOOD_PRODUCTION

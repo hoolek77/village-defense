@@ -9,8 +9,12 @@ const STONE = 4
 const MAX_LEVEL = 5
 
 export class Goldmine extends Building {
-  get id() {
+  static get id() {
     return 'goldmine'
+  }
+
+  get id() {
+    return Goldmine.id
   }
 
   readonly goldProduction = GOLD_PRODUCTION

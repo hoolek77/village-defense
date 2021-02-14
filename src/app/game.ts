@@ -292,6 +292,24 @@ export class Game {
     }
   }
 
+  unpauseGame() {
+    this.startTime += this.pauseTimeInMiliseconds
+    this.elapsedTimeInMilliseconds += this.pauseTimeInMiliseconds
+    this.peaceTimeDuration += this.pauseTimeInMiliseconds
+    this.nextAttackTotalInMiliseconds += this.pauseTimeInMiliseconds
+    this.isGamePaused = false
+  }
+
+  pauseGame() {
+    this.pauseStartTime = Date.now()
+    this.pauseTimeInMiliseconds = 0
+    this.isGamePaused = true
+  }
+
+  stopGameLoop() {
+    window.clearInterval(this.intervalId)
+  }
+
   private update() {
     if (this.isGamePaused) {
       this.pauseTimeInMiliseconds = Date.now() - this.pauseStartTime
@@ -357,24 +375,6 @@ export class Game {
     }
   }
 
-  unpauseGame() {
-    this.startTime += this.pauseTimeInMiliseconds
-    this.elapsedTimeInMilliseconds += this.pauseTimeInMiliseconds
-    this.peaceTimeDuration += this.pauseTimeInMiliseconds
-    this.nextAttackTotalInMiliseconds += this.pauseTimeInMiliseconds
-    this.isGamePaused = false
-  }
-
-  pauseGame() {
-    this.pauseStartTime = Date.now()
-    this.pauseTimeInMiliseconds = 0
-    this.isGamePaused = true
-  }
-
-  stopGameLoop() {
-    window.clearInterval(this.intervalId)
-  }
-
   private initData() {
     this.storageCapacity = this.gameSettings.initialStorageCapacity
     this.population = this.gameSettings.initialPopulation
@@ -405,6 +405,8 @@ export class Game {
     this.isGamePaused = false
     this.pauseStartTime = 0
     this.pauseTimeInMiliseconds = 0
+
+    this.initData()
   }
 
   private addBuildings() {
@@ -591,7 +593,7 @@ export class Game {
   }
 
   private handleRandomWoodIncreaseEvent() {
-    const sawmill = this.getBuilding(Sawmill.name)
+    const sawmill = this.getBuilding(Sawmill.id)
     if (!sawmill || sawmill.getLevel() < 1) return
 
     const wood = Math.floor(1.05 * this.getWoodAmount())
@@ -614,7 +616,7 @@ export class Game {
   }
 
   private handleRandomStoneIncreaseEvent() {
-    const quarry = this.getBuilding(Quarry.name)
+    const quarry = this.getBuilding(Quarry.id)
     if (!quarry || quarry.getLevel() < 1) return
 
     const stone = Math.floor(1.05 * this.getStoneAmount())
@@ -659,7 +661,8 @@ export class Game {
   }
 
   private handleRandomDefenceIncreaseEvent() {
-    const barracks = this.getBuilding(Barracks.name)
+    const barracks = this.getBuilding(Barracks.id)
+
     if (!barracks || barracks.getLevel() < 1 || this.villageUnits.length < 1)
       return
 
@@ -797,13 +800,11 @@ export class Game {
     let numberOfResourcesToSteal = Math.round(
       allResourcesCount - percent * allResourcesCount
     )
-    console.log('percent of protected resources', percent)
-    console.log('enemies capacity', enemiesCapacity)
 
     if (enemiesCapacity < numberOfResourcesToSteal) {
       numberOfResourcesToSteal = enemiesCapacity
     }
-    console.log('resources to steal', numberOfResourcesToSteal)
+
     const availableResources = this.getListOfAvailableResources()
 
     if (numberOfResourcesToSteal > 0) {
@@ -852,16 +853,14 @@ export class Game {
     }
 
     const numberOfEnemies = randomBetween(1, maxEnemiesCount)
-    console.log('enemies', numberOfEnemies)
+
     return [...Array(numberOfEnemies)].map(() => new Goblin(this))
   }
 
   private isVillageDefended(enemies: Unit[]) {
     const villageDefence = this.getVillageDefence()
     const enemiesAttack = this.getUnitsAttack(enemies)
-    console.log('village defence', villageDefence)
-    console.log('enemies attack', enemiesAttack)
-    console.log('village defended', (villageDefence - enemiesAttack) / 10 > 0)
+
     return (villageDefence - enemiesAttack) / 10 > 0
   }
 

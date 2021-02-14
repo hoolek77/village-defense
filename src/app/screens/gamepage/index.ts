@@ -301,8 +301,8 @@ export class GamePage {
       upgradeButtonElement.addEventListener('click', (e) => {
         const button = e.currentTarget as HTMLElement
         if (button) {
-          const buildingName = button.dataset.building || ''
-          const building = this.game.getBuilding(buildingName)
+          const buildingId = button.dataset.building || ''
+          const building = this.game.getBuilding(buildingId)
 
           if (building) {
             building.startBuilding()

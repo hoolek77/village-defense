@@ -9,8 +9,12 @@ const MAX_LEVEL = 3
 const DEFENCE: number[] = [0, 10, 15, 20]
 
 export class Wall extends Building {
-  get id() {
+  static get id() {
     return 'wall'
+  }
+
+  get id() {
+    return Wall.id
   }
 
   private defence = DEFENCE

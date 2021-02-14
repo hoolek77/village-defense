@@ -3,8 +3,12 @@ import { Game } from '../../game'
 import { MessageType, Resource } from '../types'
 
 export class Building {
-  get id() {
+  static get id() {
     return 'building'
+  }
+
+  get id() {
+    return Building.id
   }
 
   protected level = 0

@@ -9,8 +9,12 @@ const STONE = 1
 const MAX_LEVEL = 100
 
 export class House extends Building {
-  get id() {
+  static get id() {
     return 'house'
+  }
+
+  get id() {
+    return House.id
   }
 
   population: number = POPULATION

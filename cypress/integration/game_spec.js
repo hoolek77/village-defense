@@ -39,9 +39,9 @@ describe('Game', () => {
     })
 
     it('allows to upgrading building', () => {
-      cy.get('.building__upgrade-button--Wall').click()
+      cy.get('.building__upgrade-button--wall').click()
 
-      cy.contains('You have started to upgrading the Wall.')
+      cy.contains('You have started upgrading the Wall.')
     })
   })
 })

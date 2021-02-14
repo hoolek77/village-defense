@@ -1,5 +1,5 @@
-import { START_POPULATION } from '../src/app/constants'
 import { Game } from '../src/app/game'
+import { GameSettings } from '../src/app/gameSettings'
 import {
   Goldmine,
   Quarry,
@@ -9,7 +9,8 @@ import {
 } from '../src/app/models'
 
 const createSut = (): [Game, jest.Mock<any, any>] => {
-  const game = new Game()
+  const gameSettings = new GameSettings()
+  const game = new Game(gameSettings)
   const callback = jest.fn()
   game.start(callback)
 
@@ -22,7 +23,7 @@ describe('game', () => {
   })
 
   it('is created with list of buildings', () => {
-    const game = new Game()
+    const [game, _] = createSut()
 
     expect(game.getBuildings().length).toBeGreaterThan(0)
   })
@@ -74,11 +75,11 @@ describe('game', () => {
         game.handleBuildingWasBuilt(building)
       })
 
-      expect(game.getPopulation()).not.toBe(START_POPULATION)
+      expect(game.getPopulation()).not.toBe(game.gameSettings.initialPopulation)
 
       game.stop()
 
-      expect(game.getPopulation()).toBe(START_POPULATION)
+      expect(game.getPopulation()).toBe(game.gameSettings.initialPopulation)
     })
   })
 
@@ -132,7 +133,7 @@ describe('game', () => {
     it('increase defence if wall was built', () => {
       const [game, _] = createSut()
 
-      const wall = game.getBuilding(Wall.name)
+      const wall = game.getBuilding(Wall.id)
 
       expect(wall).not.toBeUndefined()
       expect(game.getVillageDefence()).toBe(0)
@@ -148,7 +149,7 @@ describe('game', () => {
   it('increase gold if gold mine was built', () => {
     const [game, _] = createSut()
 
-    const goldMine = game.getBuilding(Goldmine.name)
+    const goldMine = game.getBuilding(Goldmine.id)
     const currentGold = game.getGoldAmount()
 
     expect(goldMine).not.toBeUndefined()
@@ -163,7 +164,7 @@ describe('game', () => {
   it('increase wood if sawmill was built', () => {
     const [game, _] = createSut()
 
-    const sawmill = game.getBuilding(Sawmill.name)
+    const sawmill = game.getBuilding(Sawmill.id)
     const currentWood = game.getWoodAmount()
 
     expect(sawmill).not.toBeUndefined()
@@ -178,7 +179,7 @@ describe('game', () => {
   it('increase stone if quarry was built', () => {
     const [game, _] = createSut()
 
-    const quarry = game.getBuilding(Quarry.name)
+    const quarry = game.getBuilding(Quarry.id)
     const currentStone = game.getStoneAmount()
 
     expect(quarry).not.toBeUndefined()
