@@ -18,15 +18,17 @@ npm start #to build and run the app on localhost
 
 ## Built with
 
-- HTML/CSS/TS - development
+- HTML/CSS/TS
 
 ## Tools used
 
-- TypeScript - better development by adding types
-- Babel - for compiling ES6+ JavaScript code into a backwards compatible version of it
-- Webpack - for bundling all JavaScript files
-- Prettier - for same code formatting in the whole project
-- Github Pages - to deploy application
+- TypeScript
+- Babel
+- Webpack
+- Prettier
+- Github Pages
+- Cypress
+- Jest
 
 ## Authors
 
