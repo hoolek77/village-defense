@@ -1,5 +1,5 @@
 import { App } from '../../app'
-import DOMElements from './DOMElements'
+import DOMElements from '../../constants/DOMElements'
 
 export class SplashPage {
   private app: App
