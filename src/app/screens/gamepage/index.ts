@@ -4,6 +4,8 @@ import { GameOverModal, Battle, QuitModal } from '../../components'
 import { Game } from '../../game'
 import { Building, GameMessage, MessageType, Warrior } from '../../models'
 import { createElement } from '../../utils'
+import { DOMElements } from '../../constants'
+
 export class GamePage {
   private app: App
   private game: Game
@@ -39,7 +41,7 @@ export class GamePage {
 
   show(appContainer: HTMLElement) {
     const template = <HTMLTemplateElement>(
-      document.querySelector('#game-screen-template')
+      document.querySelector(DOMElements.gameScreenTemplateSelector)
     )
     const pageScreen = template?.content.firstElementChild?.cloneNode(true)
 
@@ -51,7 +53,7 @@ export class GamePage {
       this.setupUI()
 
       setTimeout(() => {
-        this.gameScreen.classList.add('game__screen--opened')
+        this.gameScreen.classList.add(DOMElements.gameScreenOpenedClass)
         this.startGame()
       }, 500)
     }
@@ -65,43 +67,49 @@ export class GamePage {
 
   private bindUIElements() {
     this.quitButton = document.querySelector(
-      '.quit-button'
+      DOMElements.quitButtonSelector
     ) as HTMLButtonElement
-    this.gameScreen = document.querySelector('.game__screen') as HTMLElement
+    this.gameScreen = document.querySelector(
+      DOMElements.gameScreenSelector
+    ) as HTMLElement
     this.fractionImg = document.querySelector(
-      '.fraction__image'
+      DOMElements.fractionImageSelector
     ) as HTMLDivElement
 
     this.goldAmountElement = document.querySelector(
-      '#goldAmount'
+      DOMElements.goldAmountSelector
     ) as HTMLElement
     this.woodAmountElement = document.querySelector(
-      '#woodAmount'
+      DOMElements.woodAmountSelector
     ) as HTMLElement
     this.stoneAmountElement = document.querySelector(
-      '#stoneAmount'
+      DOMElements.stoneAmountSelector
     ) as HTMLElement
 
     this.populationElement = document.querySelector(
-      '.population__count'
+      DOMElements.populationCountSelector
     ) as HTMLElement
     this.defenceElement = document.querySelector(
-      '.defence__count'
+      DOMElements.defenceCountSelector
     ) as HTMLElement
 
-    this.unitsElement = document.querySelector('.units__count') as HTMLElement
+    this.unitsElement = document.querySelector(
+      DOMElements.unitsCountSelector
+    ) as HTMLElement
     this.addUnitButtonElement = document.querySelector(
-      '.units__add-button'
+      DOMElements.addUnitsButtonSelector
     ) as HTMLButtonElement
 
-    this.messageList = document.querySelector('.game-messages') as HTMLElement
+    this.messageList = document.querySelector(
+      DOMElements.gameMessagesSelector
+    ) as HTMLElement
 
     this.progressBar = document.querySelector(
-      '.next-attack-progress-bar'
+      DOMElements.nextAttackProgressBarSelector
     ) as HTMLElement
 
     this.progressHeader = document.querySelector(
-      '.info__heading'
+      DOMElements.nextAttackHeaderSelector
     ) as HTMLElement
   }
 
@@ -211,11 +219,11 @@ export class GamePage {
       const buildingId = building.id
 
       const progressBar = document.querySelector(
-        `.building__progress-bar--${buildingId}`
+        `.${DOMElements.buildingProgressBarClass}--${buildingId}`
       ) as HTMLElement
 
       const upgradeButton = document.querySelector(
-        `.building__upgrade-button--${buildingId}`
+        `.${DOMElements.buildingUpgradeButtonClass}--${buildingId}`
       ) as HTMLButtonElement
 
       if (building.isBuilding) {
@@ -243,14 +251,17 @@ export class GamePage {
   }
 
   private getTypeOfMessage(message: GameMessage) {
-    return `game-messages__item--${message.type}`
+    return `${DOMElements.gameMessagesItemClass}--${message.type}`
   }
 
   private addMessageToList(message: GameMessage) {
     const messageItemElement = createElement({
       type: 'li',
       content: message.message,
-      classes: ['game-messages__item', this.getTypeOfMessage(message)],
+      classes: [
+        DOMElements.gameMessagesItemClass,
+        this.getTypeOfMessage(message),
+      ],
     })
 
     this.messageList.appendChild(messageItemElement)
@@ -282,11 +293,13 @@ export class GamePage {
   }
 
   private renderBuildings() {
-    const list = document.querySelector('.buildings__list') as HTMLElement
+    const list = document.querySelector(
+      DOMElements.buildingListSelector
+    ) as HTMLElement
     this.game.getBuildings().forEach((building) => {
       const buildingItemElement = createElement({
         type: 'li',
-        classes: ['buildings__list-item'],
+        classes: [DOMElements.buildingListItemClass],
         innerHTML: this.getBuildingContent(building),
       })
 
@@ -294,7 +307,7 @@ export class GamePage {
     })
 
     const upgradeButtonElements = list?.querySelectorAll(
-      '.building__upgrade-button'
+      `.${DOMElements.buildingUpgradeButtonClass}`
     )
 
     upgradeButtonElements.forEach((upgradeButtonElement) => {
@@ -314,7 +327,7 @@ export class GamePage {
 
   private getBuildingLevelContainer(building: Building) {
     const levelContainer = document.querySelector(
-      `.building__level--${building.id}`
+      `.${DOMElements.buildingLevelClass}--${building.id}`
     ) as HTMLElement
 
     return levelContainer
@@ -322,7 +335,7 @@ export class GamePage {
 
   private getBuildingPriceContainer(building: Building) {
     const container = document.querySelectorAll(
-      `.building__price--${building.id}`
+      `.${DOMElements.buildingPriceClass}--${building.id}`
     )
 
     return container
@@ -347,31 +360,37 @@ export class GamePage {
     const resources = building.getResourcesNeededToBuild()
 
     return `
-      <div class="building">
-      <h3 class="building__heading">${building.getTitle()}</h3>
-      <p class="building__level building__level--${
-        building.id
-      }">Level: ${building.getLevel()}</p>
-      <div class="progress building__progress">
+      <div class="${DOMElements.buildingClass}">
+      <h3 class="${
+        DOMElements.buildingHeadingClass
+      }">${building.getTitle()}</h3>
+      <p class="${DOMElements.buildingLevelClass} ${
+      DOMElements.buildingLevelClass
+    }--${building.id}">Level: ${building.getLevel()}</p>
+      <div class="progress ${DOMElements.buildingProgressClass}">
         <div
-          class="progress-bar building__progress-bar building__progress-bar--${
-            building.id
-          }"
+          class="progress-bar ${DOMElements.buildingProgressBarClass} ${
+      DOMElements.buildingProgressBarClass
+    }--${building.id}"
           role="progressbar">
         </div>
       </div>
-      <button class="building__upgrade-button building__upgrade-button--${
-        building.id
-      }" data-building="${building.id}">
+      <button class="${DOMElements.buildingUpgradeButtonClass} ${
+      DOMElements.buildingUpgradeButtonClass
+    }--${building.id}" data-building="${building.id}">
         <i class="fas fa-plus-circle"></i>
       </button>
-      <div class="building__details">
-        <h3 class="building__details-title">${building.getTitle()}</h3>
-        <p class="building__details-description">${building.getDescription()}</p>
-        <ul class="building__details-resources">
+      <div class="${DOMElements.buildingDetailsClass}">
+        <h3 class="${
+          DOMElements.buildingDetailsTitleClass
+        }">${building.getTitle()}</h3>
+        <p class="${
+          DOMElements.buildingDetailsDescriptionClass
+        }">${building.getDescription()}</p>
+        <ul class="${DOMElements.buildingDetailsResourcesClass}">
           ${resources
             .map((resource) => {
-              return `<li class="building__price building__price--${resource.type} building__price--${building.id}">${resource.count} ${resource.type}</li>`
+              return `<li class="${DOMElements.buildingPriceClass} ${DOMElements.buildingPriceClass}--${resource.type} ${DOMElements.buildingPriceClass}--${building.id}">${resource.count} ${resource.type}</li>`
             })
             .join('')}
         </ul>

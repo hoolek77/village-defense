@@ -79,7 +79,7 @@ export class Battle {
       )
 
       document.querySelector('.game__screen')?.appendChild(this.battleOverlay)
-      this.gameMessagesContainer.style.transform = 'translateY(-120%)'
+      this.gameMessagesContainer.style.transform = 'translateY(-140%)'
       this.nextAttackInfoContainer.style.opacity = '0'
       this.createBattle()
       this.audio.changeAudioSource(battle_music.default)

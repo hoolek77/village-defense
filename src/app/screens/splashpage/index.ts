@@ -1,4 +1,5 @@
 import { App } from '../../app'
+import { DOMElements } from '../../constants'
 
 export class SplashPage {
   private app: App
@@ -18,7 +19,7 @@ export class SplashPage {
 
   show(appContainer: HTMLElement) {
     const template = <HTMLTemplateElement>(
-      document.querySelector('#splash-screen-template')
+      document.querySelector(`#${DOMElements.splashScreenID}`)
     )
     const pageScreen = template?.content.firstElementChild?.cloneNode(true)
 
@@ -31,7 +32,7 @@ export class SplashPage {
   }
 
   close(appContainer: HTMLElement) {
-    this.splashScreen.classList.add('splash__screen--closed')
+    this.splashScreen.classList.add(DOMElements.splashScreenClosedClass)
 
     setTimeout(() => {
       appContainer.removeChild(this.splashScreen)
@@ -39,13 +40,15 @@ export class SplashPage {
   }
 
   private bindUIElements() {
-    this.splashScreen = <HTMLElement>document.querySelector('.splash__screen')
+    this.splashScreen = <HTMLElement>(
+      document.querySelector(`.${DOMElements.splashScreenClass}`)
+    )
     this.progressBarElement = <HTMLElement>(
-      document.querySelector('.splash__loading-bar')
+      document.querySelector(`.${DOMElements.splashScreenLoadingBar}`)
     )
 
     this.percentElement = <HTMLElement>(
-      document.querySelector('.splash__loading-percent')
+      document.querySelector(`.${DOMElements.splashScreenLoadingPercentCLass}`)
     )
   }
 
