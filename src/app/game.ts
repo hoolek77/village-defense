@@ -1,4 +1,7 @@
-import { GAME_LOOP_DELAY_IN_MILISECONDS } from './constants'
+import {
+  EVENTS_DELAY_IN_MILISECONDS,
+  GAME_LOOP_DELAY_IN_MILISECONDS,
+} from './constants'
 import { GameSettings } from './gameSettings'
 import {
   Building,
@@ -510,6 +513,10 @@ export class Game {
   }
 
   private checkIfRandomEvent() {
+    if (this.elapsedTimeInMilliseconds < EVENTS_DELAY_IN_MILISECONDS) {
+      return
+    }
+
     const randomInt = Math.floor(Math.random() * 10000)
 
     if (randomInt < 30) {

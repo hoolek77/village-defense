@@ -3,13 +3,26 @@ import { GameSettings } from '../src/app/gameSettings'
 import {
   Goldmine,
   Quarry,
+  Resource,
   ResourceType,
   Sawmill,
   Wall,
 } from '../src/app/models'
 
+const getResourceForType = (
+  resourceType: ResourceType,
+  resources: Resource[]
+) => {
+  return resources.find((res) => res.type === resourceType)
+}
+
 const createSut = (): [Game, jest.Mock<any, any>] => {
   const gameSettings = new GameSettings()
+  gameSettings.goldmineDefaultTimeToBuildInMiliseconds = 1000
+  gameSettings.sawmillDefaultTimeToBuildInMiliseconds = 1000
+  gameSettings.quarryDefaultTimeToBuildInMiliseconds = 1000
+  gameSettings.wallDefaultTimeToBuildInMiliseconds = 1000
+
   const game = new Game(gameSettings)
   const callback = jest.fn()
   game.start(callback)
@@ -140,7 +153,7 @@ describe('game', () => {
 
       wall!.startBuilding()
 
-      jest.runTimersToTime(5 * 60 * 1000)
+      jest.runTimersToTime(1000)
 
       expect(game.getVillageDefence()).toBeGreaterThan(0)
     })
@@ -150,13 +163,19 @@ describe('game', () => {
     const [game, _] = createSut()
 
     const goldMine = game.getBuilding(Goldmine.id)
-    const currentGold = game.getGoldAmount()
 
     expect(goldMine).not.toBeUndefined()
 
+    const resources = goldMine!.getResourcesNeededToBuild()
+    const cost = getResourceForType(ResourceType.Gold, resources)
+
+    expect(cost).not.toBeUndefined()
+
+    const currentGold = game.getGoldAmount() - cost!.count
+
     goldMine!.startBuilding()
 
-    jest.runTimersToTime(5 * 60 * 1000)
+    jest.runTimersToTime(60 * 1000)
 
     expect(game.getGoldAmount()).toBeGreaterThan(currentGold)
   })
@@ -165,13 +184,19 @@ describe('game', () => {
     const [game, _] = createSut()
 
     const sawmill = game.getBuilding(Sawmill.id)
-    const currentWood = game.getWoodAmount()
 
     expect(sawmill).not.toBeUndefined()
 
+    const resources = sawmill!.getResourcesNeededToBuild()
+    const cost = getResourceForType(ResourceType.Wood, resources)
+
+    expect(cost).not.toBeUndefined()
+
+    const currentWood = game.getWoodAmount() - cost!.count
+
     sawmill!.startBuilding()
 
-    jest.runTimersToTime(5 * 60 * 1000)
+    jest.runTimersToTime(60 * 1000)
 
     expect(game.getWoodAmount()).toBeGreaterThan(currentWood)
   })
@@ -180,13 +205,19 @@ describe('game', () => {
     const [game, _] = createSut()
 
     const quarry = game.getBuilding(Quarry.id)
-    const currentStone = game.getStoneAmount()
 
     expect(quarry).not.toBeUndefined()
 
+    const resources = quarry!.getResourcesNeededToBuild()
+    const cost = getResourceForType(ResourceType.Stone, resources)
+
+    expect(cost).not.toBeUndefined()
+
+    const currentStone = game.getStoneAmount() - cost!.count
+
     quarry!.startBuilding()
 
-    jest.runTimersToTime(5 * 60 * 1000)
+    jest.runTimersToTime(60 * 1000)
 
     expect(game.getStoneAmount()).toBeGreaterThan(currentStone)
   })
