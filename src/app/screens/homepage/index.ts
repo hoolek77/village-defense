@@ -10,6 +10,7 @@ import {
   setCSSProperty,
 } from '../../utils'
 import { InfoModal, GameSettingsModal } from '../../components'
+import DOMElements from './DOMElements'
 
 export class HomePage {
   private app: App
@@ -32,7 +33,7 @@ export class HomePage {
 
   show(appContainer: HTMLElement, startHidden: boolean) {
     const template = <HTMLTemplateElement>(
-      document.querySelector('#start-screen-template')
+      document.querySelector(`#${DOMElements.startScreenTemplateID}`)
     )
     const pageScreen = template?.content.firstElementChild?.cloneNode(true)
 
@@ -45,55 +46,67 @@ export class HomePage {
       if (startHidden) {
         this.updateTheme()
 
-        this.startScreen.classList.add('start__screen--hidden')
-        this.startScreen.classList.add('start__screen--opened')
+        this.startScreen.classList.add(DOMElements.startScreenHiddenClass)
+        this.startScreen.classList.add(DOMElements.startScreenOpenedClass)
 
         setTimeout(() => {
-          this.startScreen.classList.remove('start__screen--hidden')
-          this.startScreen.classList.remove('start__screen--opened')
+          this.startScreen.classList.remove(DOMElements.startScreenHiddenClass)
+          this.startScreen.classList.remove(DOMElements.startScreenOpenedClass)
         }, 500)
       }
     }
   }
 
   close(appContainer: HTMLElement) {
-    this.startScreen.classList.add('start__screen--closed')
+    this.startScreen.classList.add(DOMElements.startScreenClosedClass)
     setTimeout(() => {
       appContainer.removeChild(this.startScreen)
     }, 500)
   }
 
   private bindUIElements() {
-    this.settingButton = <HTMLElement>document.querySelector('#settings-button')
-    this.infoButton = <HTMLElement>document.querySelector('#info-button')
-    this.startButton = <HTMLElement>document.querySelector('#start-game-button')
-    this.characterButton = <HTMLInputElement>(
-      document.querySelector('#character-dropdown')
+    this.settingButton = <HTMLElement>(
+      document.querySelector(DOMElements.startGameBtnID)
     )
-    this.startScreen = <HTMLElement>document.querySelector('.start__screen')
+    this.infoButton = <HTMLElement>(
+      document.querySelector(`.${DOMElements.infoBtnID}`)
+    )
+    this.startButton = <HTMLElement>(
+      document.querySelector(`#${DOMElements.startGameBtnID}`)
+    )
+    this.characterButton = <HTMLInputElement>(
+      document.querySelector(`#${DOMElements.characterDropdownID}`)
+    )
+    this.startScreen = <HTMLElement>(
+      document.querySelector(`.${DOMElements.startScreenClass}`)
+    )
     this.startScreenBackground = <HTMLElement>(
-      document.querySelector('.start__screen--background')
+      document.querySelector(`.${DOMElements.startScreenBgClass}`)
     )
     this.startScreenLogo = <HTMLElement>(
-      document.querySelector('.start__screen__logo')
+      document.querySelector(`.${DOMElements.startScreenLogoClass}`)
     )
     this.characterButtonOptions = <NodeListOf<HTMLInputElement>>(
-      document.querySelectorAll('.start__screen__button--option')
+      document.querySelectorAll(`.${DOMElements.startScreenBtnOption}`)
     )
     this.startScreenLogoBackground = <HTMLElement>(
-      document.querySelector('.start__screen__logo--background')
+      document.querySelector(`.${DOMElements.startScreenLogoBgClass}`)
     )
   }
 
   private removeClasses() {
     for (const fractionKey of enumKeys(Fractions)) {
       const fraction = Fractions[fractionKey]
-      this.startScreenLogo.classList.remove(`start__screen__logo--${fraction}`)
+      this.startScreenLogo.classList.remove(
+        `${DOMElements.startScreenLogoClass}--${fraction}`
+      )
       this.startScreenLogoBackground.classList.remove(`${fraction}__background`)
-      this.startScreenBackground.classList.remove(`start_screen--${fraction}`)
+      this.startScreenBackground.classList.remove(
+        `${DOMElements.startScreenClass}--${fraction}`
+      )
     }
     this.characterButtonOptions.forEach((e) => {
-      e.classList.remove('start__screen__button--option--selected')
+      e.classList.remove(DOMElements.startScreenBtnOptionSelected)
     })
   }
 
@@ -140,12 +153,18 @@ export class HomePage {
 
   private changeLogo() {
     const fraction = this.app.gameSettings.fraction
-    this.startScreenLogo.classList.add(`start__screen__logo--${fraction}`)
+    this.startScreenLogo.classList.add(
+      `${DOMElements.startScreenLogoClass}--${fraction}`
+    )
     this.startScreenLogoBackground.classList.add(`${fraction}__background`)
-    this.startScreenLogoBackground.classList.add('background__animation')
+    this.startScreenLogoBackground.classList.add(
+      DOMElements.backgroundAnimation
+    )
     const randomAnimation = Math.floor(Math.random() * 2)
     const className =
-      randomAnimation === 1 ? 'logo__animation--one' : 'logo__animation--two'
+      randomAnimation === 1
+        ? DOMElements.logoAnimationOneClass
+        : DOMElements.logoAnimationTwoClass
 
     this.startScreenLogo.classList.add(className)
     setTimeout(() => {
@@ -153,7 +172,9 @@ export class HomePage {
     }, 700)
 
     setTimeout(() => {
-      this.startScreenLogoBackground.classList.remove('background__animation')
+      this.startScreenLogoBackground.classList.remove(
+        DOMElements.backgroundAnimation
+      )
     }, 700)
   }
 
@@ -161,7 +182,9 @@ export class HomePage {
     const fraction = this.app.gameSettings.fraction
     this.startScreenBackground.style.display = 'none'
     setTimeout(() => (this.startScreenBackground.style.display = 'block'), 100)
-    this.startScreenBackground.classList.add(`start_screen--${fraction}`)
+    this.startScreenBackground.classList.add(
+      `${DOMElements.startScreenClass}--${fraction}`
+    )
   }
 
   private handleFracChange(): void {
@@ -182,22 +205,12 @@ export class HomePage {
   }
 
   private triggerOptionButton(element: HTMLElement) {
-    element.classList.add('start__screen__button--option--selected')
-  }
-
-  private triggerSettingsButton(): void {
-    this.settingButton.addEventListener('click', () => {})
-  }
-
-  private triggerInfoButton(): void {
-    this.infoButton.addEventListener('click', () => {})
+    element.classList.add(`${DOMElements.startScreenBtnOptionSelected}`)
   }
 
   private bindEvents() {
     this.handleFracChange()
-    this.triggerInfoButton()
     this.triggerStartButton()
-    this.triggerSettingsButton()
     new InfoModal()
     new GameSettingsModal(this.app, this.audio)
   }
