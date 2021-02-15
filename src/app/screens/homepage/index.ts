@@ -10,7 +10,7 @@ import {
   setCSSProperty,
 } from '../../utils'
 import { InfoModal, GameSettingsModal } from '../../components'
-import DOMElements from '../../constants/DOMElements'
+import { DOMElements } from '../../constants'
 
 export class HomePage {
   private app: App

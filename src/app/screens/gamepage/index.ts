@@ -4,7 +4,7 @@ import { GameOverModal, Battle, QuitModal } from '../../components'
 import { Game } from '../../game'
 import { Building, GameMessage, MessageType, Warrior } from '../../models'
 import { createElement } from '../../utils'
-import DOMElements from '../../constants/DOMElements'
+import { DOMElements } from '../../constants'
 
 export class GamePage {
   private app: App

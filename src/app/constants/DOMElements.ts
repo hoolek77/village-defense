@@ -1,4 +1,4 @@
-export default {
+export const DOMElements = {
   gameScreenTemplateSelector: '#game-screen-template',
   gameScreenSelector: '.game__screen',
   gameScreenOpenedClass: 'game__screen--opened',
