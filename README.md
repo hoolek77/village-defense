@@ -1,6 +1,6 @@
 # Village-Defence
 
-Available at [Village-Defence](https://pdybowski.github.io/village-defense/)
+Available at [Village-Defence](https://hoolek77.github.io/village-defense/)
 
 [<img src="./src/assets/images/readme/readmeImg.png" />]()
 
